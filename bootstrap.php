@@ -15,22 +15,23 @@ spl_autoload_register('f_auto_load');
 
 //version: 0.0.1
 function f_auto_load($class){
-    $path = '';
+    $dir = '';
     if(strpos($class, 'Controller') !== false) {
-        $path =  PATH_ROOT.DS."controllers".DS.$class.".php";
+        $dir = 'controllers';
     } elseif(strpos($class, 'Model') !== false) {
-        $path =  PATH_ROOT.DS."model".DS.$class.".php";
+        $dir = 'model';
     } elseif(strpos($class, 'Core') !== false) {
-        $path = PATH_ROOT.DS."core".DS.$class.".php";
+        $dir = 'core';
     } elseif(strpos($class, 'Data') !== false) {
-        $path = PATH_ROOT.DS."data".DS.$class.".php";
+        $dir = 'data';
     } elseif(strpos($class, 'Lib') !== false) {
-        $path = PATH_ROOT.DS."lib".DS.$class.".php";
+        $dir = 'lib';
     } elseif(strpos($class, 'Worker') !== false){
-        $path = PATH_DAEMON.DS.'workers'.DS.$class.'.php';
+        $dir = 'daemon'.DS.'workers';
     } else {
         //
     }
+    $path = PATH_ROOT.DS.$dir.DS.$class.'.php';
     //print_r($path);
     if(file_exists($path)){
         include $path;

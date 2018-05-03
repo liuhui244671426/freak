@@ -13,7 +13,7 @@ class testWorker extends baseWorker {
     public function run(){
         sleep(10);
         $log = new logCore();
-        $log->write(__METHOD__);
+        $log->write(date('Y-m-d H:i:s'));
         return;
     }
 }
