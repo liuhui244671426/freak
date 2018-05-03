@@ -7,7 +7,7 @@
  * @copyright copyright(2018) weibo.com all rights reserved
  */
 
-require_once dirname(dirname(dirname(__FILE__))).'/cli.php';
+require_once dirname(dirname(dirname(__FILE__))).'/bootstrap.php';
 
 class testWorker extends baseWorker {
     public function run(){

@@ -24,7 +24,7 @@ class indexController extends baseController{
 //        $b = requestLib::get('array', 'b', '');
 //        var_dump($b);
 
-//        $r = new redisCore('read');
-//        echo $r->get('aaa');
+        $r = new redisCore('read');
+        echo $r->get('aaa');
     }
 }
