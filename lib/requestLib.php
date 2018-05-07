@@ -14,7 +14,7 @@ class requestLib{
     public static function getAll(){
         return $_GET?$_GET:$_POST;
     }
-
+    //参数检测
     public static function checkParam($type, $params){
         switch($type){
             case 'string':{

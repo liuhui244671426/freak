@@ -15,7 +15,7 @@ try{
     $obj = new $controller();
     $obj->$method();
 } catch (Exception $e){
-    exit("system error");
+    exit($e->getTraceAsString());
 }
 
 if($is_debug){

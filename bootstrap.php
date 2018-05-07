@@ -13,10 +13,10 @@ define('PATH_DAEMON', PATH_ROOT.DS.'daemon');
 
 spl_autoload_register('f_auto_load');
 
-//version: 0.0.1
+//version: 0.0.2
 function f_auto_load($class){
     $dir = '';
-    $dir_map = array(
+    $map = array(
         'Controller' => 'controllers',
         'Model' => 'model',
         'Core' => 'core',
@@ -24,7 +24,7 @@ function f_auto_load($class){
         'Lib' => 'lib',
         'Worker' => 'daemon'.DS.'workers',
     );
-    foreach ($dir_map as $k => $v) {
+    foreach ($map as $k => $v) {
         if(strpos($class, $k) !== false){
             $dir = $v;
         }
