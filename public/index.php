@@ -15,11 +15,19 @@ if($is_debug) {
     xhprof_enable(XHPROF_FLAGS_CPU+XHPROF_FLAGS_MEMORY);
 }
 
-$controller = $_GET['c']."Controller";
-$method = $_GET['m'];
+$module = explode('?', $_SERVER['REQUEST_URI'])[0];//取?前的目录
+$module = ltrim($module, '/');
+#router
+#module->controller->action
+#index?c=index&a=index
+$module = $module   ?   $module :   'index';
+$controller = $_GET['c']    ?   $_GET['c']  :   'index';
+$action = $_GET['a']    ?   $_GET['a']  :   'index';
+
+$exec_class = $module.'_'.$controller."Controller";
 try{
-    $obj = new $controller();
-    $obj->$method();
+    $obj = new $exec_class();
+    $obj->$action();
 } catch (Exception $e){
     exit($e->getTraceAsString());
 }

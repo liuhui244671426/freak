@@ -25,7 +25,7 @@ function f_auto_load($class){
             $dir = $v;
         }
     }
-    $path = PATH_ROOT.DS.$dir.DS.$class.'.php';
+    $path = PATH_ROOT.DS.$dir.DS.str_replace('_','/',$class).'.php';
     if(file_exists($path)){
         include $path;
     } else {

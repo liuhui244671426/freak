@@ -2,7 +2,7 @@
 /**
  *
  */
-class indexController extends baseController{
+class Index_indexController extends baseController{
     public function init(){}
 
     public function index(){
@@ -10,8 +10,8 @@ class indexController extends baseController{
 //        $data = array('a' => 'a', 'b' => 123);
 //        outputCore::view_render('index', $data);
 
-//        $m = new indexModel();
-//        echo $m->get_name();
+        $m = new indexModel();
+        echo $m->get_name();
 
 //        $l = new logCore();
 //        $l->write('write log');
