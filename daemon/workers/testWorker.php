@@ -9,12 +9,16 @@
 
 require_once dirname(dirname(dirname(__FILE__))).'/bootstrap.php';
 
-class testWorker extends baseWorker {
+class Workers_testWorker extends Workers_baseWorker {
+    public function init(){
+        $log = new logCore();
+        $log->write(__METHOD__);
+    }
     public function run(){
-        sleep(10);
+        //sleep(10);
         $log = new logCore();
         $log->write(date('Y-m-d H:i:s'));
         return;
     }
 }
-new testWorker();
+new Workers_testWorker();

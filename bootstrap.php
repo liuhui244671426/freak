@@ -18,7 +18,7 @@ function f_auto_load($class){
         'Core' => 'core',
         'Data' => 'data',
         'Lib' => 'lib',
-        'Worker' => 'daemon'.DS.'workers',
+        'Worker' => 'daemon',
     );
     foreach ($map as $k => $v) {
         if(strpos($class, $k) !== false){

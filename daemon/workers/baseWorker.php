@@ -1,6 +1,6 @@
 <?php
 
-abstract class baseWorker {
+abstract class Workers_baseWorker {
 
     private $ip;
     private $pid;
@@ -17,11 +17,12 @@ abstract class baseWorker {
 //        pcntl_signal(SIGINT,	array(&$this, 'signalHandler'));
 //        pcntl_signal(SIGHUP,	array(&$this, 'signalHandler'));
 //        pcntl_signal(SIGCHLD,	array(&$this, 'signalHandler'));
-
+        $this->init();
         $this->run();
     }
 
     abstract public function run();
+    abstract public function init();
     public function stop() {$this->stop = true;}
 
     public function isStop() {
