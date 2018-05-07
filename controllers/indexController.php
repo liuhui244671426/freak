@@ -17,7 +17,7 @@ class indexController extends baseController{
 //        $l->write('write log');
 
         $pdo = new pdoCore('read');
-        $ret = $pdo->row("select * from GnAdm");
+        $ret = $pdo->row("select * from GnAdm where id=:id", array('id'=>1));
         print_r($ret);
 
 
