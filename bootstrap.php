@@ -1,8 +1,4 @@
 <?php
-header("Content-type:text/html;charset=utf-8");
-date_default_timezone_set('PRC');
-error_reporting(E_ALL);
-
 define('VERSION', "0.0.1");
 define('FREAK_ACCESS', true);
 define('PATH_ROOT', dirname(__FILE__));

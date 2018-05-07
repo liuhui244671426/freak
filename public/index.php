@@ -4,7 +4,13 @@
  *
  */
 $is_debug = false;
+
+header("Content-type:text/html;charset=utf-8");
+date_default_timezone_set('PRC');
+error_reporting(E_ALL);
+
 include dirname(dirname(__FILE__)).'/bootstrap.php';
+
 if($is_debug) {
     xhprof_enable(XHPROF_FLAGS_CPU+XHPROF_FLAGS_MEMORY);
 }
