@@ -16,15 +16,15 @@ class indexController extends baseController{
 //        $l = new logCore();
 //        $l->write('write log');
 
-//        $pdo = new pdoCore('read');
-//        $ret = $pdo->row("select * from GnAdm");
-//        print_r($ret);
+        $pdo = new pdoCore('read');
+        $ret = $pdo->row("select * from GnAdm");
+        print_r($ret);
 
 
 //        $b = requestLib::get('array', 'b', '');
 //        var_dump($b);
 
-        $r = new redisCore('read');
-        echo $r->get('aaa');
+//        $r = new redisCore('read');
+//        echo $r->get('aaa');
     }
 }
