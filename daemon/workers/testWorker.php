@@ -6,7 +6,7 @@
  * @version 2018/5/3
  * @copyright copyright(2018) weibo.com all rights reserved
  */
-
+if(PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
 require_once dirname(dirname(dirname(__FILE__))).'/bootstrap.php';
 
 class Workers_testWorker extends Workers_baseWorker {
@@ -14,13 +14,9 @@ class Workers_testWorker extends Workers_baseWorker {
     }
     public function run(){
         //sleep(10);
-//        $log = new logCore();
-//        $log->write(__METHOD__ . $this->getPid());
-//        return;
-
-        while(true){
-
-        }
+        $log = new logCore();
+        $log->write(__METHOD__ . $this->getPid());
+        return;
     }
 }
 new Workers_testWorker();

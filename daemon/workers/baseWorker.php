@@ -1,5 +1,6 @@
 <?php
 
+if(PHP_SAPI != 'cli') exit('must cli mode');
 abstract class Workers_baseWorker {
 
     private $ip;
