@@ -5,6 +5,7 @@
 	* @git 			https://github.com/wickyaswal/PHP-MySQL-PDO-Database-Class
 	* @version      0.1a
 	*/
+defined(FREAK_ACCESS) or exit('Access Denied');
 class logCore {
 
     # @string, Log directory name

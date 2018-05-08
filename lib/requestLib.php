@@ -3,6 +3,7 @@
  *
  *
  */
+defined(FREAK_ACCESS) or exit('Access Denied');
 class requestLib{
 
     public static function get($type, $key,$default=''){
