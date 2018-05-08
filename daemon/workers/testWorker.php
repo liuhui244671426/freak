@@ -15,7 +15,9 @@ class Workers_testWorker extends Workers_baseWorker {
     public function run(){
         //sleep(10);
         $log = new logCore();
+        $model = new indexModel();
         $log->write(__METHOD__ . $this->getPid());
+        $log->write($model->get_name());
         return;
     }
 }
