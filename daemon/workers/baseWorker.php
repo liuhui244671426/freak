@@ -25,10 +25,7 @@ abstract class Workers_baseWorker {
     abstract public function init();
     public function stop() {$this->stop = true;}
 
-    public function isStop() {
-//        pcntl_signal_dispatch();
-        return $this->stop;
-    }
+    public function isStop() { return $this->stop; } //pcntl_signal_dispatch();
 
     public function signalHandler($signo){
         switch ($signo) {
