@@ -14,15 +14,15 @@ function f_auto_load($class){
     $dir = '';
     $map = array(
         'Controller' => 'controllers',
-        'Model' => 'model',
         'Core' => 'core',
+        'Model' => 'model',
         'Data' => 'data',
         'Lib' => 'lib',
         'Worker' => 'daemon',
     );
     foreach ($map as $k => $v) {
         if(strpos($class, $k) !== false){
-            $dir = $v;
+            $dir = $v;break;
         }
     }
     $path = PATH_ROOT.DS.$dir.DS.str_replace('_','/',$class).'.php';
