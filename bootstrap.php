@@ -1,5 +1,5 @@
 <?php
-define('VERSION', "0.0.1");
+
 define('PATH_ROOT', dirname(__FILE__));
 define('DS', DIRECTORY_SEPARATOR);
 define('PATH_VIEW', PATH_ROOT.DS.'views');
@@ -10,7 +10,7 @@ date_default_timezone_set('PRC');
 error_reporting(E_ALL);
 spl_autoload_register('f_auto_load');
 
-//version: 0.0.2
+
 function f_auto_load($class){
     $dir = '';
     $map = array(

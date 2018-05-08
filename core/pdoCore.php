@@ -101,7 +101,7 @@ class pdoCore{
     {
         # Connect to database
         if (!$this->bConnected) {
-            $this->ExceptionLog("connect database failed");
+            $this->ExceptionLog("connect database failed", $query);
         }
         try {
             # Prepare query
