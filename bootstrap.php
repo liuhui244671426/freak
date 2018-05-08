@@ -5,7 +5,7 @@ define('DS', DIRECTORY_SEPARATOR);
 define('PATH_VIEW', PATH_ROOT.DS.'views');
 define('PATH_CONFIG', PATH_ROOT.DS.'config');
 define('PATH_DAEMON', PATH_ROOT.DS.'daemon');
-defined(FREAK_ACCESS) or exit('Access Denied');
+defined('FREAK_ACCESS') or exit('Access Denied');
 spl_autoload_register('f_auto_load');
 
 //version: 0.0.2
@@ -25,6 +25,7 @@ function f_auto_load($class){
         }
     }
     $path = PATH_ROOT.DS.$dir.DS.str_replace('_','/',$class).'.php';
+
     if(file_exists($path)){
         include $path;
     } else {

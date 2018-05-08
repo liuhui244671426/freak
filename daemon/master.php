@@ -3,6 +3,7 @@
  *
  * 定时任务启动器, 需要配置到系统的crontab里, 每分钟执行一次
  */
+define('FREAK_ACCESS', true);
 require_once dirname(dirname(__FILE__)).'/bootstrap.php';
 
 class master {

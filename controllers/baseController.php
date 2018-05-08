@@ -1,10 +1,10 @@
 <?php
-defined(FREAK_ACCESS) or exit('Access Denied');
+defined('FREAK_ACCESS') or exit('Access Denied');
 
 abstract class baseController{
     public function __construct(){$this->init();}
     public function __destruct(){}
-    public function init(){}
+    abstract public function init();
 
     //__call
     //__callStatic

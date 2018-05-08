@@ -1,5 +1,5 @@
 <?php
-defined(FREAK_ACCESS) or exit('Access Denied');
+defined('FREAK_ACCESS') or exit('Access Denied');
 class pdoCore{
     /**
      *  DB - A simple database class

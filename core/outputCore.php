@@ -3,7 +3,7 @@
  *
  *
  */
-defined(FREAK_ACCESS) or exit('Access Denied');
+defined('FREAK_ACCESS') or exit('Access Denied');
 class outputCore{
     public static function view_render($file, $data=array()){
         @extract($data);

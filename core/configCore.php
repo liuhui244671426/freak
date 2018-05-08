@@ -1,7 +1,7 @@
 <?php
 /**
  */
-defined(FREAK_ACCESS) or exit('Access Denied');
+defined('FREAK_ACCESS') or exit('Access Denied');
 
 class configCore{
     public static function get($file, $filed=''){
