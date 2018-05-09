@@ -35,7 +35,7 @@ class logCore {
         if(is_dir($this->path)) {
             if(!file_exists($log)) {
                 $fh  = fopen($log, 'a+') or die("Fatal Error !");
-                $logcontent = "Time : " . $date->format('H:i:s')."\r\n" . $message ."\r\n";
+                $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n";
                 fwrite($fh, $logcontent);
                 fclose($fh);
             }
@@ -61,7 +61,7 @@ class logCore {
      * @param string $message
      */
     private function edit($log,$date,$message) {
-        $logcontent = "Time : " . $date->format('H:i:s')."\r\n" . $message ."\r\n\r\n";
+        $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n\r\n";
         $logcontent = $logcontent . file_get_contents($log);
         file_put_contents($log, $logcontent);
     }
