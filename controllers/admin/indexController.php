@@ -3,7 +3,12 @@
 class Admin_indexController extends baseController{
     public function init(){}
 
-    public function hello(){
-        echo __METHOD__;
+    public function index(){
+        $bool = ssoClientLib::is_login();
+        if($bool){
+            echo 'success';
+        } else {
+            echo 'failed';
+        }
     }
 }
