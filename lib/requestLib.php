@@ -13,7 +13,7 @@ class requestLib{
     }
 
     public static function getAll(){
-        return $_GET?$_GET:$_POST;
+        return $_POST?$_POST:$_GET;
     }
     //参数检测
     public static function checkParam($type, $params){
