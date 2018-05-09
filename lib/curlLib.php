@@ -39,6 +39,8 @@ class curlLib {
         }
         return self::$instance;
     }
+    //变成单例模式
+    private function __construct(){}
     /**
      * Task info
      *
