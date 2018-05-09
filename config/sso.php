@@ -6,6 +6,7 @@ return array(
         // token 检测
         'url_check' => 'http://sso.com/?m=sso&c=center&a=check',
     ),
+    'cookie_expire' => time()+86400,
     //'client' => array(
         //'callback' => ''
     //),
