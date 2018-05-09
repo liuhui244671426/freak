@@ -4,17 +4,17 @@ class ssoClientLib{
         $token = requestLib::get('string', 'token');
         if($token){
             $bool = self::check_token($token);
-            if($bool){
-                setcookie('token', $token);
+            if($bool && empty($_COOKIE['token'])){
+                setcookie('token', $token, configCore::get('sso', 'cookie_expire'));
             }
             return $bool;
-        }else {
+        } else {
             if(empty($_COOKIE['token'])){
                 $url = configCore::get('sso', 'server');
-                header("Location: {$url['url_login']}&callback={$callback}");
+                $callback = ($callback == '')   ?   self::current_url() :   $callback;
+                header("Location: {$url['url_login']}&callback=".urlencode($callback));
                 exit;
-            }
-            else {
+            } else {
                 return true;
             }
         }
@@ -22,8 +22,8 @@ class ssoClientLib{
 
     public static function check_token($token){
         $curl = curlLib::init();
-        $url = configCore::get('sso', 'server');
-        $ret = $curl->url("{$url['url_check']}&token=".$token);
+        $url = configCore::get('sso', 'server')['url_check'];
+        $ret = $curl->url("{$url}&token=".$token)->data();
         if($ret == 'ok'){
             return true;
         }
@@ -31,6 +31,6 @@ class ssoClientLib{
     }
 
     public static function current_url(){
-        return $_SERVER['SERVER_PROTOCOL']."://".$_SERVER['REMOTE_HOST'].$_SERVER['REQUEST_URI'];
+        return $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }
 }
