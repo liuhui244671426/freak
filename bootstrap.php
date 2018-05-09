@@ -1,5 +1,4 @@
 <?php
-
 define('PATH_ROOT', dirname(__FILE__));
 define('DS', DIRECTORY_SEPARATOR);
 define('PATH_VIEW', PATH_ROOT.DS.'views');

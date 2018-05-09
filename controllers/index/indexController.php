@@ -21,9 +21,10 @@ class Index_indexController extends baseController{
         $ret = $pdo->row("select * from GnAdm where id=:id", array('id'=>1));
         print_r($ret);
 
-        $curl = new curlLib();
-        $res = $curl->url('http://www.baidu.com');
-        print_r($res);
+//        $curl = new curlLib();
+//        $res = $curl->url('http://www.baidu.com');
+//        print_r($res);
+
 //        $b = requestLib::get('array', 'b', '');
 //        var_dump($b);
 

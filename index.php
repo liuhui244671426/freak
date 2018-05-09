@@ -2,6 +2,7 @@
 /**
  * freak.framework
  * @author: liuhui
+ * @version: 1.0.0
  */
 define('FREAK_ACCESS', true);
 header("Content-type:text/html;charset=utf-8");
