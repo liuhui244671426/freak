@@ -2,3 +2,5 @@
 .idea
 daemon.master.log
 logs
+vendor
+composer.lock

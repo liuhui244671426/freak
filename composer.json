@@ -1,0 +1,16 @@
+{
+    "name": "vagrant/freak",
+    "description": "simple & power",
+    "type": "project",
+    "require": {
+//        "godv/cron-manager": "^1.5",
+//        "pear/console_table": "^1.3"
+
+    },
+    "authors": [
+        {
+            "name": "liuhui",
+            "email": "752277321@qq.com"
+        }
+    ]
+}
