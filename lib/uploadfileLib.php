@@ -156,7 +156,7 @@ class uploadfilesLib
             //使用子目录保存文件
             switch ($this->config['subDirType']) {
                 case 'date':
-                    $dir = date($this->config['dateFormat'], NOW_TIME) . DIRECTORY_SEPARATOR;
+                    $dir = date($this->config['dateFormat'], time()) . DIRECTORY_SEPARATOR;
                     break;
                 case 'hash':
                 default:
