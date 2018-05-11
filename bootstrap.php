@@ -8,7 +8,7 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 date_default_timezone_set('PRC');
 error_reporting(E_ALL);
 spl_autoload_register('f_auto_load');
-
+set_error_handler('f_error_handler');
 
 function f_auto_load($class){
     $dir = '';
@@ -33,7 +33,16 @@ function f_auto_load($class){
         throw new Exception("path loaded failed, ".$path);
     }
 }
-
+function f_error_handler($errno, $errstr, $errfile, $errline){
+    if(0 === error_reporting() || 30711 === error_reporting()){return false;}
+    $msg = "ERROR";
+    if($errno == E_WARNING)$msg = "WARNING";
+    if($errno == E_NOTICE)$msg = "NOTICE";
+    if($errno == E_STRICT)$msg = "STRICT";
+    if($errno == 8192)$msg = "DEPRECATED";
+    $log = new logCore();
+    $log->write("$msg: $errstr in $errfile on line $errline");
+}
 ###########router rule##############
 #rule : module->controller->action
 #     : m=index?c=index&a=index
