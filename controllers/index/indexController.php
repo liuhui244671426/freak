@@ -10,16 +10,18 @@ class Index_indexController extends baseController{
 
 //        $data = array('a' => 'a', 'b' => 123);
 //        outputCore::view_render('index', $data);
+        outputCore::view_layout_render('index',array('a' => 13145));
+        return;
 
-        $m = new indexModel();
-        echo $m->get_name();
+//        $m = new indexModel();
+//        echo $m->get_name();
 
 //        $l = new logCore();
 //        $l->write('write log');
 
-        $pdo = new pdoCore('read');
-        $ret = $pdo->row("select * from GnAdm where id=:id", array('id'=>1));
-        print_r($ret);
+//        $pdo = new pdoCore('read');
+//        $ret = $pdo->row("select * from GnAdm where id=:id", array('id'=>1));
+//        print_r($ret);
 
 //        $curl = new curlLib();
 //        $res = $curl->url('http://www.baidu.com');
