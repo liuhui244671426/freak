@@ -11,4 +11,8 @@ class controller_admin_index extends controller_base{
             echo 'failed';
         }
     }
+
+    public function welcome(){
+
+    }
 }

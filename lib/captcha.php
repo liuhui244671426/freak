@@ -48,7 +48,7 @@ class lib_captcha
         $this->fontSize = $fontSize;
         $this->createCode();
 
-        $this->font = PATH_ROOT .DS. 'fonts/Elephant.ttf';
+        $this->font = PATH_PUBLIC .DS. 'fonts/Elephant.ttf';
     }
 
     /**
