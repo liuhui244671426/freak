@@ -25,7 +25,7 @@ function f_auto_load($class){
             $dir = $v;break;
         }
     }
-    $path = PATH_ROOT.DS.$dir.DS.str_replace('_','/',$class).'.php';
+    $path = PATH_ROOT.DS.str_replace('_',DS,$class).'.php';
 
     if(file_exists($path)){
         include $path;
@@ -40,7 +40,7 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
     if($errno == E_NOTICE)$msg = "NOTICE";
     if($errno == E_STRICT)$msg = "STRICT";
     if($errno == 8192)$msg = "DEPRECATED";
-    $log = new logCore();
+    $log = new core_log();
     $log->write("$msg: $errstr in $errfile on line $errline");
 }
 ###########router rule##############
@@ -53,7 +53,7 @@ function run(){
     $module = $_GET['m']   ?   $_GET['m'] :   'index';
     $controller = $_GET['c']    ?   $_GET['c']  :   'index';
     $action = $_GET['a']    ?   $_GET['a']  :   'index';
-    $exec_class = $module.'_'.$controller."Controller";
+    $exec_class = 'controller'.'_'.$module.'_'.$controller;
 
     try{
         $obj = new $exec_class();

@@ -1,6 +1,6 @@
 <?php
 defined('FREAK_ACCESS') or exit('Access Denied');
-class pdoCore{
+class core_pdo{
     /**
      *  DB - A simple database class
      *
@@ -38,7 +38,7 @@ class pdoCore{
      */
     public function __construct($mode='read')
     {
-        $this->log = new logCore();
+        $this->log = new core_log();
         $this->Connect($mode);
         $this->parameters = array();
     }
@@ -54,7 +54,7 @@ class pdoCore{
     private function Connect($mode)
     {
         //$this->settings = parse_ini_file("settings.ini.php");
-        $this->settings = configCore::get('pdo', $mode);
+        $this->settings = core_config::get('pdo', $mode);
         $dsn    = 'mysql:dbname='.$this->settings["dbname"].';host='.$this->settings["host"].';port='.$this->settings["port"];
         try {
             # Read settings from INI file, set UTF8

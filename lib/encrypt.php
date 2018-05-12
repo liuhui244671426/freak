@@ -1,7 +1,7 @@
 <?php
 //写图术
 
-class encryptLib
+class lib_encrypt
 {
     /**
      * 文件名

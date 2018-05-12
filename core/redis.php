@@ -1,10 +1,10 @@
 <?php
 defined('FREAK_ACCESS') or exit('Access Denied');
-class redisCore{
+class core_redis{
     private static $obj = null;
 
     public function __construct($mode='read'){
-        $config = configCore::get('redis', $mode);
+        $config = core_config::get('redis', $mode);
         if(is_null(self::$obj)){
             self::$obj = new Redis();
             self::$obj->pconnect($config['host'], $config['port']);

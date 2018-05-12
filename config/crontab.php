@@ -5,5 +5,5 @@
  */
 defined('FREAK_ACCESS') or exit('Access Denied');
 return array(
-    "* * * * * php workers/testWorker.php   2 1.0",
+    "* * * * * php workers/test.php   2 1.0",
 );

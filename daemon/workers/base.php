@@ -1,7 +1,7 @@
 <?php
 
 if(PHP_SAPI != 'cli') exit('must cli mode');
-abstract class Workers_baseWorker {
+abstract class daemon_workers_base {
 
     private $ip;
     private $pid;

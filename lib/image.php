@@ -5,7 +5,7 @@
  * Class Image
  * @package Timo
  */
-class imageLib
+class lib_image
 {
     private $img;
 
@@ -88,7 +88,7 @@ class imageLib
 
         //打开图像
         if ('gif' == $this->info['type']) {
-            $this->gif = new gifLib($image);
+            $this->gif = new lib_gif($image);
             $this->img = imagecreatefromstring($this->gif->image());
         } else {
             $fun = "imagecreatefrom{$this->info['type']}";
@@ -179,7 +179,7 @@ class imageLib
      * @param  integer $height 缩略图最大高度
      * @param  integer $type 缩略图裁剪类型
      */
-    public function thumb($width, $height, $type = imageLib::IMAGE_THUMB_SCALE)
+    public function thumb($width, $height, $type = lib_image::IMAGE_THUMB_SCALE)
     {
         if (empty($this->img)) {
             $this->setError('没有可以被缩略的图像资源');
@@ -193,7 +193,7 @@ class imageLib
         /* 计算缩略图生成的必要参数 */
         switch ($type) {
             /* 等比例缩放 */
-            case imageLib::IMAGE_THUMB_SCALE:
+            case lib_image::IMAGE_THUMB_SCALE:
                 //原图尺寸小于缩略图尺寸则不进行缩略
                 if ($w < $width && $h < $height) return;
 
@@ -207,7 +207,7 @@ class imageLib
                 break;
 
             /* 居中裁剪 */
-            case imageLib::IMAGE_THUMB_CENTER:
+            case lib_image::IMAGE_THUMB_CENTER:
                 //计算缩放比例
                 $scale = max($width / $w, $height / $h);
 
@@ -219,7 +219,7 @@ class imageLib
                 break;
 
             /* 左上角裁剪 */
-            case imageLib::IMAGE_THUMB_NORTHWEST:
+            case lib_image::IMAGE_THUMB_NORTHWEST:
                 //计算缩放比例
                 $scale = max($width / $w, $height / $h);
 
@@ -230,7 +230,7 @@ class imageLib
                 break;
 
             /* 右下角裁剪 */
-            case imageLib::IMAGE_THUMB_SOUTHEAST:
+            case lib_image::IMAGE_THUMB_SOUTHEAST:
                 //计算缩放比例
                 $scale = max($width / $w, $height / $h);
 
@@ -242,7 +242,7 @@ class imageLib
                 break;
 
             /* 填充 */
-            case imageLib::IMAGE_THUMB_FILLED:
+            case lib_image::IMAGE_THUMB_FILLED:
                 //计算缩放比例
                 if ($w < $width && $h < $height) {
                     $scale = 1;
@@ -274,7 +274,7 @@ class imageLib
                 return;
 
             /* 固定 */
-            case imageLib::IMAGE_THUMB_FIXED:
+            case lib_image::IMAGE_THUMB_FIXED:
                 $x = $y = 0;
                 break;
 
@@ -323,7 +323,7 @@ class imageLib
      * @param bool $des_water 打了之后是否销毁水印图片资源
      * @return bool
      */
-    public function water($locate = imageLib::IMAGE_WATER_SOUTHEAST, $alpha = 80, $des_water = true)
+    public function water($locate = lib_image::IMAGE_WATER_SOUTHEAST, $alpha = 80, $des_water = true)
     {
         //资源检测
         if (empty($this->img)) return false;
@@ -332,54 +332,54 @@ class imageLib
         /* 设定水印位置 */
         switch ($locate) {
             /* 右下角水印 */
-            case imageLib::IMAGE_WATER_SOUTHEAST:
+            case lib_image::IMAGE_WATER_SOUTHEAST:
                 $x = $this->info['width'] - $this->water_info[0] - 10;
                 $y = $this->info['height'] - $this->water_info[1] - 10;
                 break;
 
             /* 左下角水印 */
-            case imageLib::IMAGE_WATER_SOUTHWEST:
+            case lib_image::IMAGE_WATER_SOUTHWEST:
                 $x = 10;
                 $y = $this->info['height'] - $this->water_info[1] - 10;
                 break;
 
             /* 左上角水印 */
-            case imageLib::IMAGE_WATER_NORTHWEST:
+            case lib_image::IMAGE_WATER_NORTHWEST:
                 $x = $y = 0;
                 break;
 
             /* 右上角水印 */
-            case imageLib::IMAGE_WATER_NORTHEAST:
+            case lib_image::IMAGE_WATER_NORTHEAST:
                 $x = $this->info['width'] - $this->water_info[0];
                 $y = 0;
                 break;
 
             /* 居中水印 */
-            case imageLib::IMAGE_WATER_CENTER:
+            case lib_image::IMAGE_WATER_CENTER:
                 $x = ($this->info['width'] - $this->water_info[0]) / 2;
                 $y = ($this->info['height'] - $this->water_info[1]) / 2;
                 break;
 
             /* 下居中水印 */
-            case imageLib::IMAGE_WATER_SOUTH:
+            case lib_image::IMAGE_WATER_SOUTH:
                 $x = ($this->info['width'] - $this->water_info[0]) / 2;
                 $y = $this->info['height'] - $this->water_info[1];
                 break;
 
             /* 右居中水印 */
-            case imageLib::IMAGE_WATER_EAST:
+            case lib_image::IMAGE_WATER_EAST:
                 $x = $this->info['width'] - $this->water_info[0];
                 $y = ($this->info['height'] - $this->water_info[1]) / 2;
                 break;
 
             /* 上居中水印 */
-            case Image::IMAGE_WATER_NORTH:
+            case lib_image::IMAGE_WATER_NORTH:
                 $x = ($this->info['width'] - $this->water_info[0]) / 2;
                 $y = 0;
                 break;
 
             /* 左居中水印 */
-            case imageLib::IMAGE_WATER_WEST:
+            case lib_image::IMAGE_WATER_WEST:
                 $x = 0;
                 $y = ($this->info['height'] - $this->water_info[1]) / 2;
                 break;

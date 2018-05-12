@@ -6,7 +6,7 @@
  * CSRF
  */
 
-class csrfLib
+class lib_csrf
 {
     public static function getHiddenInputString()	{
         $uuid = microtime(true)*10000;

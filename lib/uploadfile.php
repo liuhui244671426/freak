@@ -1,6 +1,6 @@
 <?php
 
-class uploadfilesLib
+class lib_uploadfiles
 {
     private $config = [
         'maxSize' => 8388608, //文件大小限制（默认：8M）

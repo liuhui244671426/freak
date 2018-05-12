@@ -1,5 +1,5 @@
 <?php
-class gifLib
+class lib_gif
 {
     /**
      * GIF帧列表

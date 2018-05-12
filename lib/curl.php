@@ -9,7 +9,7 @@
  */
 
 
-class curlLib {
+class lib_curl {
     private $post;
     private $retry = 0;
     private $custom = array();

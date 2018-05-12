@@ -1,5 +1,5 @@
 <?php
-class captchaLib
+class lib_captcha
 {
     /**
      * 随机因子

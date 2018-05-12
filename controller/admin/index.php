@@ -1,10 +1,10 @@
 <?php
 
-class Admin_indexController extends baseController{
+class controller_admin_index extends controller_base{
     public function init(){}
 
     public function index(){
-        $bool = ssoClientLib::is_login();
+        $bool = lib_ssoClient::is_login();
         if($bool){
             echo 'success';
         } else {

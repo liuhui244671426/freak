@@ -4,7 +4,7 @@
  *
  */
 defined('FREAK_ACCESS') or exit('Access Denied');
-class requestLib{
+class lib_request{
 
     public static function get($type, $key,$default=''){
         $params = self::getAll();

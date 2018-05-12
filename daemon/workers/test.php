@@ -9,16 +9,16 @@
 if(PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
 require_once dirname(dirname(dirname(__FILE__))).'/bootstrap.php';
 
-class Workers_testWorker extends Workers_baseWorker {
+class daemon_workers_test extends daemon_workers_base {
     public function init(){
     }
     public function run(){
         //sleep(10);
-        $log = new logCore();
-        $model = new indexModel();
+        $log = new core_log();
+        $model = new model_index();
         $log->write(__METHOD__ . $this->getPid());
         $log->write($model->get_name());
         return;
     }
 }
-new Workers_testWorker();
+new daemon_workers_test();

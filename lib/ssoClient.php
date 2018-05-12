@@ -1,7 +1,7 @@
 <?php
-class ssoClientLib{
+class lib_ssoClient{
     public static function is_login($callback=''){
-        $token = requestLib::get('string', 'token');
+        $token = lib_request::get('string', 'token');
         if($token){
             $bool = self::check_token($token);
             if($bool && empty($_COOKIE['token'])){

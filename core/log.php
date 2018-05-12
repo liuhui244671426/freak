@@ -6,7 +6,7 @@
 	* @version      0.1a
 	*/
 defined('FREAK_ACCESS') or exit('Access Denied');
-class logCore {
+class core_log {
 
     # @string, Log directory name
     private $path = PATH_ROOT.DS.'logs'.DS;
