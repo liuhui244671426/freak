@@ -38,7 +38,6 @@ class core_pdo{
      */
     public function __construct($mode='read')
     {
-        $this->log = new core_log();
         $this->Connect($mode);
         $this->parameters = array();
     }
@@ -299,7 +298,7 @@ class core_pdo{
             $message .= "\r\nRaw SQL : " . $sql;
         }
         # Write into log
-        $this->log->write($message);
+        core_log::write($message);
 
         return $exception;
     }

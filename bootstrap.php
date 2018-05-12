@@ -11,20 +11,6 @@ spl_autoload_register('f_auto_load');
 set_error_handler('f_error_handler');
 
 function f_auto_load($class){
-    $dir = '';
-    $map = array(
-        'Controller' => 'controllers',
-        'Core' => 'core',
-        'Model' => 'model',
-        'Data' => 'data',
-        'Lib' => 'lib',
-        'Worker' => 'daemon',
-    );
-    foreach ($map as $k => $v) {
-        if(strpos($class, $k) !== false){
-            $dir = $v;break;
-        }
-    }
     $path = PATH_ROOT.DS.str_replace('_',DS,$class).'.php';
 
     if(file_exists($path)){
@@ -40,8 +26,8 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
     if($errno == E_NOTICE)$msg = "NOTICE";
     if($errno == E_STRICT)$msg = "STRICT";
     if($errno == 8192)$msg = "DEPRECATED";
-    $log = new core_log();
-    $log->write("$msg: $errstr in $errfile on line $errline");
+
+    core_log::write("$msg: $errstr in $errfile on line $errline");
 }
 ###########router rule##############
 #rule : module->controller->action

@@ -9,7 +9,7 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 class core_log {
 
     # @string, Log directory name
-    private $path = PATH_ROOT.DS.'logs'.DS;
+    private static $path = PATH_ROOT.DS.'logs'.DS;
 
     # @void, Default Constructor, Sets the timezone and path of the log files.
     public function __construct() {
@@ -29,10 +29,10 @@ class core_log {
      *	 5. If log exists, edit method called.
      *	 6. Edit method modifies the current log.
      */
-    public function write($message) {
+    public static function write($message) {
         $date = new DateTime();
-        $log = $this->path . $date->format('Ymd').".txt";
-        if(is_dir($this->path)) {
+        $log = self::$path . $date->format('Ymd').".txt";
+        if(is_dir(self::$path)) {
             if(!file_exists($log)) {
                 $fh  = fopen($log, 'a+') or die("Fatal Error !");
                 $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n";
@@ -40,13 +40,13 @@ class core_log {
                 fclose($fh);
             }
             else {
-                $this->edit($log,$date, $message);
+                self::edit($log,$date, $message);
             }
         }
         else {
-            if(mkdir($this->path,0777) === true)
+            if(mkdir(self::$path,0777) === true)
             {
-                $this->write($message);
+                self::write($message);
             }
         }
     }
@@ -60,7 +60,7 @@ class core_log {
      * @param DateTimeObject $date
      * @param string $message
      */
-    private function edit($log,$date,$message) {
+    private static function edit($log,$date,$message) {
         $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n\r\n";
         $logcontent = $logcontent . file_get_contents($log);
         file_put_contents($log, $logcontent);

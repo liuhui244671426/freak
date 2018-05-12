@@ -33,8 +33,8 @@ class controller_index_index extends controller_base{
 //        $r = new core_redis('read');
 //        echo $r->get('aaa');
 
-//        $captcha = new lib_captcha();
-//        $captcha->getImage();
+        $captcha = new lib_captcha();
+        $captcha->getImage();
 
 
     }
