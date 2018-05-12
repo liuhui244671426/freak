@@ -37,6 +37,12 @@ class controller_index_index extends controller_base{
 //        $captcha->getCode();
 //        $captcha->getImage();
 
+//        $key = 'liuhuhi';
+//        $en = lib_helper::encrypt('woshiphp', $key);
+//        echo $en. PHP_EOL;
+//        echo lib_helper::decrypt($en, 123);
 
+//        var_dump( lib_csrf::getHiddenInputString('liuhui12'));
+//        var_dump( lib_csrf::check_token('liuhui2', 'nJ+tmquZ'));
     }
 }

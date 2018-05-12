@@ -8,19 +8,19 @@
 
 class lib_csrf
 {
-    public static function getHiddenInputString()	{
-        $uuid = microtime(true)*10000;
-        return sprintf('<input type="hidden" name="_csrf_token_uuid" value="%s"/><input type="hidden" name="_csrf_token" value="%s"/>', $uuid, self::generate_token($uuid));
+    const KEY = 'Freak_frameworkv1.4.0_on-20180511';
+    public static function getHiddenInputString($session_data)	{
+        return sprintf('<input type="hidden" name="_csrf_token_data" value="%s"/><input type="hidden" name="_csrf_token" value="%s"/>', $session_data, self::generate_token($session_data));
     }
 
-    public static function generate_token($uuid)
+    public static function generate_token($data)
     {
-        $token = sha1( $uuid.'20180511'.helperLib::getip());
+        $token = sha1($data.self::KEY);
         return $token;
     }
 
-    public static function check_token($uuid, $token){
-        $n_token = sha1( $uuid.'20180511'.helperLib::getip());
+    public static function check_token($session_data, $token){
+        $n_token = sha1($session_data.self::KEY);
         if($n_token == $token){
             return true;
         } else {
