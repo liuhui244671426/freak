@@ -10,8 +10,8 @@ class controller_index_index extends controller_base{
 
 //        $data = array('a' => 'a', 'b' => 123);
 //        outputCore::view_render('index', $data);
-//        core_output::view_layout_render('index',array('a' => 13145));
-        //return;
+//        core_output::view_layout_render('index');
+//        return;
 
 //        $m = new model_index();
 //        echo $m->get_name();
