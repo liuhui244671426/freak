@@ -3,7 +3,7 @@ class controller_sso_server extends controller_base{
     public function init(){}
 
     public function index(){
-        $callback = lib_request::get('string', 'callback');
+        $callback = lib_filter::strGet('callback');
         core_output::view_render("login", array('callback'=>$callback));
         return;
     }
@@ -15,8 +15,8 @@ class controller_sso_server extends controller_base{
         # 3.通过回跳,把 token 带个 client
         ##############################
 
-        $name = lib_request::get('string', 'name');
-        $password = lib_request::get('string', 'password');
+        $name = lib_filter::strGet('string', 'name');
+        $password = lib_filter::strGet('string', 'password');
 
         $db = new core_pdo('write');
         $ret = $db->row("select * from `sso` where `name`=:name and `password`=:password", array('name'=>$name, 'password'=>$password));
@@ -24,7 +24,7 @@ class controller_sso_server extends controller_base{
             $token = ((microtime(true) * 10000 ) . mt_rand(10,30)) << 4;
             $db->query("insert into `token` (`uid`, `token`) VALUES (:uid, :token)", array('uid'=>$ret['id'], 'token'=>$token));
 
-            $callback = lib_request::get('string', 'callback');
+            $callback = lib_filter::strGet('string', 'callback');
             $callback = $callback.'&token='.$token;
 
             header("Location:".$callback);
@@ -34,7 +34,7 @@ class controller_sso_server extends controller_base{
     // 检测 token 是否有效
     public function check(){
         $db = new core_pdo();
-        $ret = $db->row("select * from `token` where `token`=:token", array('token' => requestLib::get('string', 'token')));
+        $ret = $db->row("select * from `token` where `token`=:token", array('token' => lib_filter::strGet('string', 'token')));
         if($ret){
             echo 'ok';
         } else {
