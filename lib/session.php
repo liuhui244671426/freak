@@ -1,7 +1,7 @@
 <?php
 
-class lib_session extends  SessionHandler{
-    public function __construct(){
+class lib_session implements SessionHandlerInterface{
+    /*public function __construct(){
         ini_set("session.save_handler", "redis");
         $config = core_config::get('redis','write');
         if($config['password']){
@@ -10,9 +10,9 @@ class lib_session extends  SessionHandler{
             ini_set('session.save_path', "tcp://{$config['host']}:{$config['port']}");
         }
         session_start();
-    }
+    }*/
 
-    /*protected static $obj;
+    protected static $obj;
 
     public function __construct($resource='redis'){
         if($resource=='redis'){
@@ -26,15 +26,20 @@ class lib_session extends  SessionHandler{
     public function close(){
         return true;
     }
-
+    /**
+     * @url http://php.net/manual/zh/sessionhandlerinterface.read.php
+     * Returns an encoded string of the read data. If nothing was read,
+     * it must return an empty string.
+     * Note this value is returned internally to PHP for processing.
+     * */
     public function read($sid){
         $ret= self::$obj->get($sid);
+        $ret = $ret?$ret:'';
         return $ret;
     }
 
     public function write($sid,$data){
-        $maxtime = 60*60*24*1;//n day
-        $ret = self::$obj->set($sid,$data,$maxtime);
+        $ret = self::$obj->set($sid,$data, 86400);//n day
         return $ret;
     }
 
@@ -44,5 +49,5 @@ class lib_session extends  SessionHandler{
 
     public function gc($maxtime){
         return true;
-    }*/
+    }
 }

@@ -18,6 +18,8 @@ set_error_handler('f_error_handler');
 
 //--------session-----------
 $session = new lib_session();
+session_set_save_handler($session, true);
+session_start();
 //--------session-----------
 
 function f_auto_load($class){

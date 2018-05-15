@@ -45,10 +45,10 @@ class controller_index_index extends controller_base{
 //        var_dump( lib_csrf::getHiddenInputString('liuhui12'));
 //        var_dump( lib_csrf::check_token('liuhui2', 'nJ+tmquZ'));
 
-//        $_SESSION['aaa'] = 1234567;
+        $_SESSION['aaa'] = 1234567;
 //        $r = new core_redis();
 //        $ret = $r->get('PHPREDIS_SESSION:'.session_id());
-
-        //echo lib_filter::session('aaa');
+        //phpinfo();
+        echo lib_filter::session('aaa');
     }
 }
