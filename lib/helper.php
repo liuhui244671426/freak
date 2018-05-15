@@ -1,5 +1,6 @@
 <?php
 class lib_helper{
+
     public static function getIp(){
         if (getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
             $ip = getenv('HTTP_CLIENT_IP');
@@ -35,5 +36,9 @@ class lib_helper{
         for ( $i = 0; $i < $length; ++$i )
             $string .= $seed{intval( mt_rand( 0.0, $max ) )};
         return $string;
+    }
+
+    public static function current_url(){
+        return $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }
 }

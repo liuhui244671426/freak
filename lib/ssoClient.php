@@ -1,7 +1,7 @@
 <?php
 class lib_ssoClient{
     public static function is_login($callback=''){
-        $token = lib_request::get('string', 'token');
+        $token = lib_filter::strGet('token');
         if($token){
             $bool = self::check_token($token);
             if($bool && empty($_COOKIE['token'])){
@@ -11,7 +11,7 @@ class lib_ssoClient{
         } else {
             if(empty($_COOKIE['token'])){
                 $url = core_config::get('sso', 'server');
-                $callback = ($callback == '')   ?   self::current_url() :   $callback;
+                $callback = ($callback == '')   ?   lib_helper::current_url() :   $callback;
                 header("Location: {$url['url_login']}&callback=".urlencode($callback));
                 exit;
             } else {
@@ -30,7 +30,5 @@ class lib_ssoClient{
         return false;
     }
 
-    public static function current_url(){
-        return $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-    }
+
 }
