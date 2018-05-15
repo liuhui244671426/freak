@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+date_default_timezone_set('PRC');
+//--------CONST-----------
 define('PATH_ROOT', dirname(__FILE__));
 define('DS', DIRECTORY_SEPARATOR);
 define('PATH_VIEW', PATH_ROOT.DS.'views');
@@ -6,10 +9,16 @@ define('PATH_CONFIG', PATH_ROOT.DS.'config');
 define('PATH_DAEMON', PATH_ROOT.DS.'daemon');
 define('PATH_PUBLIC', PATH_ROOT.DS.'public');
 defined('FREAK_ACCESS') or exit('Access Denied');
-date_default_timezone_set('PRC');
-error_reporting(E_ALL);
+//--------CONST-----------
+
+//--------register-----------
 spl_autoload_register('f_auto_load');
 set_error_handler('f_error_handler');
+//--------register-----------
+
+//--------session-----------
+$session = new lib_session();
+//--------session-----------
 
 function f_auto_load($class){
     $path = PATH_ROOT.DS.str_replace('_',DS,$class).'.php';
