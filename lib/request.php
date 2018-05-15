@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * 遗弃,不建议使用
  *
  */
 defined('FREAK_ACCESS') or exit('Access Denied');

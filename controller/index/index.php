@@ -13,8 +13,8 @@ class controller_index_index extends controller_base{
 //        core_output::view_layout_render('index',array('a' => 13145));
         //return;
 
-//        $m = new model_index();
-//        echo $m->get_name();
+        $m = new model_index();
+        echo $m->get_name();
 //
 //        $l = new core_log();
 //        $l->write('write log');
@@ -27,8 +27,8 @@ class controller_index_index extends controller_base{
 //        $res = $curl->url('http://www.baidu.com');
 //        print_r($res);
 //
-//        $b = lib_request::get('array', 'b', '');
-//        var_dump($b);
+        $b = lib_filter::strGet('b');
+        var_dump($b);
 
 //        $r = new core_redis('read');
 //        echo $r->get('aaa');

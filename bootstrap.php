@@ -37,11 +37,14 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
 function run(){
     //$module = explode('?', $_SERVER['REQUEST_URI'])[0];//取?前的目录
     //$module = ltrim($module, '/');
-    $module = $_GET['m']   ?   $_GET['m'] :   'index';
-    $controller = $_GET['c']    ?   $_GET['c']  :   'index';
-    $action = $_GET['a']    ?   $_GET['a']  :   'index';
-    $exec_class = 'controller'.'_'.$module.'_'.$controller;
+    $m = filter_input(INPUT_GET, 'm');
+    $c = filter_input(INPUT_GET, 'c');
+    $a = filter_input(INPUT_GET, 'a');
+    $module = $m?$m:'index';
+    $controller = $c?$c:'index';
+    $action = $a?$a:'index';
 
+    $exec_class = 'controller'.'_'.$module.'_'.$controller;
     try{
         $obj = new $exec_class();
         $obj->$action();
