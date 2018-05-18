@@ -302,4 +302,26 @@ class core_pdo{
 
         return $exception;
     }
+
+
+    public function insert($table, $insert_data){
+        $sql = "INSERT INTO {$table}";
+        $fields = $fields2 = '';
+        foreach ($insert_data as $key => $value) {
+            $fields .= '`'.$key.'`,';
+            $fields2 .= ':'.$key.',';
+        }
+
+        $sql .= '('.trim($fields, ',').') values ('.trim($fields2, ',').')';
+        return $this->query($sql, $insert_data);
+    }
+
+    public function update($table, $where, $update_data){
+        $fields = $fields2 = '';
+        foreach ($update_data as $key => $value) {
+            $fields .= '`'.$key.'`=:'.$key.',';
+        }
+        $sql = "UPDATE {$table} SET " . trim($fields, ',') . ' WHERE '.$where;
+        return $this->query($sql, $update_data);
+    }
 }
