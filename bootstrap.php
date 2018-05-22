@@ -24,12 +24,11 @@ session_start();
 
 function f_auto_load($class){
     $path = PATH_ROOT.DS.str_replace('_',DS,$class).'.php';
-
-    if(file_exists($path)){
-        include $path;
-    } else {
-        throw new Exception("path loaded failed, ".$path);
+    if(!file_exists($path)){
+        throw new Exception("file : {$path}, NOT EXIST");
     }
+    include $path;
+    return true;
 }
 function f_error_handler($errno, $errstr, $errfile, $errline){
     if(0 === error_reporting() || 30711 === error_reporting()){return false;}
@@ -38,16 +37,14 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
     if($errno == E_NOTICE)$msg = "NOTICE";
     if($errno == E_STRICT)$msg = "STRICT";
     if($errno == 8192)$msg = "DEPRECATED";
-
     core_log::write("$msg: $errstr in $errfile on line $errline");
+    return true;
 }
 ###########router rule##############
 #rule : module->controller->action
 #     : m=index?c=index&a=index
 ####################################
 function run(){
-    //$module = explode('?', $_SERVER['REQUEST_URI'])[0];//取?前的目录
-    //$module = ltrim($module, '/');
     $m = filter_input(INPUT_GET, 'm');
     $c = filter_input(INPUT_GET, 'c');
     $a = filter_input(INPUT_GET, 'a');
