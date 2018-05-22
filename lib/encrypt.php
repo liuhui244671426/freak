@@ -1,6 +1,7 @@
 <?php
 //写图术
 defined('FREAK_ACCESS') or exit('Access Denied');
+
 class lib_encrypt
 {
     /**
@@ -37,7 +38,6 @@ class lib_encrypt
     private $errmsg;
 
 
-
     /**
      * 初始化错误
      */
@@ -66,41 +66,32 @@ class lib_encrypt
     public function encryptFile($encrypt_file, $pic_file, $new_name = null)
     {
         // 文件是否存在
-        if (!is_file($pic_file))
-        {
+        if (!is_file($pic_file)) {
             $this->errno = 1;
-
             return false;
         }
 
         // 文件是否存在
-        if (is_file($encrypt_file))
-        {
+        if (is_file($encrypt_file)) {
             // 初始化文件信息
             $this->initFileInfo($encrypt_file);
-        }
-        else
-        {
+        } else {
             // 不是文件
             $this->errno = 2;
-
             return false;
         }
 
         // 获取文件类型
         $mime = getimagesize($pic_file);
         // 是否为图片文件
-        if (!$mime)
-        {
+        if (!$mime) {
             $this->errno = 3;
-
             return false;
         }
 
         // 加密不同类型的文件
         $img_data = "";
-        switch ($mime['mime'])
-        {
+        switch ($mime['mime']) {
             case "image/png":
                 $img_data = $this->encryptPNG($pic_file);
                 break;
@@ -115,25 +106,18 @@ class lib_encrypt
         }
 
         // 判断是否生成数据出错
-        if (!$img_data)
-        {
+        if (!$img_data) {
             return false;
         }
 
         // 是否生成新文件
-        if (is_null($new_name))
-        {
+        if (is_null($new_name)) {
             return $img_data;
-        }
-        else
-        {
+        } else {
             // 把内容写成新图片
-            if (file_put_contents($new_name, $img_data))
-            {
+            if (file_put_contents($new_name, $img_data)) {
                 return true;
-            }
-            else
-            {
+            } else {
                 $this->errno = 6;
 
                 return false;
@@ -163,23 +147,18 @@ class lib_encrypt
         list($length, $content) = $this->getFormatFileInfo();
 
 
-
         // 把 Alpha 换成加密内容
-        for ($i = 0; !feof($pf); ++$i)
-        {
+        for ($i = 0; !feof($pf); ++$i) {
             // 3 个字节代表一个像素 最后一个字节是 Alpha 通道-透明度
-            $red   = fread($pf, 1);
+            $red = fread($pf, 1);
             $green = fread($pf, 1);
-            $blue  = fread($pf, 1);
+            $blue = fread($pf, 1);
             $alpha = fread($pf, 1);
 
             // 前面四个字节存储文件名长度
-            if ($i < $length)
-            {
+            if ($i < $length) {
                 $encrypt = $content{$i};
-            }
-            else
-            {
+            } else {
                 $encrypt = $alpha;
             }
 
@@ -191,8 +170,7 @@ class lib_encrypt
         fclose($pf);
 
         // 加密内容过多
-        if ($length > $i)
-        {
+        if ($length > $i) {
             $this->errno = 5;
 
             return false;
@@ -234,9 +212,7 @@ class lib_encrypt
         $png_data .= $file_head;
 
 
-
-        while (!feof($pf))
-        {
+        while (!feof($pf)) {
             // 2: 数据块长度
             $chunk_length = fread($pf, 4);
             $png_data .= $chunk_length;
@@ -248,8 +224,7 @@ class lib_encrypt
 
 
             // 是否是文件末尾
-            if ($chunk_type_code != "IEND")
-            {
+            if ($chunk_type_code != "IEND") {
                 // 3: 6b -> PLTE
                 $chunk_data = fread($pf, $chunk_length);
                 $png_data .= $chunk_data;
@@ -257,9 +232,7 @@ class lib_encrypt
                 // crc 数据块结尾标记
                 $crc = fread($pf, 4);
                 $png_data .= $crc;
-            }
-            else
-            {
+            } else {
                 // 多写几个数据看看
                 $png_data .= $file_info;
 
@@ -322,8 +295,7 @@ class lib_encrypt
     public function decryptFile($pic_file, $path = null)
     {
         // 文件是否存在
-        if (!is_file($pic_file))
-        {
+        if (!is_file($pic_file)) {
             $this->errno = -1;
 
             return false;
@@ -333,8 +305,7 @@ class lib_encrypt
         // 获取文件类型
         $mime = getimagesize($pic_file);
         // 是否为图片文件
-        if (!$mime)
-        {
+        if (!$mime) {
             $this->errno = 3;
 
             return false;
@@ -342,8 +313,7 @@ class lib_encrypt
 
         // 加密不同类型的文件
         $img_data = "";
-        switch ($mime['mime'])
-        {
+        switch ($mime['mime']) {
             case "image/png":
                 $img_data = $this->decryptPNG($pic_file);
                 break;
@@ -358,8 +328,7 @@ class lib_encrypt
         }
 
 
-        if ($this->file_name == "" || $this->file_data == "")
-        {
+        if ($this->file_name == "" || $this->file_data == "") {
             $this->errno = -3;
 
             return false;
@@ -370,21 +339,15 @@ class lib_encrypt
         $this->file_name = base64_decode($this->file_name);
 
 
-        if (is_null($path))
-        {
+        if (is_null($path)) {
             return ['file_name' => $this->file_name, 'file_data' => $this->file_data];
-        }
-        else
-        {
+        } else {
             $path = trim($path, "/\\");
 
             // 写入新文件
-            if (file_put_contents($path . "/" . $this->file_name, $this->file_data))
-            {
+            if (file_put_contents($path . "/" . $this->file_name, $this->file_data)) {
                 return true;
-            }
-            else
-            {
+            } else {
                 $this->errno = -2;
 
                 return false;
@@ -409,39 +372,29 @@ class lib_encrypt
 
 
         // 读取位图中的加密信息
-        for ($i = 1; !feof($pf); ++$i)
-        {
+        for ($i = 1; !feof($pf); ++$i) {
             // 3 个字节代表一个像素
-            $red   = fread($pf, 1);
+            $red = fread($pf, 1);
             $green = fread($pf, 1);
-            $blue  = fread($pf, 1);
+            $blue = fread($pf, 1);
             $alpha = fread($pf, 1);
 
 
-            if ($i <= 4)
-            {
+            if ($i <= 4) {
                 // 1 ~ 4 四个字节    是文件名长度数据
                 $this->file_name_length .= $alpha;
 
-            }
-            elseif ($i <= 16)
-            {
+            } elseif ($i <= 16) {
                 // 5 ~ 16 八个字节    是文件数据长度
                 $this->file_data_length .= $alpha;
 
-            }
-            elseif ($i <= (16 + $this->file_name_length))
-            {
+            } elseif ($i <= (16 + $this->file_name_length)) {
                 // 16 ~ $this->file_name_length  是文件名
                 $this->file_name .= $alpha;
-            }
-            elseif ($i <= (16 + $this->file_name_length + $this->file_data_length))
-            {
+            } elseif ($i <= (16 + $this->file_name_length + $this->file_data_length)) {
                 // (16 + $this->file_name_length) ~ $this->file_data_length 是文件数据
                 $this->file_data .= $alpha;
-            }
-            else
-            {
+            } else {
                 break;
             }
 
@@ -460,8 +413,7 @@ class lib_encrypt
         // 1：8b -> 文件头信息   第一个字节是 137 超出了 ASCII 字符， 所以显示不正常
         $file_head = fread($pf, 8);
 
-        while (!feof($pf))
-        {
+        while (!feof($pf)) {
             // 2: 数据块长度
             $chunk_length = fread($pf, 4);
 
@@ -471,23 +423,18 @@ class lib_encrypt
             $chunk_type_code = fread($pf, 4);
 
 
-
             // 是否是文件末尾
-            if ($chunk_type_code != "IEND")
-            {
+            if ($chunk_type_code != "IEND") {
                 // 3: 6b -> PLTE
                 $chunk_data = fread($pf, $chunk_length);
                 // crc
                 $crc = fread($pf, 4);
-            }
-            else
-            {
+            } else {
                 // 标识
                 $flag = fread($pf, 4);
 
                 // 这个是加密的数据
-                if ($flag == "_GPS")
-                {
+                if ($flag == "_GPS") {
                     // 10 个字节是秘钥
                     $key = fread($pf, 10);
 
@@ -522,8 +469,7 @@ class lib_encrypt
     private function binEnAndDe($content, $key, $is_encrypt = true)
     {
         // 解密
-        if (!$is_encrypt)
-        {
+        if (!$is_encrypt) {
             $content = base64_decode($content);
         }
 
@@ -532,15 +478,13 @@ class lib_encrypt
         $key_length = strlen($key);
 
         $encrypt = "";
-        for ($i = 0; $i < $content_length; ++ $i)
-        {
+        for ($i = 0; $i < $content_length; ++$i) {
             // ;
-            $encrypt .= $content{$i} ^ substr($key, $i%$key_length, 1);
+            $encrypt .= $content{$i} ^ substr($key, $i % $key_length, 1);
         }
 
         // 加密
-        if ($is_encrypt)
-        {
+        if ($is_encrypt) {
             $encrypt = base64_encode($encrypt);
         }
 
@@ -595,8 +539,7 @@ class lib_encrypt
      */
     private function setErrorMsg()
     {
-        switch ($this->errno)
-        {
+        switch ($this->errno) {
             // 解密错误
             case -1:
                 $this->errmsg = "要解密的图片文件不存在";
@@ -605,7 +548,8 @@ class lib_encrypt
                 $this->errmsg = "生成数据文件失败";
                 break;
             case -3:
-                $this->errmsg = "解密数据出错";break;
+                $this->errmsg = "解密数据出错";
+                break;
 
 
             // 加密错误
@@ -625,7 +569,8 @@ class lib_encrypt
                 $this->errmsg = "需要加密的文件过大";
                 break;
             case 6:
-                $this->errmsg = "生成 BMP 文件错误";break;
+                $this->errmsg = "生成 BMP 文件错误";
+                break;
 
             default:
                 $this->errmsg = "未知错误";
