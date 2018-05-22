@@ -1,4 +1,5 @@
 <?php
+defined('FREAK_ACCESS') or exit('Access Denied');
 /**
  * Cookie wrapper class
  * https://github.com/behigh/Cookie

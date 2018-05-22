@@ -1,5 +1,5 @@
 <?php
-
+defined('FREAK_ACCESS') or exit('Access Denied');
 class lib_session implements SessionHandlerInterface{
     /*public function __construct(){
         ini_set("session.save_handler", "redis");

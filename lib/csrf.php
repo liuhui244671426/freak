@@ -5,7 +5,7 @@
  *
  * CSRF
  */
-
+defined('FREAK_ACCESS') or exit('Access Denied');
 class lib_csrf
 {
     const KEY = 'Freak_frameworkv1.4.0_on-20180511';

@@ -2,7 +2,7 @@
 /*
  * 农历 节气 节日
  */
-
+defined('FREAK_ACCESS') or exit('Access Denied');
 class lib_lunar
 {
     var $MIN_YEAR = 1891;

@@ -8,7 +8,7 @@
  * @author  Plamen Popov <tzappa@gmail.com>
  * @license http://opensource.org/licenses/mit-license.php (MIT License)
  */
-
+defined('FREAK_ACCESS') or exit('Access Denied');
 /**
  * Filter - a helper class which wraps a filter_var() function.
  */

@@ -7,7 +7,7 @@
  * https://github.com/wenpeng/curl
  * 一个轻量级的网络操作类，实现GET、POST、UPLOAD、DOWNLOAD常用操作，支持链式写法。
  */
-
+defined('FREAK_ACCESS') or exit('Access Denied');
 
 class lib_curl {
     private $post;

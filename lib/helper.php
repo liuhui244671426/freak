@@ -1,4 +1,5 @@
 <?php
+defined('FREAK_ACCESS') or exit('Access Denied');
 class lib_helper{
 
     public static function getIp(){

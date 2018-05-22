@@ -1,4 +1,5 @@
 <?php
+defined('FREAK_ACCESS') or exit('Access Denied');
 class lib_ssoClient{
     public static function is_login($callback=''){
         $token = lib_filter::strGet('token');

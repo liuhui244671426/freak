@@ -1,6 +1,6 @@
 <?php
 //写图术
-
+defined('FREAK_ACCESS') or exit('Access Denied');
 class lib_encrypt
 {
     /**
