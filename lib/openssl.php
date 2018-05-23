@@ -37,7 +37,9 @@ class lib_openssl
      * @var [string]
      */
     private $errmsg;
-
+    /**
+     * 私钥
+     * */
     private $key;
     /**
      * 初始化错误
@@ -45,10 +47,10 @@ class lib_openssl
     public function __construct($key)
     {
         // 初始化四个文件变量
-        $this->file_name = "";
-        $this->file_name_length = "";
-        $this->file_data = "";
-        $this->file_data_length = "";
+        $this->file_name = '';
+        $this->file_name_length = '';
+        $this->file_data = '';
+        $this->file_data_length = '';
 
         // 0 代表没有错误
         $this->errno = 0;
