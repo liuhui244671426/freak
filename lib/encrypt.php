@@ -1,7 +1,7 @@
 <?php
 //写图术
 defined('FREAK_ACCESS') or exit('Access Denied');
-
+// https://github.com/DavidNineRoc/encrypt/blob/master/Encrypt.php
 class lib_encrypt
 {
     /**
