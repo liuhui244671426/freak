@@ -5,375 +5,724 @@
 defined('FREAK_ACCESS') or exit('Access Denied');
 class lib_lunar
 {
-    var $MIN_YEAR = 1891;
-    var $MAX_YEAR = 2100;
-    var $lunarInfo = array(
-        array(0, 2, 9, 21936), array(6, 1, 30, 9656), array(0, 2, 17, 9584), array(0, 2, 6, 21168), array(5, 1, 26, 43344), array(0, 2, 13, 59728),
-        array(0, 2, 2, 27296), array(3, 1, 22, 44368), array(0, 2, 10, 43856), array(8, 1, 30, 19304), array(0, 2, 19, 19168), array(0, 2, 8, 42352),
-        array(5, 1, 29, 21096), array(0, 2, 16, 53856), array(0, 2, 4, 55632), array(4, 1, 25, 27304), array(0, 2, 13, 22176), array(0, 2, 2, 39632),
-        array(2, 1, 22, 19176), array(0, 2, 10, 19168), array(6, 1, 30, 42200), array(0, 2, 18, 42192), array(0, 2, 6, 53840), array(5, 1, 26, 54568),
-        array(0, 2, 14, 46400), array(0, 2, 3, 54944), array(2, 1, 23, 38608), array(0, 2, 11, 38320), array(7, 2, 1, 18872), array(0, 2, 20, 18800),
-        array(0, 2, 8, 42160), array(5, 1, 28, 45656), array(0, 2, 16, 27216), array(0, 2, 5, 27968), array(4, 1, 24, 44456), array(0, 2, 13, 11104),
-        array(0, 2, 2, 38256), array(2, 1, 23, 18808), array(0, 2, 10, 18800), array(6, 1, 30, 25776), array(0, 2, 17, 54432), array(0, 2, 6, 59984),
-        array(5, 1, 26, 27976), array(0, 2, 14, 23248), array(0, 2, 4, 11104), array(3, 1, 24, 37744), array(0, 2, 11, 37600), array(7, 1, 31, 51560),
-        array(0, 2, 19, 51536), array(0, 2, 8, 54432), array(6, 1, 27, 55888), array(0, 2, 15, 46416), array(0, 2, 5, 22176), array(4, 1, 25, 43736),
-        array(0, 2, 13, 9680), array(0, 2, 2, 37584), array(2, 1, 22, 51544), array(0, 2, 10, 43344), array(7, 1, 29, 46248), array(0, 2, 17, 27808),
-        array(0, 2, 6, 46416), array(5, 1, 27, 21928), array(0, 2, 14, 19872), array(0, 2, 3, 42416), array(3, 1, 24, 21176), array(0, 2, 12, 21168),
-        array(8, 1, 31, 43344), array(0, 2, 18, 59728), array(0, 2, 8, 27296), array(6, 1, 28, 44368), array(0, 2, 15, 43856), array(0, 2, 5, 19296),
-        array(4, 1, 25, 42352), array(0, 2, 13, 42352), array(0, 2, 2, 21088), array(3, 1, 21, 59696), array(0, 2, 9, 55632), array(7, 1, 30, 23208),
-        array(0, 2, 17, 22176), array(0, 2, 6, 38608), array(5, 1, 27, 19176), array(0, 2, 15, 19152), array(0, 2, 3, 42192), array(4, 1, 23, 53864),
-        array(0, 2, 11, 53840), array(8, 1, 31, 54568), array(0, 2, 18, 46400), array(0, 2, 7, 46752), array(6, 1, 28, 38608), array(0, 2, 16, 38320),
-        array(0, 2, 5, 18864), array(4, 1, 25, 42168), array(0, 2, 13, 42160), array(10, 2, 2, 45656), array(0, 2, 20, 27216), array(0, 2, 9, 27968),
-        array(6, 1, 29, 44448), array(0, 2, 17, 43872), array(0, 2, 6, 38256), array(5, 1, 27, 18808), array(0, 2, 15, 18800), array(0, 2, 4, 25776),
-        array(3, 1, 23, 27216), array(0, 2, 10, 59984), array(8, 1, 31, 27432), array(0, 2, 19, 23232), array(0, 2, 7, 43872), array(5, 1, 28, 37736),
-        array(0, 2, 16, 37600), array(0, 2, 5, 51552), array(4, 1, 24, 54440), array(0, 2, 12, 54432), array(0, 2, 1, 55888), array(2, 1, 22, 23208),
-        array(0, 2, 9, 22176), array(7, 1, 29, 43736), array(0, 2, 18, 9680), array(0, 2, 7, 37584), array(5, 1, 26, 51544), array(0, 2, 14, 43344),
-        array(0, 2, 3, 46240), array(4, 1, 23, 46416), array(0, 2, 10, 44368), array(9, 1, 31, 21928), array(0, 2, 19, 19360), array(0, 2, 8, 42416),
-        array(6, 1, 28, 21176), array(0, 2, 16, 21168), array(0, 2, 5, 43312), array(4, 1, 25, 29864), array(0, 2, 12, 27296), array(0, 2, 1, 44368),
-        array(2, 1, 22, 19880), array(0, 2, 10, 19296), array(6, 1, 29, 42352), array(0, 2, 17, 42208), array(0, 2, 6, 53856), array(5, 1, 26, 59696),
-        array(0, 2, 13, 54576), array(0, 2, 3, 23200), array(3, 1, 23, 27472), array(0, 2, 11, 38608), array(11, 1, 31, 19176), array(0, 2, 19, 19152),
-        array(0, 2, 8, 42192), array(6, 1, 28, 53848), array(0, 2, 15, 53840), array(0, 2, 4, 54560), array(5, 1, 24, 55968), array(0, 2, 12, 46496),
-        array(0, 2, 1, 22224), array(2, 1, 22, 19160), array(0, 2, 10, 18864), array(7, 1, 30, 42168), array(0, 2, 17, 42160), array(0, 2, 6, 43600),
-        array(5, 1, 26, 46376), array(0, 2, 14, 27936), array(0, 2, 2, 44448), array(3, 1, 23, 21936), array(0, 2, 11, 37744), array(8, 2, 1, 18808),
-        array(0, 2, 19, 18800), array(0, 2, 8, 25776), array(6, 1, 28, 27216), array(0, 2, 15, 59984), array(0, 2, 4, 27424), array(4, 1, 24, 43872),
-        array(0, 2, 12, 43744), array(0, 2, 2, 37600), array(3, 1, 21, 51568), array(0, 2, 9, 51552), array(7, 1, 29, 54440), array(0, 2, 17, 54432),
-        array(0, 2, 5, 55888), array(5, 1, 26, 23208), array(0, 2, 14, 22176), array(0, 2, 3, 42704), array(4, 1, 23, 21224), array(0, 2, 11, 21200),
-        array(8, 1, 31, 43352), array(0, 2, 19, 43344), array(0, 2, 7, 46240), array(6, 1, 27, 46416), array(0, 2, 15, 44368), array(0, 2, 5, 21920),
-        array(4, 1, 24, 42448), array(0, 2, 12, 42416), array(0, 2, 2, 21168), array(3, 1, 22, 43320), array(0, 2, 9, 26928), array(7, 1, 29, 29336),
-        array(0, 2, 17, 27296), array(0, 2, 6, 44368), array(5, 1, 26, 19880), array(0, 2, 14, 19296), array(0, 2, 3, 42352), array(4, 1, 24, 21104),
-        array(0, 2, 10, 53856), array(8, 1, 30, 59696), array(0, 2, 18, 54560), array(0, 2, 7, 55968), array(6, 1, 27, 27472), array(0, 2, 15, 22224),
-        array(0, 2, 5, 19168), array(4, 1, 25, 42216), array(0, 2, 12, 42192), array(0, 2, 1, 53584), array(2, 1, 21, 55592), array(0, 2, 9, 54560)
-    );
     /**
-     * 将阳历转换为阴历
-     * @param year 公历-年
-     * @param month 公历-月
-     * @param date 公历-日
+     * 农历 1900-2100 的润大小信息.
+     *
+     * @var array
      */
-    function convertSolarToLunar($year, $month, $date)
+    protected $lunars = [
+        0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
+        0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
+        0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
+        0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950, // 1930-1939
+        0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2, 0x0a950, 0x0b557, // 1940-1949
+        0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5b0, 0x14573, 0x052b0, 0x0a9a8, 0x0e950, 0x06aa0, // 1950-1959
+        0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950, 0x05b57, 0x056a0, // 1960-1969
+        0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540, 0x0b6a0, 0x195a6, // 1970-1979
+        0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46, 0x0ab60, 0x09570, // 1980-1989
+        0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x055c0, 0x0ab60, 0x096d5, 0x092e0, // 1990-1999
+        0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5, // 2000-2009
+        0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930, // 2010-2019
+        0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530, // 2020-2029
+        0x05aa0, 0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, // 2030-2039
+        0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0, // 2040-2049
+        0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0, // 2050-2059
+        0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4, // 2060-2069
+        0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0, // 2070-2079
+        0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160, // 2080-2089
+        0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252, // 2090-2099
+        0x0d520, // 2100
+    ];
+    /**
+     * 公历每个月份的天数表.
+     *
+     * @var array
+     */
+    protected $solarMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    /**
+     * 天干地支之天干速查表.
+     *
+     * @var array
+     */
+    protected $gan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    /**
+     * 天干地支之天干速查表 <=> 色彩.
+     *
+     * @var array
+     */
+    protected $colors = ['青', '青', '红', '红', '黄', '黄', '白', '白', '黑', '黑'];
+    /**
+     * 天干地支之天干速查表 <=> 五行.
+     *
+     * @var array
+     */
+    protected $wuXing = ['木', '木', '火', '火', '土', '土', '金', '金', '水', '水'];
+    /**
+     * 天干地支之地支速查表.
+     *
+     * @var array
+     */
+    protected $zhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    /**
+     * 天干地支之地支速查表 <=> 生肖.
+     *
+     * @var array
+     */
+    protected $animals = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+    /**
+     * 24节气速查表.
+     *
+     * @var array
+     */
+    protected $solarTerm = [
+        '小寒', '大寒', '立春', '雨水', '惊蛰', '春分',
+        '清明', '谷雨', '立夏', '小满', '芒种', '夏至',
+        '小暑', '大暑', '立秋', '处暑', '白露', '秋分',
+        '寒露', '霜降', '立冬', '小雪', '大雪', '冬至',
+    ];
+    /**
+     * 1900-2100 各年的 24 节气日期速查表.
+     *
+     * @var array
+     */
+    protected $solarTerms = [
+        '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf97c3598082c95f8c965cc920f',
+        '97bd0b06bdb0722c965ce1cfcc920f', 'b027097bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+        '97bcf97c359801ec95f8c965cc920f', '97bd0b06bdb0722c965ce1cfcc920f', 'b027097bd097c36b0b6fc9274c91aa',
+        '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f', '97bd0b06bdb0722c965ce1cfcc920f',
+        'b027097bd097c36b0b6fc9274c91aa', '9778397bd19801ec9210c965cc920e', '97b6b97bd19801ec95f8c965cc920f',
+        '97bd09801d98082c95f8e1cfcc920f', '97bd097bd097c36b0b6fc9210c8dc2', '9778397bd197c36c9210c9274c91aa',
+        '97b6b97bd19801ec95f8c965cc920e', '97bd09801d98082c95f8e1cfcc920f', '97bd097bd097c36b0b6fc9210c8dc2',
+        '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec95f8c965cc920e', '97bcf97c3598082c95f8e1cfcc920f',
+        '97bd097bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+        '97bcf97c3598082c95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+        '97b6b97bd19801ec9210c965cc920e', '97bcf97c3598082c95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722',
+        '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f',
+        '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+        '97bcf97c359801ec95f8c965cc920f', '97bd097bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+        '97b6b97bd19801ec9210c965cc920e', '97bcf97c359801ec95f8c965cc920f', '97bd097bd07f595b0b6fc920fb0722',
+        '9778397bd097c36b0b6fc9210c8dc2', '9778397bd19801ec9210c9274c920e', '97b6b97bd19801ec95f8c965cc920f',
+        '97bd07f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c920e',
+        '97b6b97bd19801ec95f8c965cc920f', '97bd07f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2',
+        '9778397bd097c36c9210c9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bd07f1487f595b0b0bc920fb0722',
+        '7f0e397bd097c36b0b6fc9210c8dc2', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+        '97bcf7f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+        '97b6b97bd19801ec9210c965cc920e', '97bcf7f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
+        '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e', '97bcf7f1487f531b0b0bb0b6fb0722',
+        '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b97bd19801ec9210c965cc920e',
+        '97bcf7f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+        '97b6b97bd19801ec9210c9274c920e', '97bcf7f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
+        '9778397bd097c36b0b6fc9210c91aa', '97b6b97bd197c36c9210c9274c920e', '97bcf7f0e47f531b0b0bb0b6fb0722',
+        '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9210c8dc2', '9778397bd097c36c9210c9274c920e',
+        '97b6b7f0e47f531b0723b0b6fb0722', '7f0e37f5307f595b0b0bc920fb0722', '7f0e397bd097c36b0b6fc9210c8dc2',
+        '9778397bd097c36b0b70c9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721', '7f0e37f1487f595b0b0bb0b6fb0722',
+        '7f0e397bd097c35b0b6fc9210c8dc2', '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721',
+        '7f0e27f1487f595b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+        '97b6b7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
+        '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
+        '7f0e397bd097c35b0b6fc920fb0722', '9778397bd097c36b0b6fc9274c91aa', '97b6b7f0e47f531b0723b0b6fb0721',
+        '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9274c91aa',
+        '97b6b7f0e47f531b0723b0787b0721', '7f0e27f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
+        '9778397bd097c36b0b6fc9210c91aa', '97b6b7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
+        '7f0e397bd07f595b0b0bc920fb0722', '9778397bd097c36b0b6fc9210c8dc2', '977837f0e37f149b0723b0787b0721',
+        '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f5307f595b0b0bc920fb0722', '7f0e397bd097c35b0b6fc9210c8dc2',
+        '977837f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e37f1487f595b0b0bb0b6fb0722',
+        '7f0e397bd097c35b0b6fc9210c8dc2', '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+        '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722', '977837f0e37f14998082b0787b06bd',
+        '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd097c35b0b6fc920fb0722',
+        '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
+        '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+        '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14998082b0787b06bd',
+        '7f07e7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0b0bb0b6fb0722', '7f0e397bd07f595b0b0bc920fb0722',
+        '977837f0e37f14998082b0723b06bd', '7f07e7f0e37f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
+        '7f0e397bd07f595b0b0bc920fb0722', '977837f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b0721',
+        '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f1487f595b0b0bb0b6fb0722', '7f0e37f0e37f14898082b0723b02d5',
+        '7ec967f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0722', '7f0e37f1487f531b0b0bb0b6fb0722',
+        '7f0e37f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+        '7f0e37f1487f531b0b0bb0b6fb0722', '7f0e37f0e37f14898082b072297c35', '7ec967f0e37f14998082b0787b06bd',
+        '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e37f0e37f14898082b072297c35',
+        '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
+        '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f149b0723b0787b0721',
+        '7f0e27f1487f531b0b0bb0b6fb0722', '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14998082b0723b06bd',
+        '7f07e7f0e47f149b0723b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722', '7f0e37f0e366aa89801eb072297c35',
+        '7ec967f0e37f14998082b0723b06bd', '7f07e7f0e37f14998083b0787b0721', '7f0e27f0e47f531b0723b0b6fb0722',
+        '7f0e37f0e366aa89801eb072297c35', '7ec967f0e37f14898082b0723b02d5', '7f07e7f0e37f14998082b0787b0721',
+        '7f07e7f0e47f531b0723b0b6fb0722', '7f0e36665b66aa89801e9808297c35', '665f67f0e37f14898082b0723b02d5',
+        '7ec967f0e37f14998082b0787b0721', '7f07e7f0e47f531b0723b0b6fb0722', '7f0e36665b66a449801e9808297c35',
+        '665f67f0e37f14898082b0723b02d5', '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721',
+        '7f0e36665b66a449801e9808297c35', '665f67f0e37f14898082b072297c35', '7ec967f0e37f14998082b0787b06bd',
+        '7f07e7f0e47f531b0723b0b6fb0721', '7f0e26665b66a449801e9808297c35', '665f67f0e37f1489801eb072297c35',
+        '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722',
+    ];
+    /**
+     * 数字转中文速查表.
+     *
+     * @var array
+     */
+    protected $weekdayAlias = ['日', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+    /**
+     * 日期转农历称呼速查表.
+     *
+     * @var array
+     */
+    protected $dateAlias = ['初', '十', '廿', '卅'];
+    /**
+     * 月份转农历称呼速查表.
+     *
+     * @var array
+     */
+    protected $monthAlias = ['正', '二', '三', '四', '五', '六', '七', '八', '九', '十', '冬', '腊'];
+    /**
+     * 传入阳历年月日获得详细的公历、农历信息.
+     *
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $hour
+     *
+     * @return array
+     */
+    public function solar($year, $month, $day, $hour = null)
     {
-        //debugger;
-        $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        if ($year == $this->MIN_YEAR && $month <= 2 && $date <= 9) {
-            return array(1891, '正月', '初一', '辛卯', 1, 1, '兔');
+        $date = $this->makeDate("{$year}-{$month}-{$day}");
+        $lunar = $this->solar2lunar($year, $month, $day, $hour);
+        $week = abs($date->format('w')); // 0 ~ 6 修正 星期七 为 星期日
+        return array_merge($lunar, [
+            'gregorian_year' => (string) $year,
+            'gregorian_month' => sprintf('%02d', $month),
+            'gregorian_day' => sprintf('%02d', $day),
+            'gregorian_hour' => !is_numeric($hour) || $hour < 0 || $hour > 23 ? null : sprintf('%02d', $hour),
+            'week_no' => $week, // 在周日时将会传回 0
+            'week_name' => '星期'.$this->weekdayAlias[$week],
+            'is_today' => 0 === $this->makeDate('now')->diff($date)->days,
+            'constellation' => $this->toConstellation($month, $day),
+        ]);
+    }
+    public function __construct()
+    {
+        date_default_timezone_set('PRC');
+    }
+    /**
+     * 传入农历年月日以及传入的月份是否闰月获得详细的公历、农历信息.
+     *
+     * @param int  $year        lunar year
+     * @param int  $month       lunar month
+     * @param int  $day         lunar day
+     * @param bool $isLeapMonth lunar month is leap or not.[如果是农历闰月第四个参数赋值true即可]
+     * @param int  $hour        birth hour.[0~23]
+     *
+     * @return array
+     */
+    public function lunar($year, $month, $day, $isLeapMonth = false, $hour = null)
+    {
+        $solar = $this->lunar2solar($year, $month, $day, $isLeapMonth);
+        return $this->solar($solar['solar_year'], $solar['solar_month'], $solar['solar_day'], $hour);
+    }
+    /**
+     * 返回农历指定年的总天数.
+     *
+     * @param int $year
+     *
+     * @return int
+     */
+    public function daysOfYear($year)
+    {
+        $sum = 348;
+        for ($i = 0x8000; $i > 0x8; $i >>= 1) {
+            $sum += ($this->lunars[$year - 1900] & $i) ? 1 : 0;
         }
-        return $this->getLunarByBetween($year, $this->getDaysBetweenSolar($year, $month, $date, $yearData[1], $yearData[2]));
+        return $sum + $this->leapDays($year);
     }
-    function convertSolarMonthToLunar($year, $month)
+    /**
+     * 返回农历 y 年闰月是哪个月；若 y 年没有闰月 则返回0.
+     *
+     * @param int $year
+     *
+     * @return int
+     */
+    public function leapMonth($year)
     {
-        $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        if ($year == $this->MIN_YEAR && $month <= 2 && $date <= 9) {
-            return array(1891, '正月', '初一', '辛卯', 1, 1, '兔');
+        // 闰字编码 \u95f0
+        return $this->lunars[$year - 1900] & 0xf;
+    }
+    /**
+     * 返回农历y年闰月的天数 若该年没有闰月则返回 0.
+     *
+     * @param int $year
+     *
+     * @return int
+     */
+    public function leapDays($year)
+    {
+        if ($this->leapMonth($year)) {
+            return ($this->lunars[$year - 1900] & 0x10000) ? 30 : 29;
         }
-        $month_days_ary = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-        $dd = $month_days_ary[$month];
-        if ($this->isLeapYear($year) && $month == 2) $dd++;
-        $lunar_ary = array();
-        for ($i = 1; $i < $dd; $i++) {
-            $array = $this->getLunarByBetween($year, $this->getDaysBetweenSolar($year, $month, $i, $yearData[1], $yearData[2]));
-            $array[] = $year . '-' . $month . '-' . $i;
-            $lunar_ary[$i] = $array;
+        return 0;
+    }
+    /**
+     * 返回农历 y 年 m 月（非闰月）的总天数，计算 m 为闰月时的天数请使用 leapDays 方法.
+     *
+     * @param int $year
+     * @param int $month
+     *
+     * @return int
+     */
+    public function lunarDays($year, $month)
+    {
+        // 月份参数从 1 至 12，参数错误返回 -1
+        if ($month > 12 || $month < 1) {
+            return -1;
         }
-        return $lunar_ary;
+        return ($this->lunars[$year - 1900] & (0x10000 >> $month)) ? 30 : 29;
     }
     /**
-     * 将阴历转换为阳历
-     * @param year 阴历-年
-     * @param month 阴历-月，闰月处理：例如如果当年闰五月，那么第二个五月就传六月，相当于阴历有13个月，只是有的时候第13个月的天数为0
-     * @param date 阴历-日
+     * 返回公历 y 年 m 月的天数.
+     *
+     * @param int $year
+     * @param int $month
+     *
+     * @return int
      */
-    function convertLunarToSolar($year, $month, $date)
+    public function solarDays($year, $month)
     {
-        $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        $between = $this->getDaysBetweenLunar($year, $month, $date);
-        $res = mktime(0, 0, 0, $yearData[1], $yearData[2], $year);
-        $res = date('Y-m-d', $res + $between * 24 * 60 * 60);
-        $day = explode('-', $res);
-        $year = $day[0];
-        $month = $day[1];
-        $day = $day[2];
-        return array($year, $month, $day);
-    }
-    /**
-     * 判断是否是闰年
-     * @param year
-     */
-    function isLeapYear($year)
-    {
-        return (($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0));
-    }
-    /**
-     * 获取干支纪年
-     * @param year
-     */
-    function getLunarYearName($year)
-    {
-        $sky = array('庚', '辛', '壬', '癸', '甲', '乙', '丙', '丁', '戊', '己');
-        $earth = array('申', '酉', '戌', '亥', '子', '丑', '寅', '卯', '辰', '巳', '午', '未');
-        $year = $year . '';
-        return $sky[$year{3}] . $earth[$year % 12];
-    }
-    /**
-     * 根据阴历年获取生肖
-     * @param year 阴历年
-     */
-    function getYearZodiac($year)
-    {
-        $zodiac = array('猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊');
-        return $zodiac[$year % 12];
-    }
-    /**
-     * 获取阳历月份的天数
-     * @param year 阳历-年
-     * @param month 阳历-月
-     */
-    function getSolarMonthDays($year, $month)
-    {
-        $monthHash = array('1' => 31, '2' => $this->isLeapYear($year) ? 29 : 28, '3' => 31, '4' => 30, '5' => 31, '6' => 30, '7' => 31, '8' => 31, '9' => 30, '10' => 31, '11' => 30, '12' => 31);
-        return $monthHash["$month"];
-    }
-    /**
-     * 获取阴历月份的天数
-     * @param year 阴历-年
-     * @param month 阴历-月，从一月开始
-     */
-    function getLunarMonthDays($year, $month)
-    {
-        $monthData = $this->getLunarMonths($year);
-        return $monthData[$month - 1];
-    }
-    /**
-     * 获取阴历每月的天数的数组
-     * @param year
-     */
-    function getLunarMonths($year)
-    {
-        $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        $leapMonth = $yearData[0];
-        $bit = decbin($yearData[3]);
-        for ($i = 0; $i < strlen($bit); $i++) {
-            $bitArray[$i] = substr($bit, $i, 1);
+        // 若参数错误 返回-1
+        if ($month > 12 || $month < 1) {
+            return -1;
         }
-        for ($k = 0, $klen = 16 - count($bitArray); $k < $klen; $k++) {
-            array_unshift($bitArray, '0');
+        $ms = $month - 1;
+        if (1 == $ms) { // 2 月份的闰平规律测算后确认返回 28 或 29
+            return ((0 === $year % 4) && (0 !== $year % 100) || (0 === $year % 400)) ? 29 : 28;
         }
-        $bitArray = array_slice($bitArray, 0, ($leapMonth == 0 ? 12 : 13));
-        for ($i = 0; $i < count($bitArray); $i++) {
-            $bitArray[$i] = $bitArray[$i] + 29;
-        }
-        return $bitArray;
+        return $this->solarMonth[$ms];
     }
     /**
-     * 获取农历每年的天数
-     * @param year 农历年份
+     * 农历年份转换为干支纪年.
+     *
+     * @param int      $lunarYear
+     * @param null|int $termIndex
+     *
+     * @return string
      */
-    function getLunarYearDays($year)
+    public function ganZhiYear($lunarYear, $termIndex = null)
     {
-        $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        $monthArray = $this->getLunarYearMonths($year);
-        $len = count($monthArray);
-        return ($monthArray[$len - 1] == 0 ? $monthArray[$len - 2] : $monthArray[$len - 1]);
-    }
-    function getLunarYearMonths($year)
-    {
-        //debugger;
-        $monthData = $this->getLunarMonths($year);
-        $res = array();
-        $temp = 0;
-        $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        $len = ($yearData[0] == 0 ? 12 : 13);
-        for ($i = 0; $i < $len; $i++) {
-            $temp = 0;
-            for ($j = 0; $j <= $i; $j++) {
-                $temp += $monthData[$j];
+        $ganKey = ($lunarYear - 3) % 10;
+        $zhiKey = ($lunarYear - 3) % 12;
+        // 如果余数为 0 则为最后一个天干
+        if (0 === $ganKey) {
+            $ganKey = 10;
+        }
+        // 如果余数为 0 则为最后一个地支
+        if (0 === $zhiKey) {
+            $zhiKey = 12;
+        }
+        if (null !== $termIndex) {
+            if (3 > $termIndex) {
+                $ganKey += 1;
+                $zhiKey += 1;
             }
-            array_push($res, $temp);
         }
-        return $res;
+        return $this->gan[$ganKey - 1].$this->zhi[$zhiKey - 1];
     }
     /**
-     * 获取闰月
-     * @param year 阴历年份
+     * 公历月、日判断所属星座.
+     *
+     * @param int $gregorianMonth
+     * @param int $gregorianDay
+     *
+     * @return string
      */
-    function getLeapMonth($year)
+    public function toConstellation($gregorianMonth, $gregorianDay)
     {
-        $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        return $yearData[0];
+        $constellations = '魔羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯';
+        $arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+        return mb_substr(
+            $constellations,
+            $gregorianMonth * 2 - ($gregorianDay < $arr[$gregorianMonth - 1] ? 2 : 0),
+            2,
+            'UTF-8'
+        );
     }
     /**
-     * 计算阴历日期与正月初一相隔的天数
-     * @param year
-     * @param month
-     * @param date
+     * 传入offset偏移量返回干支.
+     *
+     * @param int $offset 相对甲子的偏移量
+     *
+     * @return string
      */
-    function getDaysBetweenLunar($year, $month, $date)
+    public function toGanZhi($offset)
     {
-        $yearMonth = $this->getLunarMonths($year);
-        $res = 0;
-        for ($i = 1; $i < $month; $i++) {
-            $res += $yearMonth[$i - 1];
+        return $this->gan[$offset % 10].$this->zhi[$offset % 12];
+    }
+    /**
+     * 传入公历年获得该年第n个节气的公历日期
+     *
+     * @example
+     * <pre>
+     *  $_24 = $this->getTerm(1987,3) ;// _24 = 4; 意即 1987 年 2 月 4 日立春
+     * </pre>
+     *
+     * @param int $year 公历年(1900-2100)；
+     * @param int $no   二十四节气中的第几个节气(1~24)；从n=1(小寒)算起
+     *
+     * @return int
+     */
+    public function getTerm($year, $no)
+    {
+        if ($year < 1900 || $year > 2100) {
+            return -1;
         }
-        $res += $date - 1;
-        return $res;
+        if ($no < 1 || $no > 24) {
+            return -1;
+        }
+        $solarTermsOfYear = array_map('hexdec', str_split($this->solarTerms[$year - 1900], 5));
+        $positions = [
+            0 => [0, 1],
+            1 => [1, 2],
+            2 => [3, 1],
+            3 => [4, 2],
+        ];
+        $group = intval(($no - 1) / 4);
+        list($offset, $length) = $positions[($no - 1) % 4];
+        return substr($solarTermsOfYear[$group], $offset, $length);
+    }
+    public function toChinaYear($year)
+    {
+        if (!is_numeric($year)) {
+            throw new InvalidArgumentException("错误的年份:{$year}");
+        }
+        $lunarYear = '';
+        $year = (string) $year;
+        for ($i = 0, $l = strlen($year); $i < $l; ++$i) {
+            $lunarYear .= '0' !== $year[$i] ? $this->weekdayAlias[$year[$i]] : '零';
+        }
+        return $lunarYear;
     }
     /**
-     * 计算2个阳历日期之间的天数
-     * @param year 阳历年
-     * @param cmonth
-     * @param cdate
-     * @param dmonth 阴历正月对应的阳历月份
-     * @param ddate 阴历初一对应的阳历天数
+     * 传入农历数字月份返回汉语通俗表示法.
+     *
+     * @param int $month
+     *
+     * @return string
      */
-    function getDaysBetweenSolar($year, $cmonth, $cdate, $dmonth, $ddate)
+    public function toChinaMonth($month)
     {
-        $a = mktime(0, 0, 0, $cmonth, $cdate, $year);
-        $b = mktime(0, 0, 0, $dmonth, $ddate, $year);
-        return ceil(($a - $b) / 24 / 3600);
+        // 若参数错误 返回 -1
+        if ($month > 12 || $month < 1) {
+            throw new InvalidArgumentException("错误的月份:{$month}");
+        }
+        return $this->monthAlias[abs($month) - 1].'月';
     }
     /**
-     * 根据距离正月初一的天数计算阴历日期
-     * @param year 阳历年
-     * @param between 天数
+     * 传入农历日期数字返回汉字表示法.
+     *
+     * @param int $day
+     *
+     * @return string
      */
-    function getLunarByBetween($year, $between)
+    public function toChinaDay($day)
     {
-        //debugger;
-        $lunarArray = array();
-        $yearMonth = array();
-        $t = 0;
-        $e = 0;
-        $leapMonth = 0;
-        $m = '';
-        if ($between == 0) {
-            array_push($lunarArray, $year, '正月', '初一');
-            $t = 1;
-            $e = 1;
-        } else {
-            $year = $between > 0 ? $year : ($year - 1);
-            $yearMonth = $this->getLunarYearMonths($year);
-            $leapMonth = $this->getLeapMonth($year);
-            $between = $between > 0 ? $between : ($this->getLunarYearDays($year) + $between);
-            for ($i = 0; $i < 13; $i++) {
-                if ($between == $yearMonth[$i]) {
-                    $t = $i + 2;
-                    $e = 1;
-                    break;
-                } else if ($between < $yearMonth[$i]) {
-                    $t = $i + 1;
-                    $e = $between - (empty($yearMonth[$i - 1]) ? 0 : $yearMonth[$i - 1]) + 1;
-                    break;
+        switch ($day) {
+            case 10:
+                return '初十';
+            case 20:
+                return '二十';
+            case 30:
+                return '三十';
+            default:
+                return $this->dateAlias[intval($day / 10)].$this->weekdayAlias[$day % 10];
+        }
+    }
+    /**
+     * 年份转生肖.
+     *
+     * 仅能大致转换, 精确划分生肖分界线是 “立春”.
+     *
+     * @param int      $year
+     * @param null|int $termIndex
+     *
+     * @return string
+     */
+    public function getAnimal($year, $termIndex = null)
+    {
+        $animalIndex = ($year - 4) % 12;
+        if (null !== $termIndex) {
+            if (3 > $termIndex) {
+                $animalIndex += 1;
+            }
+        }
+        return $this->animals[$animalIndex];
+    }
+    /**
+     * 干支转色彩.
+     *
+     * @param $ganZhi
+     *
+     * @return string
+     */
+    protected function getColor($ganZhi)
+    {
+        if (!$ganZhi) {
+            return null;
+        }
+        $gan = substr($ganZhi, 2);
+        if (!$gan) {
+            return null;
+        }
+        return $this->colors[array_search($this->gan, $gan)];
+    }
+    /**
+     * 干支转五行.
+     *
+     * @param $ganZhi
+     *
+     * @return string
+     */
+    protected function getWuXing($ganZhi)
+    {
+        if (!$ganZhi) {
+            return null;
+        }
+        $gan = substr($ganZhi, 2);
+        if (!$gan) {
+            return null;
+        }
+        return $this->wuXing[array_search($this->gan, $gan)];
+    }
+    /**
+     * 阳历转阴历.
+     *
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $hour
+     *
+     * @return array
+     */
+    public function solar2lunar($year, $month, $day, $hour = null)
+    {
+        if (23 == $hour) {
+            // 23点过后算子时，农历以子时为一天的起始
+            $day += 1;
+        }
+        $date = $this->makeDate("{$year}-{$month}-{$day}");
+        list($year, $month, $day) = explode('-', $date->format('Y-n-j'));
+        // 参数区间1900.1.31~2100.12.31
+        if ($year < 1900 || $year > 2100) {
+            throw new InvalidArgumentException("不支持的年份:{$year}");
+        }
+        // 年份限定、上限
+        if (1900 == $year && 1 == $month && $day < 31) {
+            throw new InvalidArgumentException("不支持的日期:{$year}-{$month}-{$day}");
+        }
+        $offset = $this->dateDiff($date, '1900-01-31')->days;
+        for ($i = 1900; $i < 2101 && $offset > 0; ++$i) {
+            $daysOfYear = $this->daysOfYear($i);
+            $offset -= $daysOfYear;
+        }
+        if ($offset < 0) {
+            $offset += $daysOfYear;
+            --$i;
+        }
+        // 农历年
+        $lunarYear = $i;
+        $leap = $this->leapMonth($i); // 闰哪个月
+        $isLeap = false;
+        // 用当年的天数 offset,逐个减去每月（农历）的天数，求出当天是本月的第几天
+        for ($i = 1; $i < 13 && $offset > 0; ++$i) {
+            // 闰月
+            if ($leap > 0 && $i == ($leap + 1) && !$isLeap) {
+                --$i;
+                $isLeap = true;
+                $daysOfMonth = $this->leapDays($lunarYear); // 计算农历月天数
+            } else {
+                $daysOfMonth = $this->lunarDays($lunarYear, $i); // 计算农历普通月天数
+            }
+            // 解除闰月
+            if (true === $isLeap && $i == ($leap + 1)) {
+                $isLeap = false;
+            }
+            $offset -= $daysOfMonth;
+        }
+        // offset为0时，并且刚才计算的月份是闰月，要校正
+        if (0 === $offset && $leap > 0 && $i == $leap + 1) {
+            if ($isLeap) {
+                $isLeap = false;
+            } else {
+                $isLeap = true;
+                --$i;
+            }
+        }
+        if ($offset < 0) {
+            $offset += $daysOfMonth;
+            --$i;
+        }
+        // 农历月
+        $lunarMonth = $i;
+        // 农历日
+        $lunarDay = $offset + 1;
+        // 月柱 1900 年 1 月小寒以前为 丙子月(60进制12)
+        $firstNode = $this->getTerm($lunarYear, ($month * 2 - 1)); // 返回当月「节气」为几日开始
+        $secondNode = $this->getTerm($lunarYear, ($month * 2)); // 返回当月「节气」为几日开始
+        // 依据 12 节气修正干支月
+        $ganZhiMonth = $this->toGanZhi(($year - 1900) * 12 + $month + 11);
+        if ($day >= $firstNode) {
+            $ganZhiMonth = $this->toGanZhi(($year - 1900) * 12 + $month + 12);
+        }
+        // 获取该天的节气
+        $termIndex = null;
+        if ($firstNode == $day) {
+            $termIndex = $month * 2 - 2;
+        }
+        if ($secondNode == $day) {
+            $termIndex = $month * 2 - 1;
+        }
+        $term = $this->solarTerm[$termIndex];
+        // 日柱 当月一日与 1900/1/1 相差天数
+        $dayCyclical = $this->dateDiff("{$year}-{$month}-01", '1900-01-01')->days + 10;
+        $dayCyclical += $day - 1;
+        $ganZhiDay = $this->toGanZhi($dayCyclical);
+        // 时柱和时辰
+        list($ganZhiHour, $lunarHour, $hour) = $this->ganZhiHour($hour, $dayCyclical);
+        $ganZhiYear = $this->ganZhiYear($lunarYear, $termIndex);
+        return [
+            'lunar_year' => (string) $lunarYear,
+            'lunar_month' => sprintf('%02d', $lunarMonth),
+            'lunar_day' => sprintf('%02d', $lunarDay),
+            'lunar_hour' => $hour,
+            'lunar_year_chinese' => $this->toChinaYear($lunarYear),
+            'lunar_month_chinese' => ($isLeap ? '闰' : '').$this->toChinaMonth($lunarMonth),
+            'lunar_day_chinese' => $this->toChinaDay($lunarDay),
+            'lunar_hour_chinese' => $lunarHour,
+            'ganzhi_year' => $ganZhiYear,
+            'ganzhi_month' => $ganZhiMonth,
+            'ganzhi_day' => $ganZhiDay,
+            'ganzhi_hour' => $ganZhiHour,
+            'wuxing_year' => $this->getWuXing($ganZhiYear),
+            'wuxing_month' => $this->getWuXing($ganZhiMonth),
+            'wuxing_day' => $this->getWuXing($ganZhiDay),
+            'wuxing_hour' => $this->getWuXing($ganZhiHour),
+            'color_year' => $this->getColor($ganZhiYear),
+            'color_month' => $this->getColor($ganZhiMonth),
+            'color_day' => $this->getColor($ganZhiDay),
+            'color_hour' => $this->getColor($ganZhiHour),
+            'animal' => $this->getAnimal($lunarYear, $termIndex),
+            'term' => $term,
+            'is_leap' => $isLeap,
+        ];
+    }
+    /**
+     * 阴历转阳历.
+     *
+     * @param int  $year
+     * @param int  $month
+     * @param int  $day
+     * @param bool $isLeapMonth
+     *
+     * @return array|int
+     */
+    public function lunar2solar($year, $month, $day, $isLeapMonth = false)
+    {
+        // 参数区间 1900.1.3 1 ~2100.12.1
+        $leapMonth = $this->leapMonth($year);
+        // 传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
+        if ($isLeapMonth && ($leapMonth != $month)) {
+            $isLeapMonth = false;
+        }
+        // 超出了最大极限值
+        if (2100 == $year && 12 == $month && $day > 1 || 1900 == $year && 1 == $month && $day < 31) {
+            return -1;
+        }
+        $maxDays = $days = $this->lunarDays($year, $month);
+        // if month is leap, _day use leapDays method
+        if ($isLeapMonth) {
+            $maxDays = $this->leapDays($year);
+        }
+        // 参数合法性效验
+        if ($year < 1900 || $year > 2100 || $day > $maxDays) {
+            throw new InvalidArgumentException('传入的参数不合法');
+        }
+        // 计算农历的时间差
+        $offset = 0;
+        for ($i = 1900; $i < $year; ++$i) {
+            $offset += $this->daysOfYear($i);
+        }
+        $isAdd = false;
+        for ($i = 1; $i < $month; ++$i) {
+            $leap = $this->leapMonth($year);
+            if (!$isAdd) {// 处理闰月
+                if ($leap <= $i && $leap > 0) {
+                    $offset += $this->leapDays($year);
+                    $isAdd = true;
                 }
             }
-            $m = ($leapMonth != 0 && $t == $leapMonth + 1) ? ('闰' . $this->getCapitalNum($t - 1, true)) : $this->getCapitalNum(($leapMonth != 0 && $leapMonth + 1 < $t ? ($t - 1) : $t), true);
-            array_push($lunarArray, $year, $m, $this->getCapitalNum($e, false));
+            $offset += $this->lunarDays($year, $i);
         }
-        array_push($lunarArray, $this->getLunarYearName($year));// 天干地支
-        array_push($lunarArray, $t, $e);
-        array_push($lunarArray, $this->getYearZodiac($year));// 12生肖
-        array_push($lunarArray, $leapMonth);// 闰几月
-        return $lunarArray;
+        // 转换闰月农历 需补充该年闰月的前一个月的时差
+        if ($isLeapMonth) {
+            $offset += $days;
+        }
+        // 1900 年农历正月一日的公历时间为 1900 年 1 月 30 日 0 时 0 分 0 秒 (该时间也是本农历的最开始起始点)
+        // XXX: 部分 windows 机器不支持负时间戳，所以这里就写死了,哈哈哈哈...
+        $startTimestamp = -2206483200;
+        $date = date('Y-m-d', ($offset + $day) * 86400 + $startTimestamp);
+        list($solarYear, $solarMonth, $solarDay) = explode('-', $date);
+        return [
+            'solar_year' => $solarYear,
+            'solar_month' => sprintf('%02d', $solarMonth),
+            'solar_day' => sprintf('%02d', $solarDay),
+        ];
     }
     /**
-     * 获取数字的阴历叫法
-     * @param num 数字
-     * @param isMonth 是否是月份的数字
+     * 获取两个日期之间的距离.
+     *
+     * @param string|\DateTime $date1
+     * @param string|\DateTime $date2
+     *
+     * @return bool|\DateInterval
      */
-    function getCapitalNum($num, $isMonth)
+    public function dateDiff($date1, $date2)
     {
-        $isMonth = $isMonth || false;
-        $dateHash = array('0' => '', '1' => '一', '2' => '二', '3' => '三', '4' => '四', '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九', '10' => '十 ');
-        $monthHash = array('0' => '', '1' => '正月', '2' => '二月', '3' => '三月', '4' => '四月', '5' => '五月', '6' => '六月', '7' => '七月', '8' => '八月', '9' => '九月', '10' => '十月', '11' => '冬月', '12' => '腊月');
-        $res = '';
-        if ($isMonth) {
-            $res = $monthHash[$num];
-        } else {
-            if ($num <= 10) {
-                $res = '初' . $dateHash[$num];
-            } else if ($num > 10 && $num < 20) {
-                $res = '十' . $dateHash[$num - 10];
-            } else if ($num == 20) {
-                $res = "二十";
-            } else if ($num > 20 && $num < 30) {
-                $res = "廿" . $dateHash[$num - 20];
-            } else if ($num == 30) {
-                $res = "三十";
-            }
+        if (!($date1 instanceof DateTime)) {
+            $date1 = $this->makeDate($date1);
         }
-        return $res;
+        if (!($date2 instanceof DateTime)) {
+            $date2 = $this->makeDate($date2);
+        }
+        return $date1->diff($date2);
     }
-    /*
-     * 节气通用算法
+    /**
+     * 创建日期对象
+     *
+     * @param string $string
+     * @param string $timezone
+     *
+     * @return \DateTime
      */
-    function getJieQi($_year, $month, $day)
+    protected function makeDate($string = 'now', $timezone = 'PRC')
     {
-        $year = substr($_year, -2) + 0;
-        $coefficient = array(
-            array(5.4055, 2019, -1),//小寒
-            array(20.12, 2082, 1),//大寒
-            array(3.87),//立春
-            array(18.74, 2026, -1),//雨水
-            array(5.63),//惊蛰
-            array(20.646, 2084, 1),//春分
-            array(4.81),//清明
-            array(20.1),//谷雨
-            array(5.52, 1911, 1),//立夏
-            array(21.04, 2008, 1),//小满
-            array(5.678, 1902, 1),//芒种
-            array(21.37, 1928, 1),//夏至
-            array(7.108, 2016, 1),//小暑
-            array(22.83, 1922, 1),//大暑
-            array(7.5, 2002, 1),//立秋
-            array(23.13),//处暑
-            array(7.646, 1927, 1),//白露
-            array(23.042, 1942, 1),//秋分
-            array(8.318),//寒露
-            array(23.438, 2089, 1),//霜降
-            array(7.438, 2089, 1),//立冬
-            array(22.36, 1978, 1),//小雪
-            array(7.18, 1954, 1),//大雪
-            array(21.94, 2021, -1)//冬至
-        );
-        $term_name = array(
-            "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨",
-            "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑",
-            "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至");
-        $idx1 = ($month - 1) * 2;
-        $_leap_value = floor(($year - 1) / 4);
-        $day1 = floor($year * 0.2422 + $coefficient[$idx1][0]) - $_leap_value;
-        if (isset($coefficient[$idx1][1]) && $coefficient[$idx1][1] == $_year) {
-            $day1 += $coefficient[$idx1][2];
-        }
-        $day2 = floor($year * 0.2422 + $coefficient[$idx1 + 1][0]) - $_leap_value;
-        if (isset($coefficient[$idx1 + 1][1]) && $coefficient[$idx1 + 1][1] == $_year) {
-            $day1 += $coefficient[$idx1 + 1][2];
-        }
-        //echo __FILE__.'->'.__LINE__.' $day1='.$day1,',$day2='.$day2.'<br/>'.chr(10);
-        if ($day == $day1) return $term_name[$idx1];
-        if ($day == $day2) return $term_name[$idx1 + 1];
-        return '';
+        return new DateTime($string, new DateTimeZone($timezone));
     }
-    /*
-     * 获取节日：特殊的节日只能修改此函数来计算
+    /**
+     * 获取时柱.
+     *
+     * @param int $hour      0~23 小时格式
+     * @param int $ganZhiDay 干支日期
+     *
+     * @return array
+     *
+     * @see https://baike.baidu.com/item/%E6%97%B6%E6%9F%B1/6274024
      */
-    function getFestival($today, $nl_info = false, $config = 1)
+    protected function ganZhiHour($hour, $ganZhiDay)
     {
-        if ($config == 1) {
-            $arr_lunar = array('01-01' => '春节', '01-15' => '元宵节', '02-02' => '二月二', '05-05' => '端午节', '07-07' => '七夕节', '08-15' => '中秋节', '09-09' => '重阳节', '12-08' => '腊八节', '12-23' => '小年');
-            $arr_solar = array('01-01' => '元旦', '02-14' => '情人节', '03-12' => '植树节', '04-01' => '愚人节', '05-01' => '劳动节', '06-01' => '儿童节', '10-01' => '国庆节', '10-31' => '万圣节', '12-24' => '平安夜', '12-25' => '圣诞节');
-        }//需要不同节日的，用不同的$config,然后配置$arr_lunar和$arr_solar
-        $festivals = array();
-        list($y, $m, $d) = explode('-', $today);
-        if (!$nl_info) $nl_info = $this->convertSolarToLunar($y, intval($m), intval($d));
-        if ($nl_info[7] > 0 && $nl_info[7] < $nl_info[4]) $nl_info[4] -= 1;
-        $md_lunar = substr('0' . $nl_info[4], -2) . '-' . substr('0' . $nl_info[5], -2);
-        $md_solar = substr_replace($today, '', 0, 5);
-        isset($arr_lunar[$md_lunar]) ? array_push($festivals, $arr_lunar[$md_lunar]) : '';
-        isset($arr_solar[$md_solar]) ? array_push($festivals, $arr_solar[$md_solar]) : '';
-        $glweek = date("w", strtotime($today));    //0-6
-        if ($m == 5 && ($d > 7) && ($d < 15) && ($glweek == 0)) array_push($festivals, "母亲节");
-        if ($m == 6 && ($d > 14) && ($d < 22) && ($glweek == 0)) array_push($festivals, "父亲节");
-        $jieqi = $this->getJieQi($y, $m, $d);
-        if ($jieqi) array_push($festivals, $jieqi);
-        return implode('/', $festivals);
+        if (!is_numeric($hour) || $hour < 0 || $hour > 23) {
+            return [null, null, null];
+        }
+        $zhiHour = intval(($hour + 1) / 2);
+        $zhiHour = 12 === $zhiHour ? 0 : $zhiHour;
+        return [
+            $this->gan[($ganZhiDay % 10 % 5 * 2 + $zhiHour) % 10].$this->zhi[$zhiHour],
+            $this->zhi[$zhiHour].'时',
+            sprintf('%02d', $hour),
+        ];
     }
 }
