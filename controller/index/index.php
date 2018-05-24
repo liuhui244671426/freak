@@ -30,8 +30,8 @@ class controller_index_index extends controller_base{
 //        $b = lib_filter::strGet('b');
 //        var_dump($b);
 
-//        $r = new core_redis('read');
-//        echo $r->get('aaa');
+        $r = new core_redis('read');
+        echo $r->get('aaa');
 
 //        $captcha = new lib_captcha();
 //        $captcha->getCode();
@@ -50,7 +50,7 @@ class controller_index_index extends controller_base{
 //        $ret = $r->get('PHPREDIS_SESSION:'.session_id());
         //phpinfo();
         //echo lib_filter::session('aaa');
-        $this->welcome();
+        //$this->welcome();
     }
 
     public function welcome(){
