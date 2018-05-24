@@ -8,7 +8,6 @@ define('PATH_VIEW', PATH_ROOT.DS.'views');
 define('PATH_CONFIG', PATH_ROOT.DS.'config');
 define('PATH_DAEMON', PATH_ROOT.DS.'daemon');
 define('PATH_PUBLIC', PATH_ROOT.DS.'public');
-define('ENV_CONFIG', 'develop');//配置环境,'develop' || 'product'
 defined('FREAK_ACCESS') or exit('Access Denied');
 //--------CONST-----------
 
