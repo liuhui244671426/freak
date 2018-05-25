@@ -19,4 +19,8 @@ class core_output{
         header('Content-type: application/json');
         echo json_encode($data);
     }
+    //页面需要运行的js
+    public static function run_js_render($path){
+        return '<script src="'.$path.'"></script>';
+    }
 }
