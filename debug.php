@@ -3,16 +3,15 @@
  * freak.framework
  * @author: liuhui
  */
-$is_debug = true;
 define('FREAK_ACCESS', true);
 header("Content-type:text/html;charset=utf-8");
-if(version_compare(PHP_VERSION, '5.6.0') < 0){ exit('PHP版本需要大于5.6.0'); }
+
 //-----------------------------------------
 xhprof_enable(XHPROF_FLAGS_CPU+XHPROF_FLAGS_MEMORY);
 //-----------------------------------------
-include dirname(__FILE__).'/bootstrap.php';
 
-run();
+include dirname(__FILE__).'/freak/bootstrap.php';
+
 //-----------------------------------------
 $xhprof_data = xhprof_disable();
 $xhprof_root = "/Users/liuhui/vagrant/htdocs/xhprof";
@@ -23,5 +22,3 @@ $run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_freak");
 $u = 'http://xhprof.com/?run=' . $run_id . '&source=xhprof_freak';
 echo "<a href='{$u}' target='_blank'>xhprof</a>";
 //-----------------------------------------
-
-return;

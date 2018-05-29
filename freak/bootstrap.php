@@ -1,4 +1,6 @@
 <?php
+if(version_compare(PHP_VERSION, '5.6.0') < 0){ exit('PHP版本需要大于5.6.0'); }
+
 error_reporting(E_ALL);
 date_default_timezone_set('PRC');
 //--------CONST-----------
@@ -45,6 +47,7 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
 #     : m=index?c=index&a=index
 ####################################
 function run(){
+    if(PHP_SAPI == 'cli'){return true;}
     $m = filter_input(INPUT_GET, 'm');
     $c = filter_input(INPUT_GET, 'c');
     $a = filter_input(INPUT_GET, 'a');
@@ -59,4 +62,7 @@ function run(){
     } catch (Exception $e){
         exit($e->getTraceAsString());
     }
+    return true;
 }
+run();
+return;
