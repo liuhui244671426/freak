@@ -115,7 +115,7 @@ class master {
 
 
     private  function buildProcPlan() {
-        $config = core_config::get('crontab');
+        $config = freak_config::get('crontab');
         foreach($config as $item) {
             $item = trim($item);
             $item = preg_replace ( "/\s(?=\s)/","\\1", $item ); //去除重复空格

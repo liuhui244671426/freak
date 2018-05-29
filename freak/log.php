@@ -6,7 +6,7 @@
 	* @version      0.1a
 	*/
 defined('FREAK_ACCESS') or exit('Access Denied');
-class core_log {
+class freak_log {
 
     # @string, Log directory name
     private static $path = PATH_ROOT.DS.'logs'.DS;

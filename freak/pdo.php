@@ -1,6 +1,6 @@
 <?php
 defined('FREAK_ACCESS') or exit('Access Denied');
-class core_pdo{
+class freak_pdo{
     /**
      *  DB - A simple database class
      *
@@ -53,7 +53,7 @@ class core_pdo{
     private function Connect($mode)
     {
         //$this->settings = parse_ini_file("settings.ini.php");
-        $this->settings = core_config::get('pdo', $mode);
+        $this->settings = freak_config::get('pdo', $mode);
         $dsn    = 'mysql:dbname='.$this->settings["dbname"].';host='.$this->settings["host"].';port='.$this->settings["port"];
         try {
             # Read settings from INI file, set UTF8
@@ -298,7 +298,7 @@ class core_pdo{
             $message .= "\r\nRaw SQL : " . $sql;
         }
         # Write into log
-        core_log::write($message);
+        freak_log::write($message);
 
         return $exception;
     }

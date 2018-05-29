@@ -37,7 +37,7 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
     if($errno == E_NOTICE)$msg = "NOTICE";
     if($errno == E_STRICT)$msg = "STRICT";
     if($errno == 8192)$msg = "DEPRECATED";
-    core_log::write("$msg: $errstr in $errfile on line $errline");
+    freak_log::write("$msg: $errstr in $errfile on line $errline");
     return true;
 }
 ###########router rule##############

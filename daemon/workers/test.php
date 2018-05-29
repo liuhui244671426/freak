@@ -14,7 +14,7 @@ class daemon_workers_test extends daemon_workers_base {
     }
     public function run(){
         //sleep(10);
-        $log = new core_log();
+        $log = new freak_log();
         $model = new model_index();
         $log->write(__METHOD__ . $this->getPid());
         $log->write($model->get_name());

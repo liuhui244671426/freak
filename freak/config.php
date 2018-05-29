@@ -3,7 +3,7 @@
  */
 defined('FREAK_ACCESS') or exit('Access Denied');
 
-class core_config{
+class freak_config{
     public static function get($file, $filed=''){
         $ini = include PATH_CONFIG.DS.$file.'.php';
         //注: ENV_CONFIG 变量需配置到 nginx || fpm || apache 中

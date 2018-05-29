@@ -4,7 +4,7 @@ class controller_sso_server extends controller_base{
 
     public function index(){
         $callback = lib_filter::strGet('callback');
-        core_output::view_render("login", array('callback'=>$callback));
+        freak_output::view_render("login", array('callback'=>$callback));
         return;
     }
 
@@ -18,7 +18,7 @@ class controller_sso_server extends controller_base{
         $name = lib_filter::strGet('string', 'name');
         $password = lib_filter::strGet('string', 'password');
 
-        $db = new core_pdo('write');
+        $db = new freak_pdo('write');
         $ret = $db->row("select * from `sso` where `name`=:name and `password`=:password", array('name'=>$name, 'password'=>$password));
         if($ret){
             $token = ((microtime(true) * 10000 ) . mt_rand(10,30)) << 4;
@@ -33,7 +33,7 @@ class controller_sso_server extends controller_base{
     }
     // 检测 token 是否有效
     public function check(){
-        $db = new core_pdo();
+        $db = new freak_pdo();
         $ret = $db->row("select * from `token` where `token`=:token", array('token' => lib_filter::strGet('string', 'token')));
         if($ret){
             echo 'ok';

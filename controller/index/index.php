@@ -30,7 +30,7 @@ class controller_index_index extends controller_base{
 //        $b = lib_filter::strGet('b');
 //        var_dump($b);
 
-        $r = new core_redis('read');
+        $r = new freak_redis('read');
         echo $r->get('aaa');
 
 //        $captcha = new lib_captcha();
@@ -54,20 +54,20 @@ class controller_index_index extends controller_base{
     }
 
     public function welcome(){
-        core_output::view_layout_render('fontend/welcome', array(), 'fontend/layout');
+        freak_output::view_layout_render('fontend/welcome', array(), 'fontend/layout');
     }
 
     public function adopt(){
         $model = new model_adopt();
         $list = $model->getList();
-        core_output::view_layout_render('fontend/adopt', array('list' => $list), 'fontend/layout');
+        freak_output::view_layout_render('fontend/adopt', array('list' => $list), 'fontend/layout');
     }
 
     public function adopt_detail(){
         $adopt_id = lib_filter::intGet('adopt_id');
         $model = new model_adopt();
         $info = $model->getById($adopt_id);
-        core_output::view_layout_render('fontend/adopt_detail', array('info' => $info), 'fontend/layout');
+        freak_output::view_layout_render('fontend/adopt_detail', array('info' => $info), 'fontend/layout');
     }
     public function show(){
 

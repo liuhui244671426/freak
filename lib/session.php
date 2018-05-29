@@ -16,7 +16,7 @@ class lib_session implements SessionHandlerInterface{
 
     public function __construct($resource='redis'){
         if($resource=='redis'){
-            self::$obj = new core_redis('write');
+            self::$obj = new freak_redis('write');
         }
     }
 

@@ -4,7 +4,7 @@
  *
  */
 defined('FREAK_ACCESS') or exit('Access Denied');
-class core_output{
+class freak_output{
     public static function view_render($file, $data=array()){
         @extract($data);
         include PATH_VIEW.DS.$file.".html";
