@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 date_default_timezone_set('PRC');
 //--------CONST-----------
-define('PATH_ROOT', dirname(__FILE__));
+define('PATH_ROOT', dirname(dirname(__FILE__)));
 define('DS', DIRECTORY_SEPARATOR);
 define('PATH_VIEW', PATH_ROOT.DS.'views');
 define('PATH_CONFIG', PATH_ROOT.DS.'config');

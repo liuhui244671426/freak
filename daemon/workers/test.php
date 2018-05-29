@@ -7,7 +7,7 @@
  * @copyright copyright(2018) weibo.com all rights reserved
  */
 if(PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
-require_once dirname(dirname(dirname(__FILE__))).'/bootstrap.php';
+require_once dirname(dirname(dirname(__FILE__))).'/freak/bootstrap.php';
 
 class daemon_workers_test extends daemon_workers_base {
     public function init(){
