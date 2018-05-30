@@ -32,6 +32,8 @@ class lib_captcha
 
     //指定字体颜色
     private $fontColor;
+    //gif 数据组
+    private $gifData = null;
 
     /**
      * 构造方法初始化
@@ -49,7 +51,7 @@ class lib_captcha
         $this->fontSize = $fontSize;
         $this->createCode();
 
-        $this->font = PATH_PUBLIC .DS. 'fonts/Elephant.ttf';
+        $this->font = PATH_PUBLIC .DS. 'Elephant.ttf';
     }
 
     /**
@@ -137,6 +139,18 @@ class lib_captcha
         imagedestroy($this->img);
     }
 
+    private function outPutGif(){
+        include PATH_ROOT.DS.'lib'.DS.'gif.php';
+        $gif=new GIFEncoder($this->gifData,
+            array_fill(0, $this->codeLen, 88),
+            0,
+            1,
+            0, 0, 1,
+            "bin"
+        );
+        Header('Content-type:image/gif');
+        return $gif->GetAnimation();
+    }
     /**
      * 获取验证码图片
      */
@@ -146,6 +160,58 @@ class lib_captcha
         $this->createLine();
         $this->createFont();
         $this->outPut();
+    }
+    /**
+     * 获取 GIF 验证码图片
+     * */
+    public function getGifImage(){
+        /*for($i=1;$i<=16;$i++){
+            ob_start();
+            $image=imagecreate($this->width,$this->height);
+            imagecolorallocate($image,0,0,0);
+
+            $gray=imagecolorallocate($image,245,245,245);
+            imagefill($image,0,0,$gray);
+            $space=30;// 字符间距
+            $top=$this->height/4;//y 轴初始位置
+            //遍历文字长度
+            for($k=0;$k<$this->codeLen;$k++){
+                $float_top=rand(0,10);
+                //添加文字
+                imagestring($image,5,$space*$k,$top+$float_top,substr($this->code,$k,1),imagecolorallocate($image, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255)));
+                //添加干扰线
+                imageline($image, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), imagecolorallocate($image, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255)));
+                //添加干扰点
+                imagesetpixel($image,rand(),rand(),imagecolorallocate($image, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255)));
+            }
+
+            imagegif($image);
+            imagedestroy($image);
+            $this->gifData[]=ob_get_contents();
+            ob_clean();
+        }
+        include PATH_ROOT.DS.'lib'.DS.'gif.php';
+        $gif=new GIFEncoder($imagedata,
+            $delay,
+            0,
+            1,
+            0, 0, 1,
+            "bin"
+        );
+        Header('Content-type:image/gif');
+        echo $gif->GetAnimation();
+        */
+        for($i=1;$i<=16;$i++){
+            ob_start();
+            $this->createBg();
+            $this->createLine();
+            $this->createFont();
+            imagegif($this->img);
+            imagedestroy($this->img);
+            $this->gifData[] = ob_get_contents();
+            ob_clean();
+        }
+        return $this->outPutGif();
     }
 
     /**
