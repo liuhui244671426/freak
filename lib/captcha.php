@@ -87,6 +87,7 @@ class lib_captcha
             $y = mt_rand($_y - 10, $_y + 10);
             $angle = mt_rand(-30, 30);
             $this->fontColor = imagecolorallocate($this->img, mt_rand(0, 156), mt_rand(0, 156), mt_rand(0, 156));
+            freak_log::write('$this->code: '.$this->code[$i]);
             imagettftext(
                 $this->img,
                 $this->fontSize,
@@ -201,7 +202,7 @@ class lib_captcha
         Header('Content-type:image/gif');
         echo $gif->GetAnimation();
         */
-        for($i=1;$i<=16;$i++){
+        for($i=0;$i<=16;$i++){
             ob_start();
             $this->createBg();
             $this->createLine();

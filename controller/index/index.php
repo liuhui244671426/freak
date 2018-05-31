@@ -30,8 +30,8 @@ class controller_index_index extends controller_base{
 //        $b = lib_filter::strGet('b');
 //        var_dump($b);
 
-        $r = new freak_redis('read');
-        echo $r->get('aaa');
+        //$r = new freak_redis('read');
+        //echo $r->get('aaa');
 
 //        $captcha = new lib_captcha();
 //        $captcha->getCode();
@@ -51,6 +51,8 @@ class controller_index_index extends controller_base{
         //phpinfo();
         //echo lib_filter::session('aaa');
         //$this->welcome();
+        $c = new lib_captcha();
+        echo $c->getGifImage();
     }
 
     public function welcome(){

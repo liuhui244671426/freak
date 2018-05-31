@@ -162,8 +162,13 @@ Class GIFEncoder
             }
         }
         $this->GIFAddHeader();
-        for ($i = 0; $i < count($this->BUF); $i++) {
+        /*for ($i = 0; $i < count($this->BUF); $i++) {
             $this->GIFAddFrames($i, $GIF_dly [$i]);
+        }*/
+        $ii = 0;
+        foreach($this->BUF as $buff){
+            $this->GIFAddFrames($ii, $GIF_dly);
+            $ii++;
         }
         $this->GIFAddFooter();
     }
