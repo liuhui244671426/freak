@@ -149,7 +149,7 @@ class lib_captcha
             "bin"
         );
         Header('Content-type:image/gif');
-        return $gif->GetAnimation();
+        echo $gif->GetAnimation();
     }
     /**
      * 获取验证码图片

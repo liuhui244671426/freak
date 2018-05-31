@@ -51,8 +51,11 @@ class controller_index_index extends controller_base{
         //phpinfo();
         //echo lib_filter::session('aaa');
         //$this->welcome();
-        $c = new lib_captcha();
-        echo $c->getGifImage();
+
+//        $c = new lib_captcha();
+//        freak_log::write($c->getCode());
+//        $c->getGifImage();
+        //$c->getImage();
     }
 
     public function welcome(){
