@@ -19,9 +19,11 @@ set_error_handler('f_error_handler');
 //--------register-----------
 
 //--------session-----------
+if($_COOKIE[session_name()] == '') { session_id(microtime(true)*10000); }
 $session = new lib_session();
 session_set_save_handler($session, true);
 session_start();
+setcookie(session_name(), session_id(), time()+86400);//expire time和redis ttl 一致
 //--------session-----------
 
 function f_auto_load($class){
