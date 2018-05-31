@@ -87,7 +87,6 @@ class lib_captcha
             $y = mt_rand($_y - 10, $_y + 10);
             $angle = mt_rand(-30, 30);
             $this->fontColor = imagecolorallocate($this->img, mt_rand(0, 156), mt_rand(0, 156), mt_rand(0, 156));
-            freak_log::write('$this->code: '.$this->code[$i]);
             imagettftext(
                 $this->img,
                 $this->fontSize,
