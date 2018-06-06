@@ -16,6 +16,7 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 //--------register-----------
 spl_autoload_register('f_auto_load');
 set_error_handler('f_error_handler');
+register_shutdown_function('f_last_error');
 //--------register-----------
 
 //--------session-----------
@@ -42,6 +43,11 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
     if($errno == E_STRICT)$msg = "STRICT";
     if($errno == 8192)$msg = "DEPRECATED";
     freak_log::write("$msg: $errstr in $errfile on line $errline");
+    return true;
+}
+function f_last_error(){
+    $e = error_get_last();
+    freak_log::write("ERROR message: {$e['message']},type: {$e['type']}, in file: {$e['file']} on line:{$e['line']}");
     return true;
 }
 ###########router rule##############
