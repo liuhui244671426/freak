@@ -1,7 +1,8 @@
 <?php
+$_SERVER['ENV_CONFIG'] = 'develop';//配置文件
 if(version_compare(PHP_VERSION, '5.6.0') < 0){ exit('PHP版本需要大于5.6.0'); }
 
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('PRC');
 //--------CONST-----------
 define('PATH_ROOT', dirname(dirname(__FILE__)));
@@ -20,11 +21,13 @@ register_shutdown_function('f_last_error');
 //--------register-----------
 
 //--------session-----------
-if($_COOKIE[session_name()] == '') { session_id(microtime(true)*10000); }
-$session = new lib_session();
-session_set_save_handler($session, true);
-session_start();
-setcookie(session_name(), session_id(), time()+86400);//expire time和redis ttl 一致
+if(PHP_SAPI != 'cli'){
+    if($_COOKIE[session_name()] == '') { session_id(microtime(true)*10000); }
+    $session = new lib_session();
+    session_set_save_handler($session, true);
+    session_start();
+    setcookie(session_name(), session_id(), time()+86400);//expire time和redis ttl 一致
+}
 //--------session-----------
 
 function f_auto_load($class){
@@ -47,7 +50,7 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
 }
 function f_last_error(){
     $e = error_get_last();
-    freak_log::write("ERROR message: {$e['message']},type: {$e['type']}, in file: {$e['file']} on line:{$e['line']}");
+    if($e) freak_log::write("ERROR message: {$e['message']},type: {$e['type']}, in file: {$e['file']} on line:{$e['line']}");
     return true;
 }
 ###########router rule##############
