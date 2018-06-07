@@ -15,8 +15,8 @@ class controller_sso_server extends controller_base{
         # 3.通过回跳,把 token 带个 client
         ##############################
 
-        $name = lib_filter::strPost('string', 'name');
-        $password = lib_filter::strPost('string', 'password');
+        $name = lib_filter::strPost('name');
+        $password = lib_filter::strPost('password');
 
         $db = new freak_pdo('write');
         $ret = $db->row("select * from `sso` where `name`=:name and `password`=:password", array('name'=>$name, 'password'=>$password));
@@ -24,7 +24,7 @@ class controller_sso_server extends controller_base{
             $token = ((microtime(true) * 10000 ) . mt_rand(10,30)) << 4;
             $db->query("insert into `token` (`uid`, `token`) VALUES (:uid, :token)", array('uid'=>$ret['id'], 'token'=>$token));
 
-            $callback = lib_filter::strPost('string', 'callback');
+            $callback = lib_filter::strPost('callback');
             $callback = $callback.'&token='.$token;
 
             header("Location:".$callback);
