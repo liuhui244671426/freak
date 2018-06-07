@@ -4,7 +4,7 @@ class controller_sso_server extends controller_base{
 
     public function index(){
         $callback = lib_filter::strGet('callback');
-        freak_output::view_render("login", array('callback'=>$callback));
+        freak_output::view_render("sso/login", array('callback'=>$callback));
         return;
     }
 
