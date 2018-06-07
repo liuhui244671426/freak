@@ -5,7 +5,7 @@
     <title>sso login</title>
 </head>
 <body>
-    <form action="login.html" method="post">
+    <form action="?m=sso&c=server&a=login" method="post">
         name: <input type="text" name="name" /><br/>
         password: <input type="text" name="password" /><br/>
         <input type="hidden" name="callback" value="<?php echo $callback; ?>"/><br/>
