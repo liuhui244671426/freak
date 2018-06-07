@@ -23,7 +23,7 @@ class controller_sso_server extends controller_base{
         $ret = $model->login($name, $password);
         if($ret){
 
-            $token = $model->gen_token($ret['uid']);
+            $token = $model->gen_token($ret['id']);
             //回调地址,携带 token
             header("Location:".$callback.'&token='.$token);
             return;
