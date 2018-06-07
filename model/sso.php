@@ -16,6 +16,6 @@ class model_sso extends model_base{
     public function check_token($token){
         $db = new freak_pdo();
         $ret = $db->row("select * from `token` where `token`=:token", array('token' => $token));
-
+        return $ret;
     }
 }
