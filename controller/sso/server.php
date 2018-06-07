@@ -17,28 +17,26 @@ class controller_sso_server extends controller_base{
 
         $name = lib_filter::strPost('name');
         $password = lib_filter::strPost('password');
+        $callback = lib_filter::strPost('callback');
 
-        $db = new freak_pdo('write');
-        $ret = $db->row("select * from `sso` where `name`=:name and `password`=:password", array('name'=>$name, 'password'=>$password));
+        $model = new model_sso();
+        $ret = $model->login($name, $password);
         if($ret){
-            $token = ((microtime(true) * 10000 ) . mt_rand(10,30)) << 4;
-            $db->query("insert into `token` (`uid`, `token`) VALUES (:uid, :token)", array('uid'=>$ret['id'], 'token'=>$token));
 
-            $callback = lib_filter::strPost('callback');
-            $callback = $callback.'&token='.$token;
-
-            header("Location:".$callback);
+            $token = $model->gen_token($ret['uid']);
+            //回调地址,携带 token
+            header("Location:".$callback.'&token='.$token);
             return;
         }
     }
     // 检测 token 是否有效
     public function check(){
-        $db = new freak_pdo();
-        $ret = $db->row("select * from `token` where `token`=:token", array('token' => lib_filter::strGet('token')));
+        $model = new model_sso();
+        $ret = $model->check_token(lib_filter::strGet('token'));
         if($ret){
-            echo 'ok';
+            echo 'success';
         } else {
-            echo 'error';
+            echo 'failed';
         }
         return;
     }

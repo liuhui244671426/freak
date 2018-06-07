@@ -25,7 +25,7 @@ class lib_ssoClient{
         $curl = lib_curl::init();
         $url = freak_config::get('sso', 'server')['url_check'];
         $ret = $curl->url("{$url}&token=".$token)->data();
-        if($ret == 'ok'){
+        if($ret == 'success'){
             return true;
         }
         return false;
