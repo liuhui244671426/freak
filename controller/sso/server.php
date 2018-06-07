@@ -34,7 +34,7 @@ class controller_sso_server extends controller_base{
     // 检测 token 是否有效
     public function check(){
         $db = new freak_pdo();
-        $ret = $db->row("select * from `token` where `token`=:token", array('token' => lib_filter::strGet('string', 'token')));
+        $ret = $db->row("select * from `token` where `token`=:token", array('token' => lib_filter::strGet('token')));
         if($ret){
             echo 'ok';
         } else {
