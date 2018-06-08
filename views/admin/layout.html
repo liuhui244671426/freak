@@ -59,7 +59,147 @@
     </nav>
     <!-- 侧边导航菜单 结束 -->
 
-    <?php include $include_file; ?>
+
+    <!-- 右侧内容 开始 -->
+    <div class="gray-bg" id="page-wrapper">
+        <!-- 右侧顶部导航div 开始 -->
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="index.html#"><i class="fa fa-bars"></i>
+                    </a>
+                    <form class="navbar-form-custom" action="search_results.html" role="search">
+                        <div class="form-group">
+                            <input class="form-control" id="top-search" name="top-search" type="text" placeholder="请输入您要查找的内容……">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li><span class="m-r-sm text-muted welcome-message">欢迎来到 YUN+ 后台UI主题</span></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                            <i class="fa fa-envelope"></i>
+                            <span class="label label-warning">16</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a class="pull-left" href="profile.html">
+                                        <img class="img-circle" src="img/a7.jpg" alt="image">
+                                    </a>
+                                    <div class="media-body">
+                                        <small class="pull-right">46h前</small>
+                                        <strong>国民老公</strong>又在微博放料啦，某某女演员……<br>
+                                        <small class="text-muted">3 前 7:58 下午 - 10.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="img/a4.jpg">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right text-navy">5小时前</small>
+                                        <strong>股票大跌</strong> 小马哥不再是首富了。 <strong>———来自财经网</strong>. <br>
+                                        <small class="text-muted">昨天 1:21 下午 - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <a href="profile.html" class="pull-left">
+                                        <img alt="image" class="img-circle" src="img/profile.jpg">
+                                    </a>
+                                    <div class="media-body ">
+                                        <small class="pull-right">23小时前</small>
+                                        <strong>风姐</strong> 爱上 <strong>小马哥啦！</strong>. <br>
+                                        <small class="text-muted">2天前 2:30 上午 - 11.06.2014</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="mailbox.html">
+                                        <i class="fa fa-envelope"></i> <strong>查看全部消息</strong>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                            <i class="fa fa-bell"></i>
+                            <span class="label label-primary">8</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-alerts">
+                            <li>
+                                <a href="mailbox.html">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> 你有8条未读消息
+                                        <span class="pull-right text-muted small">4 分钟前</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="profile.html">
+                                    <div>
+                                        <i class="fa fa-qq fa-fw"></i> 3条新回复
+                                        <span class="pull-right text-muted small">12 分钟前</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="grid_options.html">
+                                    <div>
+                                        <i class="fa fa-upload fa-fw"></i> 服务器重启
+                                        <span class="pull-right text-muted small">4 分钟前</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a href="notifications.html">
+                                        <strong>查看全部提醒</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-sign-out"></i> 退出
+                        </a>
+                    </li>
+                    <li>
+                        <a class="right-sidebar-toggle">
+                            <i class="fa fa-tasks"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- 右侧顶部导航div 结束 -->
+        <?php include $include_file; ?>
+        <div class="footer">
+            <div class="pull-right">
+                100000个访问<strong>总250w</strong>个访问.
+            </div>
+            <div>
+                <strong>Copyright</strong> chihuoyo.com &copy; 2018
+            </div>
+        </div>
+    </div>
+    <!-- 右侧内容 结束 -->
+
+
     <!-- 右上角隐藏通知，设置页 -->
     <div id="right-sidebar">
         <div class="sidebar-container">
