@@ -31,4 +31,16 @@ class freak_output{
         }
         return $out;
     }
+
+    public static function css_render($path){
+        $out = '';
+        if(is_array($path)){
+            foreach ($path as $k => $v) {
+                $out .= '<link href="'.$v.'" rel="stylesheet">';
+            }
+        } else {
+            $out .= '<script src="'.$path.'"></script>';
+        }
+        return $out;
+    }
 }
