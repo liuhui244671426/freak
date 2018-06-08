@@ -24,10 +24,10 @@ class freak_output{
         $out = '';
         if(is_array($path)){
             foreach ($path as $k => $v) {
-                $out .= '<script src="'.$v.'"></script>';
+                $out .= '<script src="'.$v.'.js"></script>';
             }
         } else {
-            $out .= '<script src="'.$path.'"></script>';
+            $out .= '<script src="'.$path.'.js"></script>';
         }
         return $out;
     }
@@ -36,10 +36,10 @@ class freak_output{
         $out = '';
         if(is_array($path)){
             foreach ($path as $k => $v) {
-                $out .= '<link href="'.$v.'" rel="stylesheet">';
+                $out .= '<link href="'.$v.'.css" rel="stylesheet">';
             }
         } else {
-            $out .= '<script src="'.$path.'"></script>';
+            $out .= '<script src="'.$path.'.css"></script>';
         }
         return $out;
     }
