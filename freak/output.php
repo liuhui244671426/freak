@@ -20,7 +20,15 @@ class freak_output{
         echo json_encode($data);
     }
     //页面需要运行的js
-    public static function run_js_render($path){
-        return '<script src="'.$path.'"></script>';
+    public static function js_render($path){
+        $out = '';
+        if(is_array($path)){
+            foreach ($path as $k => $v) {
+                $out .= '<script src="'.$v.'"></script>';
+            }
+        } else {
+            $out .= '<script src="'.$path.'"></script>';
+        }
+        return $out;
     }
 }

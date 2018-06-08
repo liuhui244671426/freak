@@ -632,8 +632,7 @@
 
 <!-- blueimp gallery -->
 <script src="<?php echo $static;?>js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
-
+<!-- 顺序加载 JS 文件 -->
 <?php if(!empty($include_js)){ include $include_js; }?>
-<?php if(!empty($include_run_js)){ include $include_run_js; }?>
 </body>
 </html>
