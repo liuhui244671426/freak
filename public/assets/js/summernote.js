@@ -14,13 +14,13 @@ $(document).ready(function(){
                 cache: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
-
                     if(data['status'] == 1) {
-                        //把图片放到编辑框中。editor.insertImage 是参数，写死。后面的http是网上的图片资源路径。
+                        //把图片放到编辑框中。editor.insertImage 是参数，写死。后面是图片资源路径。
                         $('.summernote').summernote('editor.insertImage', data['data'][0]['savepath']+data['data'][0]['savename']);
                     }
-
+                    if(data['status'] == -1) {
+                        console.error(data['data']);
+                    }
                 },
                 error: function () {
                     alert("上传失败");
