@@ -10,7 +10,7 @@ class lib_upload
         'subDirType' => 'hash', //子目录创建方式，hash\date两种
         'dateFormat' => 'Y/m/d', //按日期保存的格式
         'hashLevel' => 1, //hash的目录层次
-        'savePath' => PATH_ROOT.DS.'uploads'.DS, //上传文件的保存路径
+        'savePath' => 'public'.DS.'uploads'.DS, //上传文件的保存路径
         'replace' => false, //替换同名文件
         'rename' => true,//是否生成唯一文件名
     ];
