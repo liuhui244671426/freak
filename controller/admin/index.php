@@ -30,23 +30,4 @@ class controller_admin_index extends controller_base{
     public function editor_post(){
         print_r($_POST);
     }
-    public function editor_upload(){
-
-        $upload = new lib_upload();
-        $upload->upload('file');
-        $err = $upload->getErrorInfo();
-        $suc = $upload->getSuccessInfo();
-        $out = [];
-        if($err){
-            $out['status'] = -1;
-            $out['data'] = $err;
-        }
-        if($suc){
-            $out['status'] = 1;
-            $out['data'] = $suc;
-        }
-
-        freak_output::json_render($out);
-        return;
-    }
 }

@@ -9,7 +9,7 @@ $(document).ready(function(){
             $.ajax({
                 data: formData,
                 type: "POST",
-                url: "/?m=admin&a=editor_upload", //图片上传出来的url，返回的是图片上传后的路径，http格式
+                url: "/?m=admin&c=upload&a=file", //图片上传出来的url，返回的是图片上传后的路径，http格式
                 contentType: false,
                 cache: false,
                 processData: false,
