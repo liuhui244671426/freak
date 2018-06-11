@@ -452,4 +452,8 @@ class lib_image
     {
         empty($this->img) || imagedestroy($this->img);
     }
+
+    public function getInfo(){
+        return $this->info;
+    }
 }
