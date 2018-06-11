@@ -201,6 +201,7 @@ class lib_captcha
         Header('Content-type:image/gif');
         echo $gif->GetAnimation();
         */
+        //创建16帧
         for($i=0;$i<=16;$i++){
             ob_start();
             $this->createBg();
