@@ -18,6 +18,10 @@ class controller_sso_server extends controller_base{
         $name = lib_filter::strPost('name');
         $password = lib_filter::strPost('password');
         $callback = lib_filter::strPost('callback');
+        if(lib_filter::strPost('login_captcha') != $_SESSION['login_captcha']){
+            header("Location:".$callback);
+            return;
+        }
 
         $model = new model_sso();
         $ret = $model->login($name, $password);
@@ -41,4 +45,11 @@ class controller_sso_server extends controller_base{
         return;
     }
 
+    public function login_captcha(){
+        $lib = new lib_captcha();
+        $code = $lib->getCode();
+        $_SESSION['login_captcha'] = $code;
+        $lib->getGifImage();
+        return;
+    }
 }
