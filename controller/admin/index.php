@@ -42,7 +42,7 @@ class controller_admin_index extends controller_base{
         ], 'admin/layout');
     }
     public function editor_post(){
-        print_r($_POST);
+        //print_r($_POST);
         $db = new freak_pdo('write');
         $db->insert('content', array('content' => $_POST['editordata']));
     }
