@@ -3,10 +3,11 @@
  *
  * 定时任务启动器, 需要配置到系统的crontab里, 每分钟执行一次
  */
-if(PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
-require_once dirname(dirname(__FILE__)).'/freak/bootstrap.php';
 
-class master {
+if(PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
+require_once dirname(__FILE__).'/bootstrap.php';
+
+class monitor {
     const MAX_PROC = 128 ;  //每个任务最多并发进程数
     const CMD_PHP = '/usr/bin/php';
     const CMD_SH = '/usr/bin/sh';
@@ -71,7 +72,7 @@ class master {
 
     //检测自身进程是否存在
     private  function checkSelfRunning() {
-        $_cmd = "ps -ef | grep -v 'sudo' | grep -v 'grep' | grep '".PATH_DAEMON . DS . "master.php' |grep -v \"/bin/sh \\-c\" | wc -l";
+        $_cmd = "ps -ef | grep -v 'sudo' | grep -v 'grep' | grep '".PATH_DAEMON . DS . "monitor.php' |grep -v \"/bin/sh \\-c\" | wc -l";
 //        echo $_cmd ;exit;
         $_pp = @popen($_cmd, 'r');
         $_num = trim(@fread($_pp, 512)) + 0;
@@ -104,7 +105,7 @@ class master {
             }
 
             $path = str_replace(PATH_DAEMON . DS, "", $path);
-            if ($path == 'master.php') continue;
+            if ($path == 'monitor.php') continue;
 
             $proc_name = $this->buildProcName($type, $path, $proc_total, $proc_no, $version);
 
@@ -210,5 +211,5 @@ class master {
 
 }
 
-$crontab = new master();
+$crontab = new monitor();
 $crontab->boot();
