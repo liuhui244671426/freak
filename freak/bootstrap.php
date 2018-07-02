@@ -71,7 +71,9 @@ function run(){
         $obj = new $exec_class();
         $obj->$action();
     } catch (Exception $e){
-        exit($e->getTraceAsString());
+        freak_log::write($e->getTraceAsString());
+        freak_log::write($e->getMessage());
+        exit();
     }
     return true;
 }
