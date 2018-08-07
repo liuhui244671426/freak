@@ -9,11 +9,12 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 class freak_log {
 
     # @string, Log directory name
-    private static $path = PATH_ROOT.DS.'logs'.DS;
+    //private static $path = '';
 
     # @void, Default Constructor, Sets the timezone and path of the log files.
     public function __construct() {
         //$this->path  = dirname(__FILE__)  . $this->path;
+        //self::$path = PATH_ROOT.DS.'logs'.DS;
     }
 
     /**
@@ -31,8 +32,9 @@ class freak_log {
      */
     public static function write($message) {
         $date = new DateTime();
-        $log = self::$path . $date->format('Ymd').".txt";
-        if(is_dir(self::$path)) {
+        $path = PATH_ROOT.DS.'logs'.DS;
+        $log = $path . $date->format('Ymd').".txt";
+        if(is_dir($path)) {
             if(!file_exists($log)) {
                 $fh  = fopen($log, 'a+') or die("Fatal Error !");
                 $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n";
@@ -44,7 +46,7 @@ class freak_log {
             }
         }
         else {
-            if(mkdir(self::$path,0777) === true)
+            if(mkdir($path,0777) === true)
             {
                 self::write($message);
             }
@@ -62,7 +64,6 @@ class freak_log {
      */
     private static function edit($log,$date,$message) {
         $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n\r\n";
-        $logcontent = $logcontent . file_get_contents($log);
-        file_put_contents($log, $logcontent);
+        file_put_contents($log, $logcontent,FILE_APPEND);
     }
 }
