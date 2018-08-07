@@ -10,8 +10,8 @@ abstract class daemon_workers_base {
     private $stop;
 
     public function __construct() {
-        $this->proc_total = $_SERVER['argv'][1];
-        $this->proc_no = $_SERVER['argv'][2];
+        $this->proc_total = $_SERVER['argv'][1]?$_SERVER['argv'][1]:'';
+        $this->proc_no = $_SERVER['argv'][2]?$_SERVER['argv'][2]:'';
         $this->stop = false;
         $this->pid = posix_getpid();
 //        pcntl_signal(SIGTERM,	array(&$this, 'signalHandler'));
