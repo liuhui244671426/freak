@@ -185,15 +185,18 @@ class lib_curl {
     {
         $ch = curl_init();
         $option = array_merge($this->option, $this->custom);
+        //print_r($option);die;
         foreach($option as $key => $val) {
             if (is_string($key)) {
                 $key = constant(strtoupper($key));
+                if($key == CURLOPT_URL){  }
             }
             curl_setopt($ch, $key, $val);
         }
         if ($this->post) {
             curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $this->convert($this->post));
+            //curl_setopt($ch, CURLOPT_POSTFIELDS, $this->convert($this->post));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->post));
         }
         $this->data = (string) curl_exec($ch);
         $this->info = curl_getinfo($ch);
