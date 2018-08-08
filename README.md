@@ -70,8 +70,8 @@ m=index?c=hello&a=world
 
 ### 文件加载规则
 框架已有自动加载功能,适用于所有文件,您在使用时无需担心文件加载问题.只需按照规则命名文件名及类名.**类名需要是根目录为起始目录完整的文件路径且已 _ 分隔目录层级**.比如,调用 lib/cookie.php 文件的get方法.
-1.类名必须是 **class lib_cookie**
-2.通过 **lib_cookie:: get('xxx');**调用
+- 类名必须是 **class lib_cookie**
+- 通过 **lib_cookie:: get('xxx');**调用
 再比如,调用 freak/pdo.php 的 query 方法
-1.类名必须是 **class freak_pdo**
-2.通过 **new freak_pdo()**调用
+- 类名必须是 **class freak_pdo**
+- 通过 **new freak_pdo()**调用
