@@ -9,7 +9,7 @@
 -   controller web业务接口
     - sso 单点登录服务版本
     - admin 后台
--   freak 核心文件
+-   freak 框架目录,不建议修改
     - bootstrap.php 启动器
     - monitor.php 脚本守护进程
 -   daemon 脚本
@@ -36,7 +36,6 @@
 -   debug.php web 业务入口的debug版本
 -   README.md
 -   composer.json
-- 
  - - - - --
 ### config介绍
 1.config 配置环境均分为product和develop,如果需要切换环境,修改bootstrap.php文件
@@ -46,7 +45,7 @@ or
 $_SERVER['ENV_CONFIG'] = 'product';
 ```
 即可
-2.获取配置具体内容
+2.获取配置内容
 ```php
 freak_config::get('文件名','字段名');//如果字段名是空,则会获取一个完整配置信息
 ```
@@ -56,5 +55,23 @@ freak_config::get('pdo', 'read');//获取 config/pdo.php 下的 'read' 配置信
 ```
 ### 入口文件
 通过apache 或 nginx定义入口文件,nginx 可以参考 config/nginx.conf
-### 守护进程
-####安装
+### 路由
+只支持一种路由
+```php
+rule : module->controller->action
+```
+例子:
+```php    
+m=index?c=hello&a=world
+//框架将执行controller/index/hello.php 里面的 function world()
+```
+### controller
+所有 web 访问的接口或页面,都要放在 controller 目录里
+
+### 文件加载规则
+框架已有自动加载功能,适用于所有文件,您在使用时无需担心文件加载问题.只需按照规则命名文件名及类名.**类名需要是根目录为起始目录完整的文件路径且已 _ 分隔目录层级**.比如,调用 lib/cookie.php 文件的get方法.
+1.类名必须是 **class lib_cookie**
+2.通过 **lib_cookie:: get('xxx');**调用
+再比如,调用 freak/pdo.php 的 query 方法
+1.类名必须是 **class freak_pdo**
+2.通过 **new freak_pdo()**调用
