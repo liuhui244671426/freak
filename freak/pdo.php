@@ -298,7 +298,7 @@ class freak_pdo{
             $message .= "\r\nRaw SQL : " . $sql;
         }
         # Write into log
-        freak_log::write($message);
+        freak_log::write($message,'SQL');
 
         return $exception;
     }

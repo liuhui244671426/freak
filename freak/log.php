@@ -30,10 +30,10 @@ class freak_log {
      *	 5. If log exists, edit method called.
      *	 6. Edit method modifies the current log.
      */
-    public static function write($message) {
+    public static function write($message, $pre='') {
         $date = new DateTime();
         $path = PATH_ROOT.DS.'logs'.DS;
-        $log = $path . $date->format('Ymd').".txt";
+        $log = $path . $date->format('Ymd').$pre.".txt";
         if(is_dir($path)) {
             if(!file_exists($log)) {
                 $fh  = fopen($log, 'a+') or die("Fatal Error !");
