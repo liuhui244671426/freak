@@ -5,8 +5,8 @@ if(PHP_SAPI != 'cli'){
 define('PATH_ROOT', dirname(__FILE__));
 define('DS', DIRECTORY_SEPARATOR);
 
-echo 'freak world'.PHP_EOL;
-echo '========================'.PHP_EOL.PHP_EOL;
+echo 'Freak 框架构建工具'.PHP_EOL.PHP_EOL;
+
 $mode_map = array(
     1 => 'controller',
     2 => 'daemon',
@@ -21,12 +21,13 @@ if($mode == NULL) {
 if($mode == 'delete logs'){
     $op = opendir(PATH_ROOT.DS.'logs');
     while(false !== ($file = readdir($op))){
-        if($file != '.' || $file != '..'){
-            unlink(PATH_ROOT.DS.'logs'.DS.$file);
+        if($file == '.' || $file == '..'){
+            continue;
         }
+        unlink(PATH_ROOT.DS.'logs'.DS.$file);
     }
     closedir($op);
-    echo "SUCCESS clean logs";return;
+    echo "SUCCESS clean logs".PHP_EOL;return;
 }
 
 fwrite(STDOUT, '请输入 module: ');
@@ -61,7 +62,8 @@ if($fw === false){
     echo "ERROR write file {$controller_file_path} is FAILED";return;
 }
 
-echo "SUCCESS write file {$controller_file_path}";return;
+echo "SUCCESS write file {$controller_file_path}".PHP_EOL;
+return;
 
 
 function build_web_class($m, $c){
