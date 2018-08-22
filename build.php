@@ -12,7 +12,11 @@ $mode_map = array(
     2 => 'daemon',
     11 => 'delete logs',
 );
-fwrite(STDOUT, '选择模式(1:controller  2:daemon  11:delete logs ), 请输入数字: ');
+fwrite(STDOUT, '选择模式
+1:创建网页接口
+2:创建任务脚本
+11:清理日志
+请输入数字: ');
 $mode = trim(fgets(STDIN));
 $mode = $mode_map[$mode];
 if($mode == NULL) {
