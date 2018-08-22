@@ -8,9 +8,16 @@ class daemon_workers_test extends daemon_workers_base {
     }
     public function run(){
         //sleep(10);
-        $log = new freak_log();
-
-        $log->write(__METHOD__ . $this->getPid());
+        $i = 0;
+        $t = '';
+        while($i <= 50){
+            $t .= "=";
+            echo $t."\r";
+            $i++;
+            sleep(1);
+        }
+        echo "\r\n";
+        echo "finish\r\n";
         return;
     }
 }

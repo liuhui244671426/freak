@@ -1,10 +1,17 @@
 <?php
-$_SERVER['ENV_CONFIG'] = 'develop';//配置文件
+/**
+ * 本文件是核心文件, web 和 cli 模式均需要加载本文件
+ * web 不需要手动加载,系统已经处理
+ * cli 必须手动加载
+ * */
+
+$_SERVER['ENV_CONFIG'] = 'develop';//配置文件需要的环境
 if(version_compare(PHP_VERSION, '5.6.0') < 0){ exit('PHP版本需要大于5.6.0'); }
 
 error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('PRC');
-//--------CONST-----------
+
+//--------CONST--------------
 define('PATH_ROOT', dirname(dirname(__FILE__)));
 define('DS', DIRECTORY_SEPARATOR);
 define('PATH_VIEW', PATH_ROOT.DS.'views');
@@ -12,7 +19,7 @@ define('PATH_CONFIG', PATH_ROOT.DS.'config');
 define('PATH_DAEMON', PATH_ROOT.DS.'daemon');
 define('PATH_PUBLIC', PATH_ROOT.DS.'public');
 defined('FREAK_ACCESS') or exit('Access Denied');
-//--------CONST-----------
+//--------CONST--------------
 
 //--------register-----------
 spl_autoload_register('f_auto_load');
@@ -20,15 +27,39 @@ set_error_handler('f_error_handler');
 register_shutdown_function('f_last_error');
 //--------register-----------
 
-//--------session-----------
+//web interface
 if(PHP_SAPI != 'cli'){
+    //--------session-----------
     if($_COOKIE[session_name()] == '') { session_id(microtime(true)*10000); }
     $session = new lib_session();
     session_set_save_handler($session, true);
     session_start();
     setcookie(session_name(), session_id(), time()+86400);//expire time和redis ttl 一致
+    //--------session-----------
+
+
+    ###########router rule##############
+    #rule : module->controller->action
+    #     : m=index?c=index&a=index
+    ####################################
+    $m = filter_input(INPUT_GET, 'm');
+    $c = filter_input(INPUT_GET, 'c');
+    $a = filter_input(INPUT_GET, 'a');
+    $module = $m?$m:'index';
+    $controller = $c?$c:'index';
+    $action = $a?$a:'index';
+
+    $exec_class = 'controller'.'_'.$module.'_'.$controller;
+    try{
+        $obj = new $exec_class();
+        $obj->$action();
+    } catch (Exception $e){
+        freak_log::write($e->getTraceAsString());
+        freak_log::write($e->getMessage());
+        exit();
+    }
 }
-//--------session-----------
+return true;
 
 function f_auto_load($class){
     $path = PATH_ROOT.DS.str_replace('_',DS,$class).'.php';
@@ -53,29 +84,3 @@ function f_last_error(){
     if($e) freak_log::write("ERROR message: {$e['message']},type: {$e['type']}, in file: {$e['file']} on line:{$e['line']}");
     return true;
 }
-###########router rule##############
-#rule : module->controller->action
-#     : m=index?c=index&a=index
-####################################
-function run(){
-    if(PHP_SAPI == 'cli'){return true;}
-    $m = filter_input(INPUT_GET, 'm');
-    $c = filter_input(INPUT_GET, 'c');
-    $a = filter_input(INPUT_GET, 'a');
-    $module = $m?$m:'index';
-    $controller = $c?$c:'index';
-    $action = $a?$a:'index';
-
-    $exec_class = 'controller'.'_'.$module.'_'.$controller;
-    try{
-        $obj = new $exec_class();
-        $obj->$action();
-    } catch (Exception $e){
-        freak_log::write($e->getTraceAsString());
-        freak_log::write($e->getMessage());
-        exit();
-    }
-    return true;
-}
-run();
-return;
