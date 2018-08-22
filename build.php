@@ -58,7 +58,7 @@ function build_web_class($m, $c){
 class controller_{$m}_{$c} extends controller_base{
 
     public function init(){}
-    // url query /m={$m}&c={$c}&a=something
+    // url query /?m={$m}&c={$c}&a=something
     public function something(){
         echo 'Hi, web';
     }
