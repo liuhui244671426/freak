@@ -20,6 +20,7 @@ class daemon_workers_clearHostDesktop extends daemon_workers_base {
                 }
             }
         }
+        closedir($op);
         return;
     }
 

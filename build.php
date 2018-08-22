@@ -10,13 +10,25 @@ echo '========================'.PHP_EOL.PHP_EOL;
 $mode_map = array(
     1 => 'controller',
     2 => 'daemon',
+    11 => 'delete logs',
 );
-fwrite(STDOUT, '选择模式(1:controller  2:daemon), 请输入数字: ');
+fwrite(STDOUT, '选择模式(1:controller  2:daemon  11:delete logs ), 请输入数字: ');
 $mode = trim(fgets(STDIN));
 $mode = $mode_map[$mode];
 if($mode == NULL) {
     echo "ERROR mode NOT EXISTS";return;
 }
+if($mode == 'delete logs'){
+    $op = opendir(PATH_ROOT.DS.'logs');
+    while(false !== ($file = readdir($op))){
+        if($file != '.' || $file != '..'){
+            unlink(PATH_ROOT.DS.'logs'.DS.$file);
+        }
+    }
+    closedir($op);
+    echo "SUCCESS clean logs";return;
+}
+
 fwrite(STDOUT, '请输入 module: ');
 $module = trim(fgets(STDIN));
 fwrite(STDOUT, '请输入 controller: ');
