@@ -8,7 +8,7 @@ define('DS', DIRECTORY_SEPARATOR);
 echo 'Freak 框架构建工具'.PHP_EOL.PHP_EOL;
 
 $mode_map = array(
-    1 => 'controller',
+    1 => 'fpm',
     2 => 'daemon',
     11 => 'delete logs',
 );
@@ -54,7 +54,7 @@ if(file_exists($controller_file_path)){
 
 $fp = fopen($controller_file_path, 'a+');
 $fw = false;
-if($mode == 'controller'){
+if($mode == 'fpm'){
     $fw = fwrite($fp, build_web_class($module, $controller));
 }
 if($mode == 'daemon'){
@@ -73,7 +73,7 @@ return;
 function build_web_class($m, $c){
     $tmp = "<?php
 
-class controller_{$m}_{$c} extends controller_base{
+class fpm_{$m}_{$c} extends fpm_base{
 
     public function init(){}
     // url query /?m={$m}&c={$c}&a=something

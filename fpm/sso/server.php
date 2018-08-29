@@ -1,5 +1,5 @@
 <?php
-class controller_sso_server extends controller_base{
+class fpm_sso_server extends fpm_base{
     public function init(){}
 
     public function index(){

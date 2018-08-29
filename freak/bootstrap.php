@@ -49,7 +49,7 @@ if(PHP_SAPI != 'cli'){
     $controller = $c?$c:'index';
     $action = $a?$a:'index';
 
-    $exec_class = 'controller'.'_'.$module.'_'.$controller;
+    $exec_class = 'fpm'.'_'.$module.'_'.$controller;
     try{
         $obj = new $exec_class();
         $obj->$action();

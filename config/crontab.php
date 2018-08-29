@@ -8,8 +8,9 @@ return array(
     'product' => array(),
     'develop' => array(
         #"* * * * * php workers/test.php   2 1.0",
-        #"*/2 * * * * php workers/daka.php   1 1.0",
-        "* */1 * * * php workers/clearHostDesktop.php   1 1.0",
+        #"00 06 * * * php weibo/login.php   1 1.0",
+        #"*/5 07 * * * php weibo/daka.php   1 1.0",
+        "00 10 * * * php workers/clearHostDesktop.php   1 1.0",
     )
 
 );

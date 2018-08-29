@@ -1,6 +1,6 @@
 <?php
 
-class controller_admin_index extends controller_base{
+class fpm_admin_index extends fpm_base{
     public function init(){
         lib_ssoClient::is_login();
     }

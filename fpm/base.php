@@ -1,7 +1,7 @@
 <?php
 defined('FREAK_ACCESS') or exit('Access Denied');
 
-abstract class controller_base{
+abstract class fpm_base{
     public function __construct(){$this->init();}
     public function __destruct(){}
     abstract public function init();

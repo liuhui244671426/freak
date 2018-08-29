@@ -1,5 +1,5 @@
 <?php
-class controller_admin_upload extends controller_base{
+class fpm_admin_upload extends fpm_base{
     public function init(){}
 
     public function file(){

@@ -6,7 +6,7 @@
 ---------
 -   config 配置目录
     - nginx.conf 安装的配置文件,安装后需要删除
--   controller web业务接口
+-   fpm web业务接口
     - sso 单点登录服务版本
     - admin 后台
 -   freak 框架目录,不建议修改
@@ -63,10 +63,10 @@ rule : module->controller->action
 例子:
 ```php    
 m=index?c=hello&a=world
-//框架将执行controller/index/hello.php 里面的 function world()
+//fpm/index/hello.php 里面的 function world()
 ```
-### controller
-所有 web 访问的接口或页面,都要放在 controller 目录里
+### fpm
+所有 web 访问的接口或页面,都要放在 fpm 目录里
 
 ### 文件加载规则
 框架已有自动加载功能,适用于所有文件,您在使用时无需担心文件加载问题.只需按照规则命名文件名及类名.**类名需要是根目录为起始目录完整的文件路径且已 _ 分隔目录层级**.比如,调用 lib/cookie.php 文件的get方法.
