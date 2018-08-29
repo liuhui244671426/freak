@@ -24,6 +24,7 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 //--------register-----------
 spl_autoload_register('f_auto_load');
 set_error_handler('f_error_handler', E_ALL|E_STRICT);
+set_exception_handler('f_last_error');
 register_shutdown_function('f_last_error');
 //--------register-----------
 
@@ -53,7 +54,7 @@ if(PHP_SAPI != 'cli'){
     try{
         $obj = new $exec_class();
         $obj->$action();
-    } catch (Exception $e){
+    } catch (Throwable $e){
         freak_log::write($e->getTraceAsString());
         freak_log::write($e->getMessage());
         exit();
@@ -82,5 +83,9 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
 function f_last_error(){
     $e = error_get_last();
     if($e) freak_log::write("ERROR message: {$e['message']},type: {$e['type']}, in file: {$e['file']} on line:{$e['line']}");
+    return true;
+}
+function f_exception($e){
+    freak_log::write("EXCEPTION: {$e->getTraceAsString()}");
     return true;
 }
