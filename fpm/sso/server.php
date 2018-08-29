@@ -4,7 +4,7 @@ class fpm_sso_server extends fpm_base{
 
     public function index(){
         $callback = lib_filter::strGet('callback');
-        freak_output::view_render("sso/login", array('callback'=>$callback));
+        freak_view::render("sso/login", array('callback'=>$callback));
         return;
     }
 

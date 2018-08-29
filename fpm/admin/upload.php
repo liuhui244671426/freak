@@ -17,7 +17,7 @@ class fpm_admin_upload extends fpm_base{
             $out['data'] = $suc;
         }
 
-        freak_output::json_render($out);
+        freak_output::json($out);
         return;
     }
 }
