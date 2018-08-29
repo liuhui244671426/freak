@@ -23,7 +23,7 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 
 //--------register-----------
 spl_autoload_register('f_auto_load');
-set_error_handler('f_error_handler');
+set_error_handler('f_error_handler', E_ALL|E_STRICT);
 register_shutdown_function('f_last_error');
 //--------register-----------
 
