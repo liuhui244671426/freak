@@ -201,15 +201,28 @@ class monitor {
         @pclose($pp);
     }
 
-
-
     private function killProc($pid) {
         $pid = intval($pid);
-//        return posix_kill($pid, SIGUSR1);
-        return posix_kill($pid, 9);
+        return posix_kill($pid, SIGKILL);//直接 Kill 进程
     }
 
+    /**
+     * 查看当前正在运行的程序
+     * */
+    public function getRunningProcess(){
+        $_cmd = "ps -ef | grep -v 'sudo' | grep -v 'grep' | grep '".PATH_DAEMON . DS . "' |grep -v \"/bin/sh \\-c\"";
+        //echo $_cmd ;exit;
+        $_pp = @popen($_cmd, 'r');
+        $_num = fread($_pp, 5120);
+        @pclose($_pp);
+        echo "runningList: \n";
+        echo $_num;
+        echo PHP_EOL;
+    }
 }
-
-$crontab = new monitor();
-$crontab->boot();
+$monitor = new monitor();
+if($argv[1] == 'runningList'){
+    $monitor->getRunningProcess();
+    return;
+}
+$monitor->boot();
