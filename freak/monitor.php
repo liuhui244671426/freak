@@ -221,7 +221,7 @@ class monitor {
     }
 }
 $monitor = new monitor();
-if($argv[1] == 'runningList'){
+if($argv[1] == 'list'){
     $monitor->getRunningProcess();
     return;
 }
