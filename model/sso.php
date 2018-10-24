@@ -18,4 +18,10 @@ class model_sso extends model_base{
         $ret = $db->row("select * from `token` where `token`=:token", array('token' => $token));
         return $ret;
     }
+    //通过uid获取用户信息
+    public function get_user_info($uid){
+        $db = new freak_pdo('read');
+        $ret = $db->row("select * from `sso` where `id`=:id", array('id'=>$uid));
+        return $ret;
+    }
 }

@@ -3,11 +3,10 @@
 class fpm_admin_index extends fpm_base{
     public function init(){
         freak_view::$layout = 'admin/layout';
-        lib_ssoClient::is_login();
+        $user_info = lib_ssoClient::is_login();
     }
 
     public function index(){
-        //freak_output::view_layout_render('admin/index/index', array(), 'admin/layout');
         freak_view::layout_render('admin/index/index', array());
         return;
     }
@@ -15,7 +14,6 @@ class fpm_admin_index extends fpm_base{
         $id = lib_filter::get('id');
         $db = new freak_pdo('read');
         $ret = $db->query("select * from `content` where id=:id", array('id' => $id));
-        //freak_output::view_layout_render('admin/index/show', array('text' => $ret[0]), 'admin/layout');
         freak_view::layout_render('admin/index/show', array('text' => $ret[0]));
         return;
     }
@@ -45,7 +43,6 @@ class fpm_admin_index extends fpm_base{
         ]);
     }
     public function editor_post(){
-        //print_r($_POST);
         $db = new freak_pdo('write');
         $db->insert('content', array('content' => $_POST['editordata']));
     }

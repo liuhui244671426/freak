@@ -33,14 +33,15 @@ class fpm_sso_server extends fpm_base{
             return;
         }
     }
-    // 检测 token 是否有效
-    public function check(){
+    // 通过 token 获取用户信息
+    public function get_user_info(){
         $model = new model_sso();
-        $ret = $model->check_token(lib_filter::strGet('token'));
-        if($ret){
-            echo 'success';
+        $token_info = $model->check_token(lib_filter::strGet('token'));
+        if($token_info){
+            $uid_info = $model->get_user_info($token_info['uid']); //获取用户信息
+            freak_output::json(array('code' => 10000, 'msg' => 'Success', 'data' => array('uid' => $uid_info['id'], 'name' => $uid_info['name'])));
         } else {
-            echo 'failed';
+            freak_output::json(array('code' => 20000, 'msg' => 'Failed', 'data' => array()));
         }
         return;
     }
