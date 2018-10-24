@@ -11,15 +11,16 @@ class lib_ssoClient{
             }
             return $user_info;
         } else {
-            if(empty($_COOKIE['token'])){
+            $token = $_COOKIE['token'];
+            if(empty($token)){
                 //去 server 的登陆页面
-                $url = freak_config::get('sso', 'server');
-                $callback = ($callback == '')   ?   lib_helper::current_url() :   $callback;
-                header("Location: {$url['url_login']}&callback=".urlencode($callback));
-                exit;
+                self::jump_login($callback);
             } else {
                 //已经埋了 token, 拿 token 换user information
-                return self::get_user_info_by_token($token);
+                $user_info = self::get_user_info_by_token($token);
+                if(empty($user_info)){
+                    self::jump_login($callback);
+                }
             }
         }
     }
@@ -36,5 +37,10 @@ class lib_ssoClient{
         return array();
     }
 
-
+    private static function jump_login($callback){
+        $url = freak_config::get('sso', 'server');
+        $callback = ($callback == '')   ?   lib_helper::current_url() :   $callback;
+        header("Location: {$url['url_login']}&callback=".urlencode($callback));
+        exit;
+    }
 }
