@@ -212,7 +212,8 @@ class lib_captcha
             $this->gifData[] = ob_get_contents();
             ob_clean();
         }
-        return $this->outPutGif();
+        $this->outPutGif();
+        return;
     }
 
     /**
