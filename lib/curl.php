@@ -6,6 +6,40 @@
  *
  * https://github.com/wenpeng/curl
  * 一个轻量级的网络操作类，实现GET、POST、UPLOAD、DOWNLOAD常用操作，支持链式写法。
+ *
+ * 示例
+$curl = new Curl;
+或者
+
+$curl = Curl::init();
+GET:
+$curl->url(目标网址);
+POST:
+$curl->post(变量名, 变量值)->post(多维数组)->url(目标网址);
+UPLOAD:
+$curl->post(多维数组)->file($_FILE字段, 本地路径, 文件类型, 原始名称)->url(目标网址);
+DOWNLOAD:
+$curl->url(文件地址)->save(保存路径);
+配置
+参考:http://php.net/manual/en/function.curl-setopt.php
+
+$curl->set('CURLOPT_选项', 值)->post(多维数组)->url(目标网址);
+自动重试
+// 出错自动重试N次(默认0)
+$curl->retry(3)->post(多维数组)->url(目标网址);
+结果
+// 任务结果状态
+if ($curl->error()) {
+echo $curl->message();
+} else {
+// 任务进程信息
+$info = $curl->info();
+
+// 任务结果内容
+$content = $curl->data();
+}
+ *
+ *
  */
 defined('FREAK_ACCESS') or exit('Access Denied');
 
@@ -96,6 +130,7 @@ class lib_curl {
                 $this->post[$data] = $value;
             }
         }
+        //print_r($this->post);
         return $this;
     }
     /**
@@ -111,7 +146,7 @@ class lib_curl {
         $name = basename($name);
         if (class_exists('CURLFile')) {
             $this->set('CURLOPT_SAFE_UPLOAD', true);
-            $file = curl_file_create($path, $type, $name);
+                        $file = curl_file_create($path, $type, $name);
         } else {
             $file = "@{$path};type={$type};filename={$name}";
         }
@@ -195,13 +230,15 @@ class lib_curl {
         }
         if ($this->post) {
             curl_setopt($ch, CURLOPT_POST, true);
-            //curl_setopt($ch, CURLOPT_POSTFIELDS, $this->convert($this->post));
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->post));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $this->convert($this->post));
+            //curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->post));
+            //curl_setopt($ch, CURLOPT_POSTFIELDS, $this->post);
         }
         $this->data = (string) curl_exec($ch);
         $this->info = curl_getinfo($ch);
         $this->error = curl_errno($ch);
         $this->message = $this->error ? curl_error($ch) : '';
+        //var_dump($this->post, $this->info);
         curl_close($ch);
         if ($this->error && $retry < $this->retry) {
             $this->process($retry + 1);

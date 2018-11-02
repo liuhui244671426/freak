@@ -3,8 +3,9 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 class freak_redis{
     private static $obj = null;
 
-    public function __construct($mode='read'){
-        $config = freak_config::get('redis', $mode);
+    public function __construct($mode='read',$alias='freak'){
+        $config = freak_config::get('redis', $alias);
+        $config = $config[$mode];
         if(is_null(self::$obj)){
             self::$obj = new Redis();
             self::$obj->pconnect($config['host'], $config['port']);

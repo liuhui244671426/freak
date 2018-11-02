@@ -36,9 +36,9 @@ class freak_pdo{
      *	2. Connect to database.
      *	3. Creates the parameter array.
      */
-    public function __construct($mode='read')
+    public function __construct($mode='read',$alias='freak')
     {
-        $this->Connect($mode);
+        $this->Connect($alias,$mode);
         $this->parameters = array();
     }
 
@@ -50,10 +50,11 @@ class freak_pdo{
      *	3. Tries to connect to the database.
      *	4. If connection failed, exception is displayed and a log file gets created.
      */
-    private function Connect($mode)
+    private function Connect($alias,$mode)
     {
         //$this->settings = parse_ini_file("settings.ini.php");
-        $this->settings = freak_config::get('pdo', $mode);
+        $config_pdo = freak_config::get('pdo', $alias);
+        $this->settings = $config_pdo[$mode];
         $dsn    = 'mysql:dbname='.$this->settings["dbname"].';host='.$this->settings["host"].';port='.$this->settings["port"];
         try {
             # Read settings from INI file, set UTF8

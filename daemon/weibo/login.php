@@ -7,7 +7,6 @@ class daemon_weibo_login extends daemon_workers_base {
     private $cookie_jar = '';
     private $header = array();
     public function init(){
-        $this->cookie_jar = PATH_ROOT.DS.'logs'.DS.'tmp.cookie';
         $this->header = array(
             'User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 weibo',
             'Referer:https://getup.sc.weibo.com/home',
@@ -22,16 +21,21 @@ class daemon_weibo_login extends daemon_workers_base {
     }
 
     public function run(){
-        unlink($this->cookie_jar);
-        $ret = $this->login_weibo();
+        $accounts = freak_config::get('account', 'weibo');
+        foreach ($accounts as $username=> $password) {
+            $this->cookie_jar = PATH_ROOT.DS.'download'.DS.'cookie'.DS.$username.'.cookie';
+            unlink($this->cookie_jar);
+            $ret = $this->login_weibo($username, $password);
+            var_dump($ret);
+        }
         return;
     }
 
-    private function login_weibo(){
+    private function login_weibo($username, $password){
         $curl = lib_curl::init();
         $post_data = array(
-            'username'=>'liuhui244671426@sina.cn',//微博账号
-            'password'=> 'Liuhui3014224',//微博密码
+            'username'=> $username,//微博账号
+            'password'=> $password,//微博密码
             'savestate'=> 1,
             'r'=> 'https://m.weibo.cn/',
             'ec'=> 0,
@@ -53,7 +57,7 @@ class daemon_weibo_login extends daemon_workers_base {
         $curl->set('CURLOPT_SSL_VERIFYPEER', false);// 信任任何证书
         $curl->set('CURLOPT_SSL_VERIFYHOST', false);// 检查证书中是否设置域名
 
-        $ret = $curl->post($post_data)->url("https://passport.weibo.cn/sso/login")->data();
+        $ret = $curl->post(http_build_query($post_data))->url("https://passport.weibo.cn/sso/login")->data();
         $ret = json_decode($ret, 1);
         if($ret['retcode'] == 20000000){
             $ret2 = $curl->url($ret['data']['loginresulturl'])->data();
