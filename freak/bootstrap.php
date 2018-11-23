@@ -75,8 +75,8 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
     $msg = "ERROR";
     if($errno == E_WARNING)$msg = "WARNING";
     if($errno == E_NOTICE)$msg = "NOTICE";
-    if($errno == E_STRICT)$msg = "STRICT";
-    if($errno == 8192)$msg = "DEPRECATED";
+    if($errno == E_STRICT)$msg = "STRICT";//严格
+    if($errno == E_DEPRECATED)$msg = "DEPRECATED"; //过时遗弃
     freak_log::write("$msg: $errstr in $errfile on line $errline");
     return true;
 }

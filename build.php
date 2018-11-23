@@ -7,11 +7,11 @@ define('DS', DIRECTORY_SEPARATOR);
 
 echo 'Freak 框架构建工具'.PHP_EOL.PHP_EOL;
 
-$mode_map = array(
+$mode_map = [
     1 => 'fpm',
     2 => 'daemon',
     11 => 'delete logs',
-);
+];
 fwrite(STDOUT, '选择模式
 1:创建网页接口
 2:创建任务脚本
