@@ -2,6 +2,12 @@
 --------
  Freak 是一个简单的 PHP 框架.
 - - - - --
+### 使用构建工具
+```php
+cd workspace
+php freak/build.php
+```
+---------
 ### 目录介绍
 ---------
 -   config 配置目录
@@ -63,15 +69,14 @@ rule : module->controller->action
 例子:
 ```php    
 m=index?c=hello&a=world
-//fpm/index/hello.php 里面的 function world()
+//fpm/index/hello.php 里面的 world() 方法
 ```
 ### fpm
 所有 web 访问的接口或页面,都要放在 fpm 目录里
 
 ### 文件加载规则
-框架已有自动加载功能,适用于所有文件,您在使用时无需担心文件加载问题.只需按照规则命名文件名及类名.**类名需要是根目录为起始目录完整的文件路径且已 _ 分隔目录层级**.比如,调用 lib/cookie.php 文件的get方法.
-- 类名必须是 **class lib_cookie**
-- 通过 **lib_cookie:: get('xxx');**调用
-再比如,调用 freak/pdo.php 的 query 方法
-- 类名必须是 **class freak_pdo**
-- 通过 **new freak_pdo()**调用
+框架已有自动加载功能,适用于所有文件,您在使用时无需担心文件加载问题.只需按照规则命名文件名及类名.**类名需要是根目录为起始目录完整的文件路径且已 _ 分隔目录层级**.比如
+
+调用 freak/pdo.php 的 query 方法
+- 类定义 **class freak_pdo**
+- 通过 **new freak_pdo()** 调用
