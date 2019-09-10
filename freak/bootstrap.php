@@ -6,7 +6,7 @@
  * */
 
 $_SERVER['ENV_CONFIG'] = 'develop';//配置文件需要的环境
-if(version_compare(PHP_VERSION, '5.6.0') < 0){ exit('PHP版本需要大于5.6.0'); }
+if(version_compare(PHP_VERSION, '5.6.0') < 0){ exit('PHP version must >= 5.6.0'); }
 
 error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('PRC');
@@ -31,11 +31,7 @@ register_shutdown_function('f_last_error');
 //web interface
 if(PHP_SAPI != 'cli'){
     //--------session-----------
-    if($_COOKIE[session_name()] == '') { session_id(microtime(true)*10000); }
-    $session = new lib_session();
-    session_set_save_handler($session, true);
-    session_start();
-    setcookie(session_name(), session_id(), time()+86400);//expire time和redis ttl 一致
+    //f_session('redis');
     //--------session-----------
 
 
@@ -51,12 +47,17 @@ if(PHP_SAPI != 'cli'){
     $action = $a?$a:'index';
 
     $exec_class = 'fpm'.'_'.$module.'_'.$controller;
+
     try{
         $obj = new $exec_class();
         $obj->$action();
     } catch (Throwable $e){
         freak_log::write($e->getTraceAsString());
         freak_log::write($e->getMessage());
+
+        echo 'File not found.';
+        header('HTTP/1.1 404 Not Found');
+        header("status: 404 Not Found");
         exit();
     }
 }
@@ -65,7 +66,7 @@ return true;
 function f_auto_load($class){
     $path = PATH_ROOT.DS.str_replace('_',DS,$class).'.php';
     if(!file_exists($path)){
-        throw new Exception("file : {$path}, NOT EXIST");
+        throw new Exception("auto load file : {$path}, NOT EXIST");
     }
     include $path;
     return true;
@@ -77,7 +78,7 @@ function f_error_handler($errno, $errstr, $errfile, $errline){
     if($errno == E_NOTICE)$msg = "NOTICE";
     if($errno == E_STRICT)$msg = "STRICT";//严格
     if($errno == E_DEPRECATED)$msg = "DEPRECATED"; //过时遗弃
-    freak_log::write("$msg: $errstr in $errfile on line $errline");
+    freak_log::write("error handler $msg: $errstr in $errfile on line $errline");
     return true;
 }
 function f_last_error(){
@@ -85,7 +86,11 @@ function f_last_error(){
     if($e) freak_log::write("ERROR message: {$e['message']},type: {$e['type']}, in file: {$e['file']} on line:{$e['line']}");
     return true;
 }
-function f_exception($e){
-    freak_log::write("EXCEPTION: {$e->getTraceAsString()}");
-    return true;
+
+function f_session($storage) {
+    if($_COOKIE[session_name()] == '') { session_id(microtime(true)*10000); }
+    $session = new freak_lib_session($storage);
+    session_set_save_handler($session, true);
+    session_start();
+    setcookie(session_name(), session_id(), time()+86400);//expire time和redis ttl 一致
 }

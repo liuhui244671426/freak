@@ -1,7 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
-daemon.master.log
 logs
 vendor
 composer.lock
 public/uploads
+config/account.develop.php
+config/pdo.product.php
+config/redis.develop.php
+download

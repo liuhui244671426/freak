@@ -7,7 +7,7 @@
 if(PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
 require_once dirname(__FILE__).'/bootstrap.php';
 
-class monitor {
+class freak_monitor {
     const MAX_PROC = 128 ;  //每个任务最多并发进程数
     const CMD_PHP = '/usr/bin/php';
     const CMD_SH = '/usr/bin/sh';
@@ -117,6 +117,7 @@ class monitor {
 
     private  function buildProcPlan() {
         $config = freak_config::get('crontab');
+        if(empty($config)) {return false;}
         foreach($config as $item) {
             $item = trim($item);
             $item = preg_replace ( "/\s(?=\s)/","\\1", $item ); //去除重复空格
@@ -220,9 +221,5 @@ class monitor {
         echo PHP_EOL;
     }
 }
-$monitor = new monitor();
-//if($argv[1] == 'list'){
-//    $monitor->getRunningProcess();
-//    return;
-//}
+$monitor = new freak_monitor();
 $monitor->boot();
