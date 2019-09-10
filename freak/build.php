@@ -200,7 +200,7 @@ abstract class data_base{}";
         return true;
     }
 
-    function make_file($path, $content){
+    public function make_file($path, $content){
         //var_dump($path, $content);
         $dir = dirname( $path );
         if(!is_dir($dir)){
@@ -210,7 +210,7 @@ abstract class data_base{}";
             }
         }
         if(file_exists($path)){
-            echo "ERROR file {$path} is EXISTS, please DELETE";
+            echo "ERROR file {$path} is EXISTS, please DELETE".PHP_EOL;
             return false;
         }
 
