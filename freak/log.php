@@ -13,15 +13,16 @@ class freak_log {
         $path = PATH_ROOT.DS.'logs'.DS;
         $log = $path . $date->format('Ymd').$pre.".txt";
         if(is_dir($path)) {
-            if(!file_exists($log)) {
+            $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n";
+            file_put_contents($log, $logcontent,FILE_APPEND);
+            /*if(!file_exists($log)) {
                 $fh  = fopen($log, 'a+') or die("Fatal Error !");
-                $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n";
                 fwrite($fh, $logcontent);
                 fclose($fh);
             }
             else {
-                self::append($log,$date, $message);
-            }
+                file_put_contents($log, $logcontent,FILE_APPEND);
+            }*/
         }
         else {
             if(mkdir($path,0777) === true)
@@ -29,10 +30,5 @@ class freak_log {
                 self::write($message);
             }
         }
-    }
-
-    private static function append($log,$date,$message) {
-        $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n\r\n";
-        file_put_contents($log, $logcontent,FILE_APPEND);
     }
 }

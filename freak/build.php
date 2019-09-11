@@ -54,7 +54,6 @@ Please enter the number: ');
                 $this->make_file(PATH_ROOT.DS.'index.php', $this->get_framework_init('index'));
                 $this->make_file(PATH_ROOT.DS.'debug.php', $this->get_framework_init('debug'));
                 $this->make_file(PATH_ROOT.DS.'views'.DS.'index.html', $this->get_framework_init(''));
-                //$this->make_file(PATH_ROOT.DS.'fpm'.DS.'base.php', $this->get_framework_init('fpm_base'));
                 $this->make_file(PATH_ROOT.DS.'public'.DS.'index.html', $this->get_framework_init(''));
                 $this->make_file(PATH_ROOT.DS.'model'.DS.'base.php', $this->get_framework_init('model'));
                 $this->make_file(PATH_ROOT.DS.'data'.DS.'base.php', $this->get_framework_init('data'));
