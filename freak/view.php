@@ -1,9 +1,7 @@
 <?php
-
 defined('FREAK_ACCESS') or exit('Access Denied');
 class freak_view{
     public static $layout = 'layout';
-
 
     public static function render($file, $data=array()){
         @extract($data);

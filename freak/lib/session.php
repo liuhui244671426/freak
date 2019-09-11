@@ -14,10 +14,16 @@ class freak_lib_session implements SessionHandlerInterface{
 
     protected static $obj;
 
-    public function __construct($resource='redis'){
-        if($resource=='redis'){
-            self::$obj = new freak_redis('write');
+    public function __construct($resource,$mode,$alias){
+        switch($resource){
+            case 'redis':
+                self::$obj = new freak_redis($mode, $alias);
+                break;
+            default:
+                self::$obj = new freak_redis($mode, $alias);
+                break;
         }
+        return self::$obj;
     }
 
     public function open($save_path, $sid){

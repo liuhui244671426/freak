@@ -20,7 +20,7 @@ class freak_log {
                 fclose($fh);
             }
             else {
-                self::edit($log,$date, $message);
+                self::append($log,$date, $message);
             }
         }
         else {
@@ -31,7 +31,7 @@ class freak_log {
         }
     }
 
-    private static function edit($log,$date,$message) {
+    private static function append($log,$date,$message) {
         $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n\r\n";
         file_put_contents($log, $logcontent,FILE_APPEND);
     }

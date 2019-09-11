@@ -1,5 +1,6 @@
 <?php
 defined('FREAK_ACCESS') or exit('Access Denied');
+
 /**
  * 图片处理类
  *
@@ -78,10 +79,10 @@ class freak_lib_image
 
         //设置图像信息
         $this->info = [
-            'width' => $info[0],
+            'width'  => $info[0],
             'height' => $info[1],
-            'type' => image_type_to_extension($info[2], false),
-            'mime' => $info['mime'],
+            'type'   => image_type_to_extension($info[2], false),
+            'mime'   => $info['mime'],
         ];
 
         //销毁已存在的图像
@@ -453,7 +454,8 @@ class freak_lib_image
         empty($this->img) || imagedestroy($this->img);
     }
 
-    public function getInfo(){
+    public function getInfo()
+    {
         return $this->info;
     }
 }

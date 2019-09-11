@@ -87,9 +87,9 @@ function f_last_error(){
     return true;
 }
 
-function f_session($storage) {
+function f_session($storage, $alias) {
     if($_COOKIE[session_name()] == '') { session_id(microtime(true)*10000); }
-    $session = new freak_lib_session($storage);
+    $session = new freak_lib_session($storage, freak_redis::$write, $alias);
     session_set_save_handler($session, true);
     session_start();
     setcookie(session_name(), session_id(), time()+86400);//expire time和redis ttl 一致

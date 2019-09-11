@@ -7,7 +7,7 @@ class freak_lib_captcha
      *
      * @var string
      */
-    private $charset = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
+    private $charset = 'qwertyuiopasdfghjklzxcvbnm123456789QWERTYUIOPASDFGHJKLZXCVBNM';
 
     //验证码
     private $code;

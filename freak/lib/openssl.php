@@ -47,16 +47,16 @@ class freak_lib_openssl
     public function __construct($key)
     {
         // 初始化四个文件变量
-        $this->file_name = '';
+        $this->file_name        = '';
         $this->file_name_length = '';
-        $this->file_data = '';
+        $this->file_data        = '';
         $this->file_data_length = '';
 
         // 0 代表没有错误
-        $this->errno = 0;
-        $this->errmsg = "没有错误~";
+        $this->errno    = 0;
+        $this->errmsg   = "没有错误~";
 
-        $this->key = $key;
+        $this->key      = $key;
     }
 
 
