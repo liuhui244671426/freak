@@ -70,7 +70,6 @@ Please enter the number: ');
         }
         return true;
     }
-
     public function get_web_class_content($m, $c){
         $tmp = "<?php
 
@@ -84,7 +83,6 @@ class fpm_{$m}_{$c} extends freak_fpm{
 }";
         return $tmp;
     }
-
     public function get_cli_class_content($m, $c){
         $tmp = "<?php
 
@@ -106,8 +104,6 @@ new daemon_{$m}_{$c}();
     ";
         return $tmp;
     }
-
-
     public function get_framework_init_config($type){
         if($type == 'crontab') {
             return "<?php
@@ -187,8 +183,7 @@ abstract class data_base{}";
 }";
         return $files_map[$file];
     }
-
-    public function clear_cache($path){
+    public function delete_dir_files($path){
         $op = opendir($path);
         while(false !== ($file = readdir($op))){
             if($file == '.' || $file == '..'){
@@ -199,7 +194,6 @@ abstract class data_base{}";
         closedir($op);
         return true;
     }
-
     public function make_file($path, $content){
         //var_dump($path, $content);
         $dir = dirname( $path );
