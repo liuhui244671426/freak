@@ -15,14 +15,6 @@ class freak_log {
         if(is_dir($path)) {
             $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n";
             file_put_contents($log, $logcontent,FILE_APPEND);
-            /*if(!file_exists($log)) {
-                $fh  = fopen($log, 'a+') or die("Fatal Error !");
-                fwrite($fh, $logcontent);
-                fclose($fh);
-            }
-            else {
-                file_put_contents($log, $logcontent,FILE_APPEND);
-            }*/
         }
         else {
             if(mkdir($path,0777) === true)

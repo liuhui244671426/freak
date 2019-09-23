@@ -117,6 +117,7 @@ return [
 ";
         }
         return "<?php
+defined('FREAK_ACCESS') or exit('Access Denied');
 return [];";
     }
     public function get_framework_init($file){

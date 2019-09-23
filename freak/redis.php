@@ -4,18 +4,14 @@ defined('FREAK_ACCESS') or exit('Access Denied');
 class freak_redis
 {
     private static $rds = null;
-    public static $read = 'read';
-    public static $write = 'write';
 
-    public function __construct($mode = 'read', $alias = 'freak')
+    public function __construct($host, $port, $password)
     {
-        $config = freak_config::get('redis', $alias);
-        $config = $config[ $mode ];
         if (is_null(self::$rds)) {
             self::$rds = new Redis();
-            self::$rds->pconnect($config['host'], $config['port']);
-            if ($config['password']) {
-                self::$rds->auth($config['password']);
+            self::$rds->pconnect($host, $port);
+            if ($password) {
+                self::$rds->auth($password);
             }
             return self::$rds;
         } else {
