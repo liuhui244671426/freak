@@ -2,7 +2,7 @@
 if(PHP_SAPI != 'cli'){ return false; }
 define('PATH_ROOT', dirname(dirname(__FILE__)));
 define('DS', DIRECTORY_SEPARATOR);
-define('VERSION', '2.0.0');
+define('VERSION', '3.0.0');
 
 class freak_build {
 
