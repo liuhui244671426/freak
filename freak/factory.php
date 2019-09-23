@@ -2,7 +2,7 @@
 class freak_factory{
     public static function getPDO($alias, $mode) {
         $config = freak_config::get('pdo', $alias)[$mode];
-        return new freak_pdo($config['host'], $config['port'], $config['dbnane'], $config['user'], $config['password']);
+        return new freak_pdo($config['host'], $config['port'], $config['dbname'], $config['user'], $config['password']);
     }
 
     public static function getRedis($alias, $mode) {
