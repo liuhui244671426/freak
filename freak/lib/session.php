@@ -15,12 +15,13 @@ class freak_lib_session implements SessionHandlerInterface{
     protected static $obj;
 
     public function __construct($resource,$mode,$alias){
+        $conf = freak_config::get($resource, $mode);
         switch($resource){
             case 'redis':
-                self::$obj = new freak_redis($mode, $alias);
+                self::$obj = new freak_redis($conf['host'], $conf['port'], $conf['password']);
                 break;
             default:
-                self::$obj = new freak_redis($mode, $alias);
+                self::$obj = new freak_redis($conf['host'], $conf['port'], $conf['password']);
                 break;
         }
         return self::$obj;

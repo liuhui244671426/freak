@@ -95,7 +95,7 @@ class bootstrap {
         if ($_COOKIE[ session_name() ] == '') {
             session_id(microtime(true) * 10000);
         }
-        $session = new freak_lib_session($storage, freak_redis::$write, $alias);
+        $session = new freak_lib_session($storage, 'write', $alias);
         session_set_save_handler($session, true);
         session_start();
         setcookie(session_name(), session_id(), time() + 86400);//expire time和redis ttl 一致
