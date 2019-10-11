@@ -4,27 +4,22 @@
  * web 不需要手动加载,系统已经处理
  * cli 必须手动加载
  * */
-
-$_SERVER['ENV_CONFIG'] = 'develop';//配置文件需要的环境
-if (version_compare(PHP_VERSION, '7.1.13') < 0) {exit('PHP version must >= 7.1.13');}
-error_reporting(E_ALL & ~E_NOTICE);
-date_default_timezone_set('PRC');
-
-define('PATH_ROOT', dirname(dirname(__FILE__)));
-define('DS', DIRECTORY_SEPARATOR);
-define('PATH_VIEW', PATH_ROOT . DS . 'views');
-define('PATH_CONFIG', PATH_ROOT . DS . 'config');
-define('PATH_DAEMON', PATH_ROOT . DS . 'daemon');
-define('PATH_PUBLIC', PATH_ROOT . DS . 'public');
 defined('FREAK_ACCESS') or exit('Access Denied');
+require_once 'const.php';
 
 class bootstrap {
+
     public function run(){
+        $_SERVER['ENV_CONFIG'] = 'develop';//配置文件需要的环境
+        if (version_compare(PHP_VERSION, '7.1.13') < 0) {exit('PHP version must >= 7.1.13');}
+        error_reporting(E_ALL & ~E_NOTICE);
+        date_default_timezone_set('PRC');
+
         //--------register-----------
         spl_autoload_register([$this, 'f_auto_load']);
         set_error_handler([$this, 'f_error_handler'], E_ALL | E_STRICT);
         set_exception_handler([$this, 'f_last_error']);
-        register_shutdown_function([$this, 'f_last_error'] );
+        register_shutdown_function([$this, 'f_last_error'] );;
         //--------register-----------
 
         if(PHP_SAPI != 'cli') $this->f_fpm_router();
@@ -56,6 +51,8 @@ class bootstrap {
             header('HTTP/1.1 404 Not Found');
             header("status: 404 Not Found");
             exit();
+        } finally{
+
         }
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 defined('FREAK_ACCESS') or exit('Access Denied');
 
 class freak_config{

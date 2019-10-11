@@ -5,13 +5,14 @@
  */
 
 if (PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
+defined('FREAK_ACCESS') or exit('Access Denied');
 require_once dirname(__FILE__) . '/bootstrap.php';
 
 class freak_monitor
 {
-    const MAX_PROC = 128;  //每个任务最多并发进程数
-    const CMD_PHP = '/usr/bin/php';
-    const CMD_SH = '/usr/bin/sh';
+    //const MAX_PROC = 128;  //每个任务最多并发进程数
+    //const CMD_PHP = '/usr/bin/php';
+    //const CMD_SH = '/usr/bin/sh';
 
     //正在运行的任务列表,  key: 脚本类型-脚本名称-进程总数-进程编号-版本号,value:进程PID
     private $proc_running = array();
@@ -87,9 +88,7 @@ class freak_monitor
         return false;
     }
 
-    private function checkSeflChange()
-    {
-    }
+    private function checkSeflChange(){}
 
     private function buildProcRunning()
     {
@@ -103,9 +102,9 @@ class freak_monitor
             list($pid, $type, $path, $proc_total, $proc_no, $version) = explode(" ", $line);
 
 
-            if ($type == self::CMD_PHP) {
+            if ($type == CMD_PHP) {
                 $type = 'php';
-            } else if ($type == self::CMD_SH) {
+            } else if ($type == CMD_SH) {
                 $type = 'sh';
             } else {
                 continue;
@@ -134,7 +133,7 @@ class freak_monitor
             list($t_minute, $t_hour, $t_day, $t_month, $t_week, $type, $path, $proc_total, $version) = explode(" ", $item);
 
             //最多限制128个进程
-            $proc_total = $proc_total > self::MAX_PROC ? self::MAX_PROC : $proc_total;
+            $proc_total = $proc_total > MAX_PROC ? MAX_PROC : $proc_total;
 
             for ($proc_no = 1; $proc_no <= $proc_total; $proc_no++) {
                 $proc_name = $this->buildProcName($type, $path, $proc_total, $proc_no, $version);
@@ -205,9 +204,9 @@ class freak_monitor
     private function startProc($type, $path, $proc_total, $proc_no, $version)
     {
         if ($type == "php") {
-            $cmd = self::CMD_PHP . " " . PATH_DAEMON . DS . $path . " " . $proc_total . " " . $proc_no . " " . $version . " > /dev/null &";
+            $cmd = CMD_PHP . " " . PATH_DAEMON . DS . $path . " " . $proc_total . " " . $proc_no . " " . $version . " > /dev/null &";
         } else if ($type == 'sh') {
-            $cmd = self::CMD_SH . " " . PATH_DAEMON . DS . $path . " " . $proc_total . " " . $proc_no . " " . $version . " > /dev/null &";
+            $cmd = CMD_SH . " " . PATH_DAEMON . DS . $path . " " . $proc_total . " " . $proc_no . " " . $version . " > /dev/null &";
         } else {
             return false;
         }
@@ -237,6 +236,4 @@ class freak_monitor
         echo PHP_EOL;
     }
 }
-
-$monitor = new freak_monitor();
-$monitor->boot();
+(new freak_monitor())->boot();

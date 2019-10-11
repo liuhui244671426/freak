@@ -1,8 +1,6 @@
 <?php
-if(PHP_SAPI != 'cli'){ return false; }
-define('PATH_ROOT', dirname(dirname(__FILE__)));
-define('DS', DIRECTORY_SEPARATOR);
-define('VERSION', '3.0.0');
+if(PHP_SAPI != 'cli'){ exit('must command line(cli)'); }
+require_once 'const.php';
 
 class freak_build {
 
@@ -38,7 +36,7 @@ Please enter the number: ');
     }
 
     public function welcome(){
-        echo 'Freak framework build tools'.PHP_EOL;
+        echo 'Freak framework build tool'.PHP_EOL;
         echo 'version: '.VERSION.PHP_EOL.PHP_EOL;
     }
 
@@ -53,16 +51,16 @@ Please enter the number: ');
             case 'init':
                 $this->make_file(PATH_ROOT.DS.'index.php', $this->get_framework_init('index'));
                 $this->make_file(PATH_ROOT.DS.'debug.php', $this->get_framework_init('debug'));
-                $this->make_file(PATH_ROOT.DS.'views'.DS.'index.html', $this->get_framework_init(''));
-                $this->make_file(PATH_ROOT.DS.'public'.DS.'index.html', $this->get_framework_init(''));
-                $this->make_file(PATH_ROOT.DS.'model'.DS.'base.php', $this->get_framework_init('model'));
-                $this->make_file(PATH_ROOT.DS.'data'.DS.'base.php', $this->get_framework_init('data'));
-                $this->make_file(PATH_ROOT.DS.'config'.DS.'nginx.conf', $this->get_framework_init('nginx'));
-                $this->make_file(PATH_ROOT.DS.'config'.DS.'common.develop.php', $this->get_framework_init_config(''));
-                $this->make_file(PATH_ROOT.DS.'config'.DS.'crontab.develop.php', $this->get_framework_init_config('crontab'));
-                $this->make_file(PATH_ROOT.DS.'config'.DS.'pdo.develop.php', $this->get_framework_init_config(''));
-                $this->make_file(PATH_ROOT.DS.'config'.DS.'redis.develop.php', $this->get_framework_init_config(''));
+                $this->make_file(PATH_VIEW.DS.'index.html', $this->get_framework_init(''));
+                $this->make_file(PATH_DATA.DS.'base.php', $this->get_framework_init('data'));
+                $this->make_file(PATH_MODEL.DS.'base.php', $this->get_framework_init('model'));
                 $this->make_file(PATH_ROOT.DS.'logs'.DS.date('Ymd').'.txt', $this->get_framework_init_config(''));
+                $this->make_file(PATH_PUBLIC.DS.'index.html', $this->get_framework_init(''));
+                $this->make_file(PATH_CONFIG.DS.'nginx.conf', $this->get_framework_init('nginx'));
+                $this->make_file(PATH_CONFIG.DS.'common.develop.php', $this->get_framework_init_config(''));
+                $this->make_file(PATH_CONFIG.DS.'crontab.develop.php', $this->get_framework_init_config('crontab'));
+                $this->make_file(PATH_CONFIG.DS.'pdo.develop.php', $this->get_framework_init_config(''));
+                $this->make_file(PATH_CONFIG.DS.'redis.develop.php', $this->get_framework_init_config(''));
                 break;
             default:
                 break;
@@ -87,7 +85,7 @@ class fpm_{$m}_{$c} extends freak_fpm{
 
 if(PHP_SAPI == 'cli') define('FREAK_ACCESS', true);
 require_once dirname(dirname(dirname(__FILE__))).'/freak/bootstrap.php';
-ini_set('memory_limit', '246M');
+ini_set('memory_limit', '128M');
 
 class daemon_{$m}_{$c} extends freak_daemon {
 
@@ -99,8 +97,7 @@ class daemon_{$m}_{$c} extends freak_daemon {
     }
 }
 
-new daemon_{$m}_{$c}();
-    ";
+new daemon_{$m}_{$c}();";
         return $tmp;
     }
     public function get_framework_init_config($type){
@@ -129,9 +126,7 @@ return [];";
  * freak.framework
  * @version: {$v}
  */
-//--------Access-----------
 define('FREAK_ACCESS', true);
-//--------Access-----------
 header('Content-type:text/html;charset=utf-8');
 include dirname(__FILE__).'/freak/bootstrap.php';";
         $files_map['debug'] = "<?php

@@ -1,6 +1,6 @@
 <?php
 
-if(PHP_SAPI != 'cli') exit('must cli mode');
+if(PHP_SAPI != 'cli') exit('must command line(cli)');
 abstract class freak_daemon {
 
     private $ip;
@@ -10,8 +10,8 @@ abstract class freak_daemon {
     private $stop;
 
     public function __construct() {
-        $this->proc_total = $_SERVER['argv'][1]?$_SERVER['argv'][1]:'';
-        $this->proc_no = $_SERVER['argv'][2]?$_SERVER['argv'][2]:'';
+        $this->proc_total = !empty($_SERVER['argv'][1])?$_SERVER['argv'][1]:'';
+        $this->proc_no = !empty($_SERVER['argv'][2])?$_SERVER['argv'][2]:'';
         $this->stop = false;
         $this->pid = posix_getpid();
 //        pcntl_signal(SIGTERM,	array(&$this, 'signalHandler'));
