@@ -7,11 +7,12 @@ class freak_build {
     public function __construct(){
         $this->welcome();
 
-        $mode_map = [0 => 'init', 1 => 'fpm', 2 => 'daemon',];
+        $mode_map = [0 => 'init', 1 => 'fpm', 2 => 'daemon', 3 => 'clean non-freak'];
         fwrite(STDOUT, 'Please selection mode
     0 - Initialization Freak framework
     1 - Build web
     2 - Build daemon worker
+    3 - Clean Non-freak file&directory
 Please enter the number: ');
         $input = trim(fgets(STDIN));
         $mode = $mode_map[$input];
@@ -31,7 +32,15 @@ Please enter the number: ');
             $this->do_build($mode, $module, $controller);
             echo "build {$mode} {$module} {$controller} done!".PHP_EOL;
         }
+        if($input == 3){
+            fwrite(STDOUT, 'confirm Y or N: ');
+            $reconfirm = trim(fgets(STDIN));
+            if($reconfirm == 'Y'){
+                $this->clean_non_framework();
+                echo "clean non-freak file&directory done!".PHP_EOL;
+            }
 
+        }
         return;
     }
 
@@ -212,6 +221,21 @@ abstract class data_base{}";
         fclose($fp);
 
         return true;
+    }
+
+    public function clean_non_framework(){
+        $this->delTree(PATH_ROOT, ['freak', '.', '..', '.DS_Store', '.git', '.gitignore', '.idea', 'README.md']);
+        return true;
+    }
+
+    public function delTree($dir, array $exclude) {
+        $files = array_diff(scandir($dir), $exclude);
+        if(empty($files)) return true;
+        foreach ($files as $file) {
+            var_dump($dir.DS.$file);
+            (is_dir($dir.DS.$file)) ? $this->delTree($dir.DS.$file, $exclude) : unlink($dir.DS.$file);
+        }
+        return ($dir!=PATH_ROOT)?rmdir($dir):true;
     }
 }
 new freak_build();
