@@ -41,8 +41,9 @@ class bootstrap {
         $exec_class = 'fpm_'.$module.'_'.$controller;
 
         try {
-            $obj = new $exec_class();
-            $obj->$action();
+            $re = new ReflectionMethod($exec_class, $action);
+            $re->invoke(new $exec_class());
+            //$obj = new $exec_class();$obj->$action();
         } catch (Throwable $e) {
             freak_log::write($e->getTraceAsString());
             freak_log::write($e->getMessage());
