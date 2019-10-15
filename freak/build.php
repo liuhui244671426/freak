@@ -187,17 +187,6 @@ abstract class data_base{}";
 }";
         return $files_map[$file];
     }
-    public function delete_dir_files($path){
-        $op = opendir($path);
-        while(false !== ($file = readdir($op))){
-            if($file == '.' || $file == '..'){
-                continue;
-            }
-            unlink($path.DS.$file);
-        }
-        closedir($op);
-        return true;
-    }
     public function make_file($path, $content){
         //var_dump($path, $content);
         $dir = dirname( $path );
@@ -232,7 +221,6 @@ abstract class data_base{}";
         $files = array_diff(scandir($dir), $exclude);
         if(empty($files)) return true;
         foreach ($files as $file) {
-            var_dump($dir.DS.$file);
             (is_dir($dir.DS.$file)) ? $this->delTree($dir.DS.$file, $exclude) : unlink($dir.DS.$file);
         }
         return ($dir!=PATH_ROOT)?rmdir($dir):true;
