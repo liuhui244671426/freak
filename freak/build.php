@@ -7,7 +7,6 @@ class freak_build {
     public function __construct(){
         $this->welcome();
         $this->check_environment();
-        
         $mode_map = [0 => 'init', 1 => 'fpm', 2 => 'daemon', 3 => 'clean non-freak'];
         fwrite(STDOUT, 'Please selection mode
     0 - Initialization Freak framework
