@@ -10,8 +10,9 @@ require_once 'const.php';
 class bootstrap {
 
     public function run(){
+        print_r(get_loaded_extensions());die;
         $_SERVER['ENV_CONFIG'] = 'develop';//配置文件需要的环境
-        if (version_compare(PHP_VERSION, '7.1.13') < 0) {exit('PHP version must >= 7.1.13');}
+        $this->f_environment();
         error_reporting(E_ALL & ~E_NOTICE);
         date_default_timezone_set('PRC');
 
@@ -97,6 +98,17 @@ class bootstrap {
         session_set_save_handler($session, true);
         session_start();
         setcookie(session_name(), session_id(), time() + 86400);//expire time和redis ttl 一致
+    }
+
+    public function f_environment(){
+        if (version_compare(PHP_VERSION, '7.1.13') < 0) {exit('PHP version must >= 7.1.13');}
+        $must_extension_map = [
+            'gd', 'PDO', 'pdo_mysql', 'mbstring', 'redis', 'curl', 'mcrypt'
+        ];
+        foreach($must_extension_map as $k => $v){
+            if (!extension_loaded($v)) {exit("PHP extension {$v} must exists");}
+        }
+
     }
 }
 (new bootstrap())->run();return true;
