@@ -6,7 +6,8 @@ class freak_build {
 
     public function __construct(){
         $this->welcome();
-
+        $this->check_environment();
+        
         $mode_map = [0 => 'init', 1 => 'fpm', 2 => 'daemon', 3 => 'clean non-freak'];
         fwrite(STDOUT, 'Please selection mode
     0 - Initialization Freak framework
@@ -224,6 +225,17 @@ abstract class data_base{}";
             (is_dir($dir.DS.$file)) ? $this->delTree($dir.DS.$file, $exclude) : unlink($dir.DS.$file);
         }
         return ($dir!=PATH_ROOT)?rmdir($dir):true;
+    }
+
+    public function check_environment(){
+        if (version_compare(PHP_VERSION, '7.1.13') < 0) {exit('PHP version must >= 7.1.13');}
+        $must_extension_map = [
+            'gd', 'PDO', 'pdo_mysql', 'mbstring', 'redis', 'curl', 'mcrypt'
+        ];
+        foreach($must_extension_map as $k => $v){
+            if (!extension_loaded($v)) {exit("PHP extension {$v} must exists");}
+        }
+
     }
 }
 new freak_build();
