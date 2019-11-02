@@ -6,7 +6,6 @@
  * */
 defined('FREAK_ACCESS') or exit('Access Denied');
 require_once 'const.php';
-
 class bootstrap {
 
     public function run(){
@@ -22,39 +21,8 @@ class bootstrap {
         register_shutdown_function([$this, 'f_last_error'] );;
         //--------register-----------
 
-        if(PHP_SAPI != 'cli') $this->f_fpm_router();
-    }
-
-    public function f_fpm_router(){
-
-        ###########router rule##############
-        #rule : module->controller->action
-        #     : m=index?c=index&a=index
-        ####################################
-        $m = filter_input(INPUT_GET, 'm');
-        $c = filter_input(INPUT_GET, 'c');
-        $a = filter_input(INPUT_GET, 'a');
-        $module     = $m ? $m : 'index';
-        $controller = $c ? $c : 'index';
-        $action     = $a ? $a : 'index';
-
-        $exec_class = 'fpm_'.$module.'_'.$controller;
-
-        try {
-            $re = new ReflectionMethod($exec_class, $action);
-            $re->invoke(new $exec_class());
-            //$obj = new $exec_class();$obj->$action();
-        } catch (Throwable $e) {
-            freak_log::write($e->getTraceAsString());
-            freak_log::write($e->getMessage());
-
-            echo 'File not found.';
-            header('HTTP/1.1 404 Not Found');
-            header("status: 404 Not Found");
-            exit();
-        } finally{
-
-        }
+        if(PHP_SAPI != 'cli') (new freak_router())->{freak_config::get('router')['mode']}();
+        return true;
     }
 
     public function f_auto_load($class)

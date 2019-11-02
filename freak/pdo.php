@@ -336,4 +336,10 @@ class freak_pdo
         $sql = "UPDATE {$table} SET " . trim($fields, ',') . ' WHERE ' . $where;
         return $this->query($sql, $update_data);
     }
+
+    public function fetch($table, $where, $where_data, $fields='*', $start=0, $limit='') {
+        $sql = "SELECT {$fields} FROM `{$table}` WHERE {$where} ";
+        if($limit) $sql .= "LIMIT {$start}, {$limit}";
+        return $this->query($sql, $where_data);
+    }
 }

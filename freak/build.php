@@ -70,6 +70,7 @@ Please enter the number: ');
                 $this->make_file(PATH_CONFIG.DS.'crontab.develop.php', $this->get_framework_init_config('crontab'));
                 $this->make_file(PATH_CONFIG.DS.'pdo.develop.php', $this->get_framework_init_config(''));
                 $this->make_file(PATH_CONFIG.DS.'redis.develop.php', $this->get_framework_init_config(''));
+                $this->make_file(PATH_CONFIG.DS.'router.develop.php', $this->get_framework_init_config('router'));
                 break;
             default:
                 break;
@@ -121,6 +122,14 @@ return [
     #\"* * * * * php workers/test.php   2 1.0\",
 ];
 ";
+        }
+        if($type == 'router') {
+            return "<?php
+defined('FREAK_ACCESS') or exit('Access Denied');
+return [
+    'mode' => 'simple', //url | simple | map
+    'map' => [],
+];";
         }
         return "<?php
 defined('FREAK_ACCESS') or exit('Access Denied');
@@ -175,6 +184,10 @@ abstract class data_base{}";
         access_log  /var/log/nginx/freak.com-access.log;
         error_log   /var/log/nginx/freak.com-error.log;
         index index.php;
+
+        location / {
+                try_files \$uri \$uri/ /index.php\$is_args\$args;
+        }
         location ~ \\.php?\$ {
                 fastcgi_pass 127.0.0.1:9000;
                 fastcgi_index index.php;
