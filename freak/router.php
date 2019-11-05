@@ -23,7 +23,7 @@ class freak_router{
         #rule : module->controller->action
         #     : /index/index/index
         ####################################
-        list($over, $m, $c, $a) = explode('/', $_SERVER['REQUEST_URI']);
+        list($over, $m, $c, $a) = explode('/', parse_url($_SERVER['REQUEST_URI'])['path']);
         $module     = $this->default_name($m);
         $controller = $this->default_name($c);
         $action     = $this->default_name($a);

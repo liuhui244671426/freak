@@ -127,7 +127,7 @@ return [
             return "<?php
 defined('FREAK_ACCESS') or exit('Access Denied');
 return [
-    'mode' => 'simple', //url | simple | map
+    'mode' => 'simple', //simple| url | map
     'map' => [],
 ];";
         }
@@ -185,6 +185,10 @@ abstract class data_base{}";
         error_log   /var/log/nginx/freak.com-error.log;
         index index.php;
 
+        #access Public files
+        location /public{
+                root {$r};
+        }
         location / {
                 try_files \$uri \$uri/ /index.php\$is_args\$args;
         }
