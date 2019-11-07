@@ -11,4 +11,3 @@ define('PATH_DATA', PATH_ROOT . DS . 'data');
 define('CMD_PHP', '/usr/bin/php');
 define('CMD_SH', '/usr/bin/sh');
 define('MAX_PROC', 128);//每个任务最多并发进程数
-define('ENV', 'develop');

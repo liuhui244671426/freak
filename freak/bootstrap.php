@@ -6,22 +6,22 @@
  * */
 defined('FREAK_ACCESS') or exit('Access Denied');
 require_once 'const.php';
-class bootstrap {
 
-    public function run(){
-        $_SERVER['ENV_CONFIG'] = 'develop';//配置文件需要的环境
-        if (version_compare(PHP_VERSION, '7.1.13') < 0) {exit('PHP version must >= 7.1.13');}
-        error_reporting(E_ALL & ~E_NOTICE);
+class bootstrap
+{
+    public function run()
+    {
+        if (version_compare(PHP_VERSION, '7.1.13') < 0) {
+            exit('PHP version must >= 7.1.13');
+        }
         date_default_timezone_set('PRC');
-
-        //--------register-----------
+        error_reporting(E_ALL & ~E_NOTICE);
         spl_autoload_register([$this, 'f_auto_load']);
-        set_error_handler([$this, 'f_error_handler'], E_ALL | E_STRICT);
         set_exception_handler([$this, 'f_last_error']);
-        register_shutdown_function([$this, 'f_last_error'] );;
-        //--------register-----------
+        set_error_handler([$this, 'f_error_handler'], E_ALL & ~E_NOTICE);
+        register_shutdown_function([$this, 'f_last_error']);
 
-        if(PHP_SAPI != 'cli') (new freak_router())->{freak_config::get('router')['mode']}();
+        if (PHP_SAPI != 'cli') (new freak_router())->{freak_config::get('router')['mode']}();
         return true;
     }
 
@@ -67,4 +67,6 @@ class bootstrap {
         setcookie(session_name(), session_id(), time() + 86400);//expire time和redis ttl 一致
     }
 }
-(new bootstrap())->run();return true;
+
+(new bootstrap())->run();
+return true;

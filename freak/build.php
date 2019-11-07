@@ -127,7 +127,7 @@ return [
             return "<?php
 defined('FREAK_ACCESS') or exit('Access Denied');
 return [
-    'mode' => 'simple', //simple| url | map
+    'mode' => 'simple', //simple| url
     'map' => [],
 ];";
         }
@@ -145,6 +145,7 @@ return [];";
  * @version: {$v}
  */
 define('FREAK_ACCESS', true);
+define('RUN_ENV', 'develop');//程序运行环境 develop | product,默认 develop
 header('Content-type:text/html;charset=utf-8');
 include dirname(__FILE__).'/freak/bootstrap.php';";
         $files_map['debug'] = "<?php
