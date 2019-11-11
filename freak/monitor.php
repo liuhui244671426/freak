@@ -18,15 +18,18 @@ class freak_monitor
     private $proc_running = array();
     //计划运行的任务列表, key: 脚本类型-脚本名称-进程总数-进程编号-版本号,value:启动时间
     private $proc_plan = array();
-
+    private $self_file = '';
+    public function __construct() {
+        $this->self_file = basename(__FILE__);
+    }
     public function boot()
     {
         //只允许一个Monitor运行
         if ($this->checkSelfRunning()) {
-            $this->log("Crontab Booter Has Runing, Exited");
+            $this->log("Monitor Has Running, Exited");
             exit;
         }
-        $this->log("Crontab Booter Begin.");
+        $this->log("Monitor Begin.");
         //构建正在运行的任务列表
         $this->buildProcRunning();
         //构建计划运行的任务列表
@@ -41,46 +44,52 @@ class freak_monitor
         }
         //启动在计划列表里, 且时间符合要求, 且未运行的任务.
         $this->log("Starting Task:");
+
+        foreach ($this->proc_plan as $proc_name => $start_time) {
+            list($type, $path, $proc_total, $proc_no, $version) = explode("-", $proc_name);
+            //list($t_minute, $t_hour, $t_day, $t_month, $t_week) = explode(" ", $start_time);
+            if(! $this->runnable($start_time)) {
+                $this->log("$proc_name, Time Skipped.");
+                continue;
+            }
+            //检查是否正在运行
+            if (isset($this->proc_running[ $proc_name ])) {
+                $this->log("$proc_name, Running.");
+                continue;
+            }
+            //启动
+            $this->startProc($type, $path, $proc_total, $proc_no, $version);
+            $this->log("$proc_name, Started.");
+        }
+        $this->log("Monitor End.");
+    }
+
+    private function runnable($start_time){
+        list($t_minute, $t_hour, $t_day, $t_month, $t_week) = explode(" ", $start_time);
         $t_now = time();
         $t_now_month = date("n", $t_now); // 没有前导0
         $t_now_day = date("j", $t_now); // 没有前导0
         $t_now_hour = date("G", $t_now);
         $t_now_minute = (int)date("i", $t_now);
         $t_now_week = date("w", $t_now); // w 0~6, 0:sunday  6:saturday
-        foreach ($this->proc_plan as $proc_name => $start_time) {
-            list($type, $path, $proc_total, $proc_no, $version) = explode("-", $proc_name);
-            list($t_minute, $t_hour, $t_day, $t_month, $t_week) = explode(" ", $start_time);
-            //检查启动时间是否符合条件
-            if (!($this->checkTime($t_now_week, $t_week, 7, 0) &&
-                $this->checkTime($t_now_month, $t_month, 12, 1) &&
-                $this->checkTime($t_now_day, $t_day, 31, 1) &&
-                $this->checkTime($t_now_hour, $t_hour, 24) &&
-                $this->checkTime($t_now_minute, $t_minute, 60)
-            )
-            ) {
-                $this->log("$proc_name, TIME SKIPPED.");
-                continue;
-            }
-            //检查是否正在运行
-            if (isset($this->proc_running[ $proc_name ])) {
-                $this->log("$proc_name, RUNNING.");
-                continue;
-            }
-            //启动
-            $this->startProc($type, $path, $proc_total, $proc_no, $version);
-            $this->log("$proc_name, STARTED.");
-        }
-        $this->log("Crontab Booter End.");
+        //检查启动时间是否符合条件
+        if (!($this->checkTime($t_now_week, $t_week, 7, 0) &&
+            $this->checkTime($t_now_month, $t_month, 12, 1) &&
+            $this->checkTime($t_now_day, $t_day, 31, 1) &&
+            $this->checkTime($t_now_hour, $t_hour, 24) &&
+            $this->checkTime($t_now_minute, $t_minute, 60)
+        )
+        ) { return false; }
+        return true;
     }
-
 
     //检测自身进程是否存在
     private function checkSelfRunning()
     {
-        $_cmd = "ps -ef | grep -v 'sudo' | grep -v 'grep' | grep '" . PATH_DAEMON . DS . "monitor.php' |grep -v \"/bin/sh \\-c\" | wc -l";
+        $_cmd = "ps -ef | grep -v 'sudo' | grep -v 'grep' | grep '" . PATH_DAEMON . DS . "{$this->self_file}' |grep -v \"/bin/sh \\-c\" | wc -l";
 //        echo $_cmd ;exit;
         $_pp = @popen($_cmd, 'r');
-        $_num = trim(@fread($_pp, 512)) + 0;
+        $_num = intval( trim(@fread($_pp, 512)) ) + 0;
         @pclose($_pp);
         if ($_num > 1) {
             return true;
@@ -88,11 +97,9 @@ class freak_monitor
         return false;
     }
 
-    private function checkSeflChange(){}
-
     private function buildProcRunning()
     {
-        $cmd = "ps -ef | grep -v 'sudo' | grep -v 'grep' |grep -E '" . PATH_DAEMON . DS . "workers'|awk -F  ' ' '{print $2,$8,$9,$10,$11,$12}' ";
+        $cmd = "ps -ef | grep -v 'sudo' | grep -v 'grep' |grep -E '" . PATH_DAEMON . DS . "'|awk -F  ' ' '{print $2,$8,$9,$10,$11,$12}' ";
         //echo $cmd;exit;
         $pp = @popen($cmd, 'r');
 
@@ -111,7 +118,7 @@ class freak_monitor
             }
 
             $path = str_replace(PATH_DAEMON . DS, "", $path);
-            if ($path == 'monitor.php') continue;
+            if ($path == $this->self_file) continue;
 
             $proc_name = $this->buildProcName($type, $path, $proc_total, $proc_no, $version);
 
@@ -160,7 +167,7 @@ class freak_monitor
      * @param    int $start 待检查的时间单位单位开始值（默认为0）
      * @return type
      */
-    private static function checkTime($current, $boot, $max, $start = 0)
+    private function checkTime($current, $boot, $max, $start = 0)
     {
         if (strpos($boot, ',') !== FALSE) {
             $weekArray = explode(',', $boot);
@@ -210,7 +217,6 @@ class freak_monitor
         } else {
             return false;
         }
-        //var_dump($cmd);
         $pp = @popen($cmd, 'r');
         @pclose($pp);
     }

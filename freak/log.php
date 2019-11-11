@@ -11,12 +11,11 @@ class freak_log {
     public static function write($message, $pre='') {
         $date = new DateTime();
         $path = PATH_ROOT.DS.'logs'.DS;
-        $log = $path . $date->format('Ymd').$pre.".txt";
+        $file = $path . $date->format('Ymd').$pre.".txt";
         if(is_dir($path)) {
-            $logcontent = "Time : " . $date->format('H:i:s')." Msg : " . $message ."\r\n";
-            file_put_contents($log, $logcontent,FILE_APPEND);
-        }
-        else {
+            $log = "Time : " . $date->format('H:i:s')." Msg : " . $message . PHP_EOL;
+            file_put_contents($file, $log, FILE_APPEND);
+        } else {
             if(mkdir($path,0777) === true)
             {
                 self::write($message);

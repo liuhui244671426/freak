@@ -160,9 +160,3 @@ class freak_lib_xss {
         $this->__common_attr($node);
     }
 }
-// if(php_sapi_name() == "cli"){
-// 	$html = $argv[1];
-// 	$xss = new XssHtml($html);
-// 	$html = $xss->getHtml();
-// 	echo "'$html'";
-// }

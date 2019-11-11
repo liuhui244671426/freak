@@ -8,33 +8,31 @@ class freak_build {
         $this->welcome();
         $this->check_environment();
         $mode_map = [0 => 'init', 1 => 'fpm', 2 => 'daemon', 3 => 'clean non-freak'];
-        fwrite(STDOUT, 'Please selection mode
+        $this->output('Please selection mode
     0 - Initialization Freak framework
     1 - Build web
     2 - Build daemon worker
     3 - Clean Non-freak file&directory
 Please enter the number: ');
-        $input = trim(fgets(STDIN));
-        $mode = $mode_map[$input];
-        if(!$mode) {
-            echo "mode : {$mode} not exists".PHP_EOL;return;
-        }
+        $input = $this->input();
+        $mode = isset($mode_map[$input])?$mode_map[$input]:exit("number : {$input} not exists".PHP_EOL);
+
 
         if($input == 0){
             $this->do_build($mode, '', '');
         }
         if($input == 1 || $input == 2){
-            fwrite(STDOUT, 'please input module name: ');
-            $module = trim(fgets(STDIN));
-            fwrite(STDOUT, 'please input  controller name: ');
-            $controller = trim(fgets(STDIN));
+            $this->output('please input module name: ');
+            $module = $this->input();
+            $this->output('please input  controller name: ');
+            $controller = $this->input();
 
             $this->do_build($mode, $module, $controller);
             echo "build {$mode} {$module} {$controller} done!".PHP_EOL;
         }
         if($input == 3){
-            fwrite(STDOUT, 'confirm Y or N: ');
-            $reconfirm = trim(fgets(STDIN));
+            $this->output('confirm Y or N: ');
+            $reconfirm = $this->input();
             if($reconfirm == 'Y'){
                 $this->clean_non_framework();
                 echo "clean non-freak file&directory done!".PHP_EOL;
@@ -147,7 +145,9 @@ return [];";
 define('FREAK_ACCESS', true);
 define('RUN_ENV', 'develop');//程序运行环境 develop | product,默认 develop
 header('Content-type:text/html;charset=utf-8');
-include dirname(__FILE__).'/freak/bootstrap.php';";
+include dirname(__FILE__).'/freak/bootstrap.php';
+
+return true;";
         $files_map['debug'] = "<?php
 /**
  * freak.framework
@@ -161,6 +161,7 @@ xhprof_enable(XHPROF_FLAGS_CPU+XHPROF_FLAGS_MEMORY);
 
 include dirname(__FILE__).'/freak/bootstrap.php';
 
+return true;
 //-----------------------------------------
 \$xhprof_data = xhprof_disable();
 \$xhprof_root = '/Users/liuhui/vagrant/htdocs/xhprof';
@@ -253,6 +254,13 @@ abstract class data_base{}";
             if (!extension_loaded($v)) {exit("PHP extension {$v} must exists");}
         }
 
+    }
+
+    public function input(){
+        return trim(fgets(STDIN));
+    }
+    public function output($msg){
+        return fwrite(STDOUT, $msg);
     }
 }
 new freak_build();

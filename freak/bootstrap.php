@@ -67,6 +67,4 @@ class bootstrap
         setcookie(session_name(), session_id(), time() + 86400);//expire time和redis ttl 一致
     }
 }
-
-(new bootstrap())->run();
-return true;
+return (new bootstrap())->run();

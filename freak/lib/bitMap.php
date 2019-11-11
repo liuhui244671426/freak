@@ -10,6 +10,7 @@
  * Instance of binary map
  */
 defined('FREAK_ACCESS') or exit('Access Denied');
+
 class freak_lib_bitMap
 {
     /**
@@ -49,7 +50,7 @@ class freak_lib_bitMap
     }
     /**
      * @param int $index
-     * @return lib_bitMap
+     * @return object freak_lib__bitMap
      */
     public function setBit($index)
     {
@@ -58,7 +59,7 @@ class freak_lib_bitMap
     }
     /**
      * @param int[] $indexList
-     * @return lib_bitMap
+     * @return object freak_lib__bitMap
      */
     public function setBits(array $indexList)
     {
@@ -75,7 +76,7 @@ class freak_lib_bitMap
     }
     /**
      * @param int $mask
-     * @return lib_bitMap
+     * @return object freak_lib__bitMap
      */
     public function setBitsByMask($mask)
     {
@@ -84,7 +85,7 @@ class freak_lib_bitMap
     }
     /**
      * @param int $index
-     * @return lib_bitMap
+     * @return object freak_lib__bitMap
      */
     public function unsetBit($index)
     {
@@ -93,7 +94,7 @@ class freak_lib_bitMap
     }
     /**
      * @param int[] $indexList
-     * @return lib_bitMap
+     * @return object freak_lib__bitMap
      */
     public function unsetBits(array $indexList)
     {
@@ -108,7 +109,7 @@ class freak_lib_bitMap
     }
     /**
      * @param int $mask
-     * @return lib_bitMap
+     * @return object freak_lib__bitMap
      */
     public function unsetBitsByMask($mask)
     {
@@ -116,7 +117,7 @@ class freak_lib_bitMap
         return $this;
     }
     /**
-     * @return lib_bitMap
+     * @return object freak_lib__bitMap
      */
     public function invert()
     {
@@ -138,21 +139,21 @@ class freak_lib_bitMap
         return decbin($this->bitmap);
     }
     /**
-     * @param lib_bitMap $bitmap
+     * @param object $bitmap
      * @return bool
      */
-    public function equals(lib_bitMap $bitmap)
+    public function equals(freak_lib_bitMap $bitmap)
     {
         return $this->bitmap === $bitmap->getInt();
     }
     /**
      * Add two bitmaps.
      *
-     * @param lib_bitMap $bitmap
-     * @return lib_bitMap
+     * @param freak_lib_bitMap $bitmap
+     * @return freak_lib_bitMap
      */
-    public function add(lib_bitMap $bitmap)
+    public function add(freak_lib_bitMap $bitmap)
     {
-        return new lib_bitMap($this->bitmap + $bitmap->getInt());
+        return new freak_lib_bitMap($this->bitmap + $bitmap->getInt());
     }
 }
