@@ -35,6 +35,10 @@ class freak_router
         $this->run($module, $controller, $action);
     }
 
+    public function __call($name, $arguments){
+        $this->simple();
+    }
+
     protected function default_name($n)
     {
         return $n ? $n : 'index';
