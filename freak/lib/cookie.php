@@ -102,7 +102,7 @@ class freak_lib_cookie
      * @param string $name
      * @return string
      */
-    public function realname($name)
+    public static function realname($name)
     {
         return self::$prefix . $name;
     }
