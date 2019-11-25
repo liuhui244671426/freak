@@ -140,8 +140,16 @@ class freak_lib_captcha
     }
 
     private function outPutGif(){
-        include PATH_ROOT.DS.'lib'.DS.'gif.php';
-        $gif=new GIFEncoder($this->gifData,
+        //include PATH_ROOT.DS.'lib'.DS.'gif.php';
+        /*$gif=new GIFEncoder($this->gifData,
+            array_fill(0, $this->codeLen, 88),
+            0,
+            1,
+            0, 0, 1,
+            "bin"
+        );*/
+        $gif = new freak_lib_image_gif_encoder(
+            $this->gifData,
             array_fill(0, $this->codeLen, 88),
             0,
             1,

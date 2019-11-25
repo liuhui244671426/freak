@@ -7,12 +7,12 @@ defined('FREAK_ACCESS') or exit('Access Denied');
  * Class Image
  * @package Timo
  */
-class freak_lib_image
+class freak_lib_image_image
 {
     private $img;
 
     /**
-     * @var Gif
+     * @var freak_lib_image_image Gif
      */
     private $gif;
 
@@ -90,7 +90,7 @@ class freak_lib_image
 
         //打开图像
         if ('gif' == $this->info['type']) {
-            $this->gif = new freak_lib_gif($image);
+            $this->gif = new freak_lib_image_gif_gif($image);
             $this->img = imagecreatefromstring($this->gif->image());
         } else {
             $fun = "imagecreatefrom{$this->info['type']}";
@@ -118,11 +118,7 @@ class freak_lib_image
         }
 
         //自动获取图像类型
-        if (is_null($type)) {
-            $type = $this->info['type'];
-        } else {
-            $type = strtolower($type);
-        }
+        $type = is_null($type)?$this->info['type']:strtolower($type);
         //保存图像
         if ('jpeg' == $type || 'jpg' == $type) {
             //JPEG图像设置隔行扫描
@@ -181,7 +177,7 @@ class freak_lib_image
      * @param  integer $height 缩略图最大高度
      * @param  integer $type 缩略图裁剪类型
      */
-    public function thumb($width, $height, $type = freak_lib_image::IMAGE_THUMB_SCALE)
+    public function thumb($width, $height, $type = self::IMAGE_THUMB_SCALE)
     {
         if (empty($this->img)) {
             $this->setError('没有可以被缩略的图像资源');
@@ -195,7 +191,7 @@ class freak_lib_image
         /* 计算缩略图生成的必要参数 */
         switch ($type) {
             /* 等比例缩放 */
-            case freak_lib_image::IMAGE_THUMB_SCALE:
+            case self::IMAGE_THUMB_SCALE:
                 //原图尺寸小于缩略图尺寸则不进行缩略
                 if ($w < $width && $h < $height) return;
 
@@ -209,7 +205,7 @@ class freak_lib_image
                 break;
 
             /* 居中裁剪 */
-            case freak_lib_image::IMAGE_THUMB_CENTER:
+            case self::IMAGE_THUMB_CENTER:
                 //计算缩放比例
                 $scale = max($width / $w, $height / $h);
 
@@ -221,7 +217,7 @@ class freak_lib_image
                 break;
 
             /* 左上角裁剪 */
-            case freak_lib_image::IMAGE_THUMB_NORTHWEST:
+            case self::IMAGE_THUMB_NORTHWEST:
                 //计算缩放比例
                 $scale = max($width / $w, $height / $h);
 
@@ -232,7 +228,7 @@ class freak_lib_image
                 break;
 
             /* 右下角裁剪 */
-            case freak_lib_image::IMAGE_THUMB_SOUTHEAST:
+            case self::IMAGE_THUMB_SOUTHEAST:
                 //计算缩放比例
                 $scale = max($width / $w, $height / $h);
 
@@ -244,7 +240,7 @@ class freak_lib_image
                 break;
 
             /* 填充 */
-            case freak_lib_image::IMAGE_THUMB_FILLED:
+            case self::IMAGE_THUMB_FILLED:
                 //计算缩放比例
                 if ($w < $width && $h < $height) {
                     $scale = 1;
@@ -276,7 +272,7 @@ class freak_lib_image
                 return;
 
             /* 固定 */
-            case freak_lib_image::IMAGE_THUMB_FIXED:
+            case self::IMAGE_THUMB_FIXED:
                 $x = $y = 0;
                 break;
 
@@ -325,7 +321,7 @@ class freak_lib_image
      * @param bool $des_water 打了之后是否销毁水印图片资源
      * @return bool
      */
-    public function water($locate = freak_lib_image::IMAGE_WATER_SOUTHEAST, $alpha = 80, $des_water = true)
+    public function water($locate = self::IMAGE_WATER_SOUTHEAST, $alpha = 80, $des_water = true)
     {
         //资源检测
         if (empty($this->img)) return false;
@@ -334,54 +330,54 @@ class freak_lib_image
         /* 设定水印位置 */
         switch ($locate) {
             /* 右下角水印 */
-            case freak_lib_image::IMAGE_WATER_SOUTHEAST:
+            case self::IMAGE_WATER_SOUTHEAST:
                 $x = $this->info['width'] - $this->water_info[0] - 10;
                 $y = $this->info['height'] - $this->water_info[1] - 10;
                 break;
 
             /* 左下角水印 */
-            case freak_lib_image::IMAGE_WATER_SOUTHWEST:
+            case self::IMAGE_WATER_SOUTHWEST:
                 $x = 10;
                 $y = $this->info['height'] - $this->water_info[1] - 10;
                 break;
 
             /* 左上角水印 */
-            case freak_lib_image::IMAGE_WATER_NORTHWEST:
+            case self::IMAGE_WATER_NORTHWEST:
                 $x = $y = 0;
                 break;
 
             /* 右上角水印 */
-            case freak_lib_image::IMAGE_WATER_NORTHEAST:
+            case self::IMAGE_WATER_NORTHEAST:
                 $x = $this->info['width'] - $this->water_info[0];
                 $y = 0;
                 break;
 
             /* 居中水印 */
-            case freak_lib_image::IMAGE_WATER_CENTER:
+            case self::IMAGE_WATER_CENTER:
                 $x = ($this->info['width'] - $this->water_info[0]) / 2;
                 $y = ($this->info['height'] - $this->water_info[1]) / 2;
                 break;
 
             /* 下居中水印 */
-            case freak_lib_image::IMAGE_WATER_SOUTH:
+            case self::IMAGE_WATER_SOUTH:
                 $x = ($this->info['width'] - $this->water_info[0]) / 2;
                 $y = $this->info['height'] - $this->water_info[1];
                 break;
 
             /* 右居中水印 */
-            case freak_lib_image::IMAGE_WATER_EAST:
+            case self::IMAGE_WATER_EAST:
                 $x = $this->info['width'] - $this->water_info[0];
                 $y = ($this->info['height'] - $this->water_info[1]) / 2;
                 break;
 
             /* 上居中水印 */
-            case freak_lib_image::IMAGE_WATER_NORTH:
+            case self::IMAGE_WATER_NORTH:
                 $x = ($this->info['width'] - $this->water_info[0]) / 2;
                 $y = 0;
                 break;
 
             /* 左居中水印 */
-            case freak_lib_image::IMAGE_WATER_WEST:
+            case self::IMAGE_WATER_WEST:
                 $x = 0;
                 $y = ($this->info['height'] - $this->water_info[1]) / 2;
                 break;

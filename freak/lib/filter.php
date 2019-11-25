@@ -228,6 +228,13 @@ class freak_lib_filter
     {
         return self::key($key, $_SESSION, $default);
     }
+
+    public static function put($key, $default=null){
+        return self::key($key, file_get_contents('php://input', 'r'), $default);
+    }
+    public static function delete($key, $default=null){
+        return self::key($key, file_get_contents('php://input', 'r'), $default);
+    }
     /**
      * Validate string from GET parameter - $_GET["key"].
      *
