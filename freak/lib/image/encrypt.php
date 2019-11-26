@@ -2,7 +2,7 @@
 //写图术
 defined('FREAK_ACCESS') or exit('Access Denied');
 // https://github.com/DavidNineRoc/encrypt/blob/master/Encrypt.php
-class freak_lib_encrypt
+class freak_lib_image_encrypt
 {
     /**
      * 文件名
@@ -297,7 +297,6 @@ class freak_lib_encrypt
         // 文件是否存在
         if (!is_file($pic_file)) {
             $this->errno = -1;
-
             return false;
         }
 
@@ -307,7 +306,6 @@ class freak_lib_encrypt
         // 是否为图片文件
         if (!$mime) {
             $this->errno = 3;
-
             return false;
         }
 
@@ -315,14 +313,13 @@ class freak_lib_encrypt
         $img_data = "";
         switch ($mime['mime']) {
             case "image/png":
-                $img_data = $this->decryptPNG($pic_file);
+                $this->decryptPNG($pic_file);
                 break;
             case "image/x-ms-bmp":
-                $img_data = $this->decryptBMP($pic_file);
+                $this->decryptBMP($pic_file);
                 break;
             default:
                 $this->errno = 4;
-
                 return false;
                 break;
         }
