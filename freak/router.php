@@ -53,9 +53,10 @@ class freak_router
         } catch (Throwable $e) {
             freak_log::write($e->getTraceAsString());
             freak_log::write($e->getMessage());
-            header('HTTP/1.1 404 Not Found');
-            header("status: 404 Not Found");
-            exit('File not found.');
+            //header('HTTP/1.1 404 Not Found');
+            //header("status: 404 Not Found");
+            //exit('File not found.');
+            exit($e->getMessage());
         }
     }
 

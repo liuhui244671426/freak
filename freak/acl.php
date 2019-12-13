@@ -1,5 +1,6 @@
 <?php
 //权限
+//参考 composer require casbin/casbin
 class freak_acl{
     private $status = 0;
     const ADD = 1;
