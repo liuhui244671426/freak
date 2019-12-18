@@ -1,4 +1,5 @@
 <?php
+defined('FREAK_ACCESS') or exit('Access Denied');
 class freak_factory{
     protected static $connect = [];
     public static function getPDO($alias, $mode) {
