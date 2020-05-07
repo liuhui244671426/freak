@@ -38,9 +38,9 @@ class freak_pdo
      *    2. Connect to database.
      *    3. Creates the parameter array.
      */
-    public function __construct($host, $port, $dbnane, $user, $password)
+    public function __construct($host, $port, $dbname, $user, $password)
     {
-        $this->Connect($host, $port, $dbnane, $user, $password);
+        $this->Connect($host, $port, $dbname, $user, $password);
         $this->parameters = array();
     }
 
@@ -52,11 +52,11 @@ class freak_pdo
      *    3. Tries to connect to the database.
      *    4. If connection failed, exception is displayed and a log file gets created.
      */
-    private function Connect($host, $port, $dbnane, $user, $password)
+    private function Connect($host, $port, $dbname, $user, $password)
     {
         $this->settings['host']     = $host;
         $this->settings['port']     = $port;
-        $this->settings['dbname']   = $dbnane;
+        $this->settings['dbname']   = $dbname;
         $this->settings['user']     = $user;
         $this->settings['password'] = $password;
         $dsn = 'mysql:dbname=' . $this->settings["dbname"] . ';host=' . $this->settings["host"] . ';port=' . $this->settings["port"];
@@ -194,6 +194,40 @@ class freak_pdo
 
         if ($statement === 'select' || $statement === 'show') {
             return $this->sQuery->fetchAll($fetchmode);
+        } elseif ($statement === 'insert' || $statement === 'update' || $statement === 'delete') {
+            return $this->sQuery->rowCount();
+        } else {
+            return NULL;
+        }
+    }
+    /**
+     *  If the SQL query  contains a SELECT or SHOW statement it returns an array containing all of the result set row
+     *    If the SQL statement is a DELETE, INSERT, or UPDATE statement it returns the number of affected rows
+     * yield 处理大量数据,query 升级版
+     * example:
+     *         foreach (query_yield(sql, params) as $row) {
+     *               var_dump($row);
+     *           }
+     * @param  string $query
+     * @param  array $params
+     * @param  int $fetchmode
+     * @return mixed
+     */
+    public function query_yield($query, $params = null, $fetchmode = PDO::FETCH_ASSOC)
+    {
+        $query = trim(str_replace("\r", " ", $query));
+
+        $this->Init($query, $params);
+
+        $rawStatement = explode(" ", preg_replace("/\s+|\t+|\n+/", " ", $query));
+
+        # Which SQL statement is used
+        $statement = strtolower($rawStatement[0]);
+
+        if ($statement === 'select' || $statement === 'show') {
+            while($row = $this->sQuery->fetch($fetchmode)){
+                yield $row;
+            }
         } elseif ($statement === 'insert' || $statement === 'update' || $statement === 'delete') {
             return $this->sQuery->rowCount();
         } else {
