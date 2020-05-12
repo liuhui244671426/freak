@@ -22,7 +22,7 @@ class bootstrap
         register_shutdown_function([$this, 'f_last_error']);
 
         if (PHP_SAPI != 'cli') (new freak_router())->{freak_config::get('router')['mode']}();
-        freak_log::write("fpm memory usage: ".json_encode(freak_debug::memory_usage()));
+        freak_log::write("memory usage: ".json_encode(freak_debug::memory_usage()));
         return true;
     }
 
